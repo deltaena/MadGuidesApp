@@ -12,10 +12,11 @@ public class HotelCategoriesAdapter extends BaseAdapter{
 
     @Override
     View.OnClickListener getOnItemClickedListener(int position) {
-        HotelCategory hotel = (HotelCategory) recyclerViewElements.get(position);
+        HotelCategory hotelCategory = (HotelCategory) recyclerViewElements.get(position);
 
         Bundle bundle = new Bundle();
-        bundle.putInt("selectedElementCategory", hotel.getCategory());
+        bundle.putString("title", hotelCategory.getName());
+        bundle.putInt("selectedElementCategory", hotelCategory.getCategory());
 
         return click -> navController.navigate(R.id.nav_hotels, bundle);
     }
