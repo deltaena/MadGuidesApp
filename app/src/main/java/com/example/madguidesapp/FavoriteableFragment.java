@@ -16,9 +16,9 @@ import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 
 public abstract class FavoriteableFragment extends Fragment {
 
-    private DrawerActivityViewModel drawerActivityViewModel;
+    protected DrawerActivityViewModel drawerActivityViewModel;
 
-    private View.OnClickListener requireAccount = click -> {
+    public View.OnClickListener requireAccount = click -> {
         AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
         accountRequiredDialog.show(getParentFragmentManager(), "Account Required");
     };
@@ -59,6 +59,13 @@ public abstract class FavoriteableFragment extends Fragment {
 
                     setFavoriteButton();
                 });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        drawerActivityViewModel.getFavoritesLiveData().removeObservers(this);
     }
 
     public void setFavoriteButton(){

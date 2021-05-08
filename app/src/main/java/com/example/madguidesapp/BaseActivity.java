@@ -1,9 +1,11 @@
 package com.example.madguidesapp;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,10 +68,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initToolBar(){
         toolbar = findViewById(R.id.toolbar);
         TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
+        ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton);
 
         toolbar.findViewById(R.id.openDrawerImageButton).setOnClickListener(click -> drawer.open());
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+
+            View.OnClickListener arrowListener = click -> navController.popBackStack(),
+                    menuListener = click -> drawer.open();
+
+            if(destination.getId() == R.id.nav_main_menu){
+                openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.three_lines_menu_icon));
+                openDrawerImageButton.setOnClickListener(menuListener);
+            }
+            else{
+                openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.back_arrow));
+                openDrawerImageButton.setOnClickListener(arrowListener);
+            }
+
             toolbarTitleTextView.setText(destination.getLabel());
         });
 

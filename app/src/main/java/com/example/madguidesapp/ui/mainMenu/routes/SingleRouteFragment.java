@@ -136,7 +136,7 @@ public class SingleRouteFragment extends Fragment {
 
         toggleVisitedBtn.setOnClickListener(click -> {
             toggleVisitedBtn.setOnClickListener(null);
-            drawerActivityViewModel.toggleRouteVisited(route.getName());
+            drawerActivityViewModel.toggleVisited(route);
         });
 
         if(isVisited){

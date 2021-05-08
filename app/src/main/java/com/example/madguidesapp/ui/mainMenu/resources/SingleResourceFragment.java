@@ -23,41 +23,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.madguidesapp.DrawerActivityViewModel;
 import com.example.madguidesapp.FavoriteableFragment;
+import com.example.madguidesapp.SingleRecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 
-public class SingleResourceFragment extends FavoriteableFragment {
+public class SingleResourceFragment extends SingleRecyclerViewElement {
 
     private static final String TAG = "SingleResourceFragment";
 
     private Resource resource;
-    private DrawerActivityViewModel drawerActivityViewModel;
-
-    private View.OnClickListener requireAccount = click -> {
-        AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
-        accountRequiredDialog.show(getParentFragmentManager(), "Account Required");
-    };
-
-    private Button toggleVisitedBtn;
-    private boolean isVisited = false;
 
     public SingleResourceFragment(RecyclerViewElement resource){
         this.resource = (Resource) resource;
-    }
-
-    @Override
-    protected RecyclerViewElement getRecyclerViewElement() {
-        return resource;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        drawerActivityViewModel = new ViewModelProvider(requireActivity()).
-                get(DrawerActivityViewModel.class);
     }
 
     @Override
@@ -80,63 +59,18 @@ public class SingleResourceFragment extends FavoriteableFragment {
         //TextView curiositiesTextView = view.findViewById(R.id.curiositiesTextView);
         //curiositiesTextView.setText(resource.getCuriosities());
 
-        Button showResourceOnMapsBtn = view.findViewById(R.id.showResourceOnMapsBtn);
-        showResourceOnMapsBtn.setOnClickListener(click -> {
-            Intent showOnMapsIntent = new Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(resource.getMapsUrl()));
-
-            startActivity(showOnMapsIntent);
-        });
-
-        toggleVisitedBtn = view.findViewById(R.id.toggleResourceVisitedBtn);
-        toggleVisitedBtn.setOnClickListener(requireAccount);
-
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        drawerActivityViewModel.getUserLiveData().
-                observe(this, user -> {
-                    if(user != null) {
-                        isVisited = user.getVisitedResources().contains(resource.getName());
-                    }
-
-                    setVisitedButton();
-                });
+    protected RecyclerViewElement getRecyclerViewElement() {
+        return resource;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-
-        drawerActivityViewModel.getUserLiveData().removeObservers(this);
+    protected String getMapsUrl() {
+        return resource.getMapsUrl();
     }
-
-    public void setVisitedButton(){
-        if(!drawerActivityViewModel.areUserRegistered()) {
-            toggleVisitedBtn.setOnClickListener(requireAccount);
-            toggleVisitedBtn.setText("Mark as visited");
-            return;
-        }
-
-        toggleVisitedBtn.setOnClickListener(click -> {
-            toggleVisitedBtn.setOnClickListener(null);
-            drawerActivityViewModel.toggleResourceVisited(resource.getName());
-        });
-
-        if(isVisited){
-            toggleVisitedBtn.setText("Remove from visited");
-        }
-        else{
-            toggleVisitedBtn.setText("Mark as visited");
-        }
-    }
-
-
 }
 
 

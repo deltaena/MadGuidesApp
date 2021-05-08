@@ -122,6 +122,15 @@ public class DrawerActivityViewModel extends ViewModel {
         }
     }
 
+    public void toggleVisited(RecyclerViewElement recyclerViewElement){
+        if(recyclerViewElement instanceof Resource){
+            toggleResourceVisited(recyclerViewElement.getName());
+        }
+        else if(recyclerViewElement instanceof Route){
+            toggleRouteVisited(recyclerViewElement.getName());
+        }
+    }
+
     public void toggleFavorite(RecyclerViewElement recyclerViewElement){
         DocumentReference reference = userRepository.createReference(recyclerViewElement.toString());
 
@@ -155,7 +164,7 @@ public class DrawerActivityViewModel extends ViewModel {
                     });
         }
     }
-    public void toggleResourceVisited(String name){
+    private void toggleResourceVisited(String name){
         User user = userMutableLiveData.getValue();
         List<String> resources = user.getVisitedResources();
 
@@ -186,7 +195,7 @@ public class DrawerActivityViewModel extends ViewModel {
                     });
         }
     }
-    public void toggleRouteVisited(String name){
+    private void toggleRouteVisited(String name){
         User user = userMutableLiveData.getValue();
         List<String> routes = user.getVisitedRoutes();
 
