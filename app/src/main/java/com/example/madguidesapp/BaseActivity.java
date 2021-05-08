@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.example.madguidesapp.pojos.User;
@@ -53,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
 
         drawer = findViewById(R.id.drawer_layout);
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         initToolBar();
@@ -60,10 +63,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         setUpHeader(null);
     }
 
-    public void initToolBar(){
+    protected void initToolBar(){
         toolbar = findViewById(R.id.toolbar);
+        TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
 
         toolbar.findViewById(R.id.openDrawerImageButton).setOnClickListener(click -> drawer.open());
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            toolbarTitleTextView.setText(destination.getLabel());
+        });
 
         setSupportActionBar(toolbar);
     }

@@ -22,12 +22,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.madguidesapp.DrawerActivityViewModel;
+import com.example.madguidesapp.FavoriteableFragment;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 
-public class SingleResourceFragment extends Fragment {
+public class SingleResourceFragment extends FavoriteableFragment {
 
     private static final String TAG = "SingleResourceFragment";
 
@@ -44,6 +45,11 @@ public class SingleResourceFragment extends Fragment {
 
     public SingleResourceFragment(RecyclerViewElement resource){
         this.resource = (Resource) resource;
+    }
+
+    @Override
+    protected RecyclerViewElement getRecyclerViewElement() {
+        return resource;
     }
 
     @Override
@@ -83,6 +89,9 @@ public class SingleResourceFragment extends Fragment {
             startActivity(showOnMapsIntent);
         });
 
+        toggleVisitedBtn = view.findViewById(R.id.toggleResourceVisitedBtn);
+        toggleVisitedBtn.setOnClickListener(requireAccount);
+
         return view;
     }
 
@@ -98,22 +107,12 @@ public class SingleResourceFragment extends Fragment {
 
                     setVisitedButton();
                 });
-
-        drawerActivityViewModel.getFavoritesLiveData().
-                observe(this, favorites -> {
-                    if(drawerActivityViewModel.areUserRegistered()) {
-                        //isFavorite = favorites.contains(resource);
-                    }
-
-                    setFavoriteButton();
-                });
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        drawerActivityViewModel.getFavoritesLiveData().removeObservers(this);
         drawerActivityViewModel.getUserLiveData().removeObservers(this);
     }
 
@@ -137,25 +136,7 @@ public class SingleResourceFragment extends Fragment {
         }
     }
 
-    public void setFavoriteButton(){
-        /*if(!drawerActivityViewModel.areUserRegistered()) {
-            markAsFavorite.setOnClickListener(requireAccount);
-            markAsFavorite.setImageDrawable(getContext().getDrawable(R.drawable.empty_heart));
-            return;
-        }
 
-        markAsFavorite.setOnClickListener(click -> {
-            markAsFavorite.setOnClickListener(null);
-            drawerActivityViewModel.toggleFavorite(resource);
-        });
-
-        if (isFavorite){
-            markAsFavorite.setImageDrawable(getContext().getDrawable(R.drawable.filled_heart));
-        }
-        else {
-            markAsFavorite.setImageDrawable(getContext().getDrawable(R.drawable.empty_heart));
-        }*/
-    }
 }
 
 
