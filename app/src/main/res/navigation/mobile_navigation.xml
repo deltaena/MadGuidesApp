@@ -5,7 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_main_menu">
 
-    <activity
+    <fragment
         android:id="@+id/nav_resources_pager"
         android:name="com.example.madguidesapp.viewPagerClasses.ResourcesViewPager"
         android:label="Pager" />
@@ -14,7 +14,7 @@
         android:id="@+id/nav_routes_pager"
         android:name="com.example.madguidesapp.viewPagerClasses.RoutesViewPager"
         android:label="Pager"
-        tools:layout="@layout/fragment_view_pager" />
+        tools:layout="@layout/fragment_pager_layout" />
     <fragment
         android:id="@+id/nav_login"
         android:name="com.example.madguidesapp.auth.LoginFragment"

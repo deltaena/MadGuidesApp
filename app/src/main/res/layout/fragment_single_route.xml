@@ -6,13 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:openDrawer="start">
-
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <include layout="@layout/base_single_element_layout" />
 

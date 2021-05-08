@@ -16,10 +16,10 @@ public class ResourcesViewPager extends BaseViewPagerAdapter{
     private DrawerActivityViewModel drawerActivityViewModel;
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
-        drawerActivityViewModel = new ViewModelProvider(this).get(DrawerActivityViewModel.class);
+        drawerActivityViewModel = new ViewModelProvider(requireActivity()).get(DrawerActivityViewModel.class);
         drawerActivityViewModel.getResourcesLiveData().
                 observe(this, resources -> fillSliderAdapter(resources));
     }

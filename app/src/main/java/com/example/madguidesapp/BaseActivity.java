@@ -74,6 +74,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             if(user == null){
                 AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
                 accountRequiredDialog.show(getSupportFragmentManager(), "AccountRequired");
+
+                return false;
             }
 
             switch(item.getItemId()){

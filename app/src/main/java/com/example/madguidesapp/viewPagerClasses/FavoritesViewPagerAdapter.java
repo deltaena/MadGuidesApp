@@ -28,7 +28,7 @@ public class FavoritesViewPagerAdapter extends BaseViewPagerAdapter{
                 get(DrawerActivityViewModel.class);
 
         drawerActivityViewModel.getFavoritesLiveData().
-                observe(this, recyclerViewElements -> {
+                observe(requireActivity(), recyclerViewElements -> {
                     fillSliderAdapter(recyclerViewElements);
                 });
     }

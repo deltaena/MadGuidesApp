@@ -1,10 +1,6 @@
 package com.example.madguidesapp.viewPagerClasses;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,29 +8,27 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.madguidesapp.DraweActivity;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 
 import java.util.List;
 
-public abstract class BaseViewPagerAdapter extends DraweActivity {
+public abstract class BaseViewPagerAdapter extends Fragment {
 
     private ViewPager2 viewPager2;
     private SliderAdapter sliderAdapter;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_view_pager);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_pager_layout, container, false);
 
-        viewPager2 = findViewById(R.id.viewPager2);
+        viewPager2 = view.findViewById(R.id.viewPager2);
+
+        return view;
     }
 
     public void fillSliderAdapter(List<? extends RecyclerViewElement> recyclerViewElements){
@@ -42,7 +36,7 @@ public abstract class BaseViewPagerAdapter extends DraweActivity {
             return;
         }
 
-        int selectedResourceIndex = getIntent().getIntExtra("selectedElementIndex", 0);
+        int selectedResourceIndex = getArguments().getInt("selectedElementIndex", 0);
 
         sliderAdapter = new BaseViewPagerAdapter.SliderAdapter(this, recyclerViewElements);
         viewPager2.setAdapter(sliderAdapter);
@@ -54,8 +48,7 @@ public abstract class BaseViewPagerAdapter extends DraweActivity {
 
         List<? extends RecyclerViewElement> recyclerViewElements;
 
-        public SliderAdapter(@NonNull FragmentActivity fragment,
-                List<? extends RecyclerViewElement> recyclerViewElements) {
+        public SliderAdapter(@NonNull Fragment fragment, List<? extends RecyclerViewElement> recyclerViewElements) {
 
             super(fragment);
             this.recyclerViewElements = recyclerViewElements;

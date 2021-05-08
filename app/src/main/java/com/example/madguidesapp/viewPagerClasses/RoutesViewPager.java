@@ -18,7 +18,7 @@ public class RoutesViewPager extends BaseViewPagerAdapter {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        drawerActivityViewModel = new ViewModelProvider(this).get(DrawerActivityViewModel.class);
+        drawerActivityViewModel = new ViewModelProvider(requireActivity()).get(DrawerActivityViewModel.class);
         drawerActivityViewModel.getRoutesLiveData().
                 observe(this, routes -> fillSliderAdapter(routes));
     }
