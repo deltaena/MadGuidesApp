@@ -6,14 +6,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/visitedResources"
+            android:checkable="true"
             android:icon="@android:drawable/alert_dark_frame"
-            android:title="Recursos visitados"/>
+            android:title="Recursos visitados" />
         <item
             android:id="@+id/createGuideProfile"
+            android:checkable="true"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Create guide profile" />
         <item
             android:id="@+id/favorites"
+            android:checkable="true"
             android:icon="@android:drawable/ic_menu_add"
             android:title="Favoritos" />
     </group>

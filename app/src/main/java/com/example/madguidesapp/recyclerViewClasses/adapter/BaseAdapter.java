@@ -77,8 +77,6 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseViewHolder>{
                 into(holder.elementImageView);
 
         holder.elementBtn.setOnClickListener(getOnItemClickedListener(position));
-
-        doSomeExtraInitialization(holder, position);
     }
 
     @Override
@@ -94,10 +92,6 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseViewHolder>{
 
     int getLayout(){
         return R.layout.recycler_view_element_layout;
-    }
-
-    void doSomeExtraInitialization(BaseViewHolder holder, int position){
-
     }
 
     public void setRecyclerViewElements(List<? extends RecyclerViewElement> recyclerViewElements) {

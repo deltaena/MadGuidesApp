@@ -95,13 +95,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     public void initNavigationView(){
         navigationView = findViewById(R.id.nav_view);
+
+        Log.d(TAG, "initNavigationView: "+navigationView.getCheckedItem());
+
         navigationView.setNavigationItemSelectedListener(item -> {
 
             if(user == null){
                 AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
                 accountRequiredDialog.show(getSupportFragmentManager(), "AccountRequired");
 
-                return false;
+                return true;
             }
 
             switch(item.getItemId()){
@@ -116,7 +119,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
             drawer.close();
-            return true;
+            return false;
         });
     }
 

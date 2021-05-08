@@ -51,6 +51,8 @@ public abstract class FavoriteableFragment extends Fragment {
 
         toolbarTitleTextView.setText(getRecyclerViewElement().getName());
 
+        markAsFavorite.setVisibility(View.VISIBLE);
+
         drawerActivityViewModel.getFavoritesLiveData().
                 observe(this, favorites -> {
                     if(drawerActivityViewModel.areUserRegistered()) {

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.User;
@@ -27,6 +28,7 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeUserViewModel();
         initializeResourcesViewModel();
         initializeRoutesViewModel();
+        initializeGuidesViewModel();
     }
 
     //region User view model
@@ -34,7 +36,7 @@ public class DrawerActivityViewModel extends ViewModel {
     private MutableLiveData<List<RecyclerViewElement>> favoritesMutableLiveData;
     private UserRepository userRepository;
 
-    public void initializeUserViewModel(){
+    private void initializeUserViewModel(){
         userRepository = new UserRepository();
 
         userMutableLiveData = new MutableLiveData<>();
@@ -56,6 +58,7 @@ public class DrawerActivityViewModel extends ViewModel {
                         User user = task.getResult().toObject(User.class);
                         userMutableLiveData.setValue(user);
                         initializeFavorites();
+                        removeUserFromGuides(user.getEmail());
                     }
                 });
     }
@@ -73,6 +76,7 @@ public class DrawerActivityViewModel extends ViewModel {
         userRepository.signOut();
         userMutableLiveData.setValue(null);
         favoritesMutableLiveData.setValue(null);
+        restoreGuidesList();
     }
 
     public void register(User user, String password){
@@ -249,7 +253,7 @@ public class DrawerActivityViewModel extends ViewModel {
     private MutableLiveData<List<Resource>> filteredResourcesMutableLiveData;
     private boolean areResourcesFiltered = false;
 
-    public void initializeResourcesViewModel(){
+    private void initializeResourcesViewModel(){
         resourcesMutableLiveData = new MutableLiveData<>();
         filteredResourcesMutableLiveData = new MutableLiveData<>();
 
@@ -279,7 +283,7 @@ public class DrawerActivityViewModel extends ViewModel {
     //region Routes view model
     private MutableLiveData<List<Route>> routesMutableLiveData;
 
-    public void initializeRoutesViewModel(){
+    private void initializeRoutesViewModel(){
         routesMutableLiveData = new MutableLiveData<>();
 
         appRepository.getRoutes().addOnCompleteListener(task -> {
@@ -291,6 +295,41 @@ public class DrawerActivityViewModel extends ViewModel {
 
     public LiveData<List<Route>> getRoutesLiveData(){
         return routesMutableLiveData;
+    }
+    //endregion
+
+    //region Guides view model
+    private List<Guide> guidesFullList = new ArrayList<>();
+    private MutableLiveData<List<Guide>> filteredGuidesMutableLiveData;
+
+    private void initializeGuidesViewModel(){
+        appRepository = new AppRepository();
+        filteredGuidesMutableLiveData = new MutableLiveData<>();
+
+        appRepository.getGuides().
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        guidesFullList = task.getResult().toObjects(Guide.class);
+
+                        filteredGuidesMutableLiveData.setValue(guidesFullList);
+                    }
+                });
+    }
+
+    public void removeUserFromGuides(String userEmail){
+        List<Guide> guidesFiltered = guidesFullList.stream().
+                filter(guide -> !guide.getEmail().equals(userEmail)).
+                collect(Collectors.toList());
+
+        filteredGuidesMutableLiveData.setValue(guidesFiltered);
+    }
+
+    public void restoreGuidesList(){
+        filteredGuidesMutableLiveData.setValue(guidesFullList);
+    }
+
+    public LiveData<List<Guide>> getGuidesLiveData(){
+        return filteredGuidesMutableLiveData;
     }
     //endregion
 }

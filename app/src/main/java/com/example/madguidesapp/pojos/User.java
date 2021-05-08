@@ -10,7 +10,7 @@ public class User {
     private String username;
     private List<String> visitedResources = new ArrayList<>();
     private List<String> visitedRoutes = new ArrayList<>();
-    private List<DocumentReference> favorites;
+    private List<DocumentReference> favorites = new ArrayList<>();
 
     public String getEmail() {
         return email;

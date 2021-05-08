@@ -49,12 +49,10 @@ public abstract class RecyclerViewBaseFragment extends Fragment {
 
         navController = Navigation.findNavController(getView());
 
-        setToolbar();
-
         baseAdapter = getBaseAdapter();
 
         baseAdapter.setNavController(navController);
-        baseAdapter.setRecyclerViewElements(this.recyclerViewElements);
+        baseAdapter.setRecyclerViewElements(recyclerViewElements);
 
         recyclerView.setAdapter(baseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,32 +75,8 @@ public abstract class RecyclerViewBaseFragment extends Fragment {
         }
         this.recyclerViewElements = recyclerViewElements;
 
-        baseAdapter.setRecyclerViewElements(this.recyclerViewElements);
+        baseAdapter.setRecyclerViewElements(recyclerViewElements);
         baseAdapter.notifyDataSetChanged();
-    }
-
-    public void setToolbar(){
-        /*boolean isMainMenu = navController.getCurrentDestination().getId() == R.id.nav_main_menu;
-
-        DrawerLayout drawer = ((AppCompatActivity) requireActivity()).findViewById(R.id.drawer_layout);
-        Toolbar toolbar = ((AppCompatActivity) requireActivity()).findViewById(R.id.toolbar);
-
-        TextView textView = toolbar.findViewById(R.id.toolbarTitleTextView);
-        textView.setText("some text");
-
-        ImageButton openDrawerBtn = toolbar.findViewById(R.id.openDrawerImageButton),
-                markAsFavorite = toolbar.findViewById(R.id.markAsFavoriteImageButton);
-
-        markAsFavorite.setVisibility(View.GONE);
-
-        if(isMainMenu){
-            openDrawerBtn.setImageDrawable(getContext().getDrawable(R.drawable.three_lines_menu_icon));
-            openDrawerBtn.setOnClickListener(click -> drawer.open());
-        }
-        else{
-            openDrawerBtn.setImageDrawable(getContext().getDrawable(R.drawable.back_arrow));
-            openDrawerBtn.setOnClickListener(click -> navController.popBackStack());
-        }*/
     }
 
     public abstract BaseAdapter getBaseAdapter();

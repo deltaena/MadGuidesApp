@@ -44,8 +44,15 @@ public class RegisterFragment extends Fragment {
     };
 
     View.OnClickListener goToLoginClicked = click -> {
+        String emailStr = emailEditText.getText().toString(),
+                passwordStr = passwordEditText.getText().toString();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("email", emailStr);
+        bundle.putString("password", passwordStr);
+
         navController.popBackStack();
-        navController.navigate(R.id.nav_login);
+        navController.navigate(R.id.nav_login, bundle);
     };
 
     @Override
@@ -71,6 +78,11 @@ public class RegisterFragment extends Fragment {
         emailEditText = view.findViewById(R.id.emailEditText);
         usernameEditText = view.findViewById(R.id.usernameEditText);
         passwordEditText = view.findViewById(R.id.passwordEditText);
+
+        if(getArguments() != null){
+            emailEditText.setText(getArguments().getString("email", ""));
+            passwordEditText.setText(getArguments().getString("password", ""));
+        }
 
         registerBtn = view.findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(onRegisterBtnClicked);

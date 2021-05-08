@@ -44,7 +44,9 @@ public class GuidesAdapter extends BaseAdapter {
     }
 
     @Override
-    void doSomeExtraInitialization(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+
         Guide guide = (Guide) recyclerViewElements.get(position);
 
         GuidesViewHolder guidesViewHolder = (GuidesViewHolder) holder;
