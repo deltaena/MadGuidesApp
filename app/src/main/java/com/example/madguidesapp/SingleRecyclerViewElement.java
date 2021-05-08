@@ -40,7 +40,7 @@ public abstract class SingleRecyclerViewElement extends FavoriteableFragment{
         drawerActivityViewModel.getUserLiveData().
                 observe(this, user -> {
                     if(user != null) {
-                        isVisited = user.getVisitedResources().contains(getRecyclerViewElement());
+                        isVisited = drawerActivityViewModel.isVisited(getRecyclerViewElement());
                     }
 
                     setVisitedButton();

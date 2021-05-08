@@ -34,6 +34,6 @@ public class ResourcesFragment extends RecyclerViewBaseFragment {
     public void onDestroy() {
         super.onDestroy();
 
-        drawerActivityViewModel.clearFilters();
+        drawerActivityViewModel.setResourcesFilter(false);
     }
 }

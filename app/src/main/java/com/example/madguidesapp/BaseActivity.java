@@ -67,13 +67,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void initToolBar(){
         toolbar = findViewById(R.id.toolbar);
-        TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
-        ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton);
 
-        toolbar.findViewById(R.id.openDrawerImageButton).setOnClickListener(click -> drawer.open());
+        TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
+        ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton),
+                markAsFavoriteImageButton = findViewById(R.id.markAsFavoriteImageButton);
+
+        openDrawerImageButton.setOnClickListener(click -> drawer.open());
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-
             View.OnClickListener arrowListener = click -> navController.popBackStack(),
                     menuListener = click -> drawer.open();
 
@@ -87,6 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
             toolbarTitleTextView.setText(destination.getLabel());
+            markAsFavoriteImageButton.setVisibility(View.INVISIBLE);
         });
 
         setSupportActionBar(toolbar);
@@ -104,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             switch(item.getItemId()){
                 case R.id.visitedResources:
-                    drawerActivityViewModel.filterResources();
+                    drawerActivityViewModel.setResourcesFilter(true);
                     navController.navigate(R.id.nav_resources);
                     break;
 

@@ -1,6 +1,7 @@
 package com.example.madguidesapp.viewPagerClasses;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public abstract class BaseViewPagerAdapter extends Fragment {
 
+    private static final String TAG = "BaseViewPagerAdapter";
+    
     private ViewPager2 viewPager2;
     private SliderAdapter sliderAdapter;
 
@@ -33,9 +36,12 @@ public abstract class BaseViewPagerAdapter extends Fragment {
 
     public void fillSliderAdapter(List<? extends RecyclerViewElement> recyclerViewElements){
         if(recyclerViewElements == null){
+            Log.d(TAG, "fillSliderAdapter: null");
             return;
         }
 
+        Log.d(TAG, "fillSliderAdapter: "+recyclerViewElements.size());
+        
         int selectedResourceIndex = getArguments().getInt("selectedElementIndex", 0);
 
         sliderAdapter = new BaseViewPagerAdapter.SliderAdapter(this, recyclerViewElements);

@@ -2,7 +2,6 @@ package com.example.madguidesapp;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,11 +11,9 @@ import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,6 +119,17 @@ public class DrawerActivityViewModel extends ViewModel {
         }
     }
 
+    public boolean isVisited(RecyclerViewElement recyclerViewElement){
+        if(recyclerViewElement instanceof Resource){
+            return userMutableLiveData.getValue().getVisitedResources().contains(recyclerViewElement.getName());
+        }
+        else if(recyclerViewElement instanceof Route){
+            return userMutableLiveData.getValue().getVisitedRoutes().contains(recyclerViewElement.getName());
+        }
+
+        return false;
+    }
+
     public void toggleVisited(RecyclerViewElement recyclerViewElement){
         if(recyclerViewElement instanceof Resource){
             toggleResourceVisited(recyclerViewElement.getName());
@@ -130,7 +138,6 @@ public class DrawerActivityViewModel extends ViewModel {
             toggleRouteVisited(recyclerViewElement.getName());
         }
     }
-
     public void toggleFavorite(RecyclerViewElement recyclerViewElement){
         DocumentReference reference = userRepository.createReference(recyclerViewElement.toString());
 
@@ -164,6 +171,7 @@ public class DrawerActivityViewModel extends ViewModel {
                     });
         }
     }
+
     private void toggleResourceVisited(String name){
         User user = userMutableLiveData.getValue();
         List<String> resources = user.getVisitedResources();
@@ -239,7 +247,7 @@ public class DrawerActivityViewModel extends ViewModel {
     //region Resources view model
     private MutableLiveData<List<Resource>> resourcesMutableLiveData;
     private MutableLiveData<List<Resource>> filteredResourcesMutableLiveData;
-    private boolean isFiltered = false;
+    private boolean areResourcesFiltered = false;
 
     public void initializeResourcesViewModel(){
         resourcesMutableLiveData = new MutableLiveData<>();
@@ -254,7 +262,6 @@ public class DrawerActivityViewModel extends ViewModel {
     }
 
     public void filterResources(){
-        isFiltered = true;
         List<Resource> filteredResources = resourcesMutableLiveData.getValue().stream().
                 filter(resource -> userMutableLiveData.getValue().getVisitedResources().contains(resource.getName())).
                 collect(Collectors.toList());
@@ -262,12 +269,10 @@ public class DrawerActivityViewModel extends ViewModel {
         filteredResourcesMutableLiveData.setValue(filteredResources);
     }
 
-    public void clearFilters(){
-        isFiltered = false;
-    }
+    public void setResourcesFilter(boolean filter){ this.areResourcesFiltered = filter; }
 
     public LiveData<List<Resource>> getResourcesLiveData(){
-        return (isFiltered) ? filteredResourcesMutableLiveData : resourcesMutableLiveData;
+        return (areResourcesFiltered) ? filteredResourcesMutableLiveData : resourcesMutableLiveData;
     }
     //endregion
 
