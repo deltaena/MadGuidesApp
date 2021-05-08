@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "671425872077",
+    "project_id": "tfgfinal-b1c50",
+    "storage_bucket": "tfgfinal-b1c50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671425872077:android:3eaf67a8a4fd486bcc6984",
+        "android_client_info": {
+          "package_name": "com.example.madguidesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671425872077-mfa51u6fgc7155069qlrvlid05brsuc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMTrTnSko8hTYTIWHi8h7d7tIGWrCeAWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671425872077-mfa51u6fgc7155069qlrvlid05brsuc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671425872077:android:f42245ac41337ccccc6984",
+        "android_client_info": {
+          "package_name": "com.example.tfgfinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671425872077-mfa51u6fgc7155069qlrvlid05brsuc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMTrTnSko8hTYTIWHi8h7d7tIGWrCeAWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671425872077-mfa51u6fgc7155069qlrvlid05brsuc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

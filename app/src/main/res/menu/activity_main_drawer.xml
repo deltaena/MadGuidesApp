@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/visitedResources"
+            android:icon="@android:drawable/alert_dark_frame"
+            android:title="Recursos visitados"/>
+        <item
+            android:id="@+id/createGuideProfile"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Create guide profile" />
+        <item
+            android:id="@+id/favorites"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Favoritos" />
+    </group>
+</menu>

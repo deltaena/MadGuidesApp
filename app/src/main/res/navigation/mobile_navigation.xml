@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_main_menu">
+
+    <activity
+        android:id="@+id/nav_resources_pager"
+        android:name="com.example.madguidesapp.viewPagerClasses.ResourcesViewPager"
+        android:label="Pager" />
+
+    <fragment
+        android:id="@+id/nav_routes_pager"
+        android:name="com.example.madguidesapp.viewPagerClasses.RoutesViewPager"
+        android:label="Pager"
+        tools:layout="@layout/fragment_view_pager" />
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.madguidesapp.auth.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.example.madguidesapp.auth.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/nav_main_menu"
+        android:name="com.example.madguidesapp.ui.mainMenu.main.MainMenuFragment"
+        android:label="Inicio"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_resources"
+        android:name="com.example.madguidesapp.ui.mainMenu.resources.ResourcesFragment"
+        android:label="Recursos"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_routes"
+        android:name="com.example.madguidesapp.ui.mainMenu.routes.RoutesFragment"
+        android:label="Rutas"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_guides"
+        android:name="com.example.madguidesapp.ui.mainMenu.guides.GuidesFragment"
+        android:label="Guías"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_hotel_categories"
+        android:name="com.example.madguidesapp.ui.mainMenu.hotels.HotelCategoriesFragment"
+        android:label="Hoteles"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_hotels"
+        android:name="com.example.madguidesapp.ui.mainMenu.hotels.HotelsFragment"
+        tools:layout="@layout/recycler_view_fragment" />
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.example.madguidesapp.ui.sideMenu.FavoritesFragment"
+        android:label="FavoritesFragment" />
+    <fragment
+        android:id="@+id/nav_favorites_pager"
+        android:name="com.example.madguidesapp.viewPagerClasses.FavoritesViewPagerAdapter"
+        android:label="FavoritesViewPagerAdapter" />
+
+</navigation>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
