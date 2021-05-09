@@ -5,14 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madguidesapp.pojos.Hotel;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewBaseFragment;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewBaseFragment;
 import com.example.madguidesapp.recyclerViewClasses.adapter.BaseAdapter;
 import com.example.madguidesapp.recyclerViewClasses.adapter.HotelsAdapter;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class HotelsFragment extends RecyclerViewBaseFragment {
 

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madguidesapp.DrawerActivityViewModel;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.example.madguidesapp.ui.mainMenu.routes.SingleRouteFragment;
 
 public class RoutesViewPager extends BaseViewPagerAdapter {

@@ -1,21 +1,16 @@
 package com.example.madguidesapp.viewPagerClasses;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madguidesapp.DrawerActivityViewModel;
-import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.Resource;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.example.madguidesapp.ui.mainMenu.resources.SingleResourceFragment;
 import com.example.madguidesapp.ui.mainMenu.routes.SingleRouteFragment;
-
-import java.util.List;
 
 public class FavoritesViewPagerAdapter extends BaseViewPagerAdapter{
     DrawerActivityViewModel drawerActivityViewModel;

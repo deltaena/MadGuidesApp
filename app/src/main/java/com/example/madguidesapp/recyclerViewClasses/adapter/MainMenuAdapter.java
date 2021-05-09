@@ -1,18 +1,12 @@
 package com.example.madguidesapp.recyclerViewClasses.adapter;
 
-import android.os.Bundle;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.MainMenuElement;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 
-import java.util.List;
-
-public class MainMenuAdapter extends BaseAdapter{
+public class MainMenuAdapter extends BaseAdapter {
 
     @Override
     View.OnClickListener getOnItemClickedListener(int position) {

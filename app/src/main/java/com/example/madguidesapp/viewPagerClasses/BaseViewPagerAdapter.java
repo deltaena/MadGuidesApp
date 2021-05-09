@@ -13,7 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 
 import java.util.List;
 

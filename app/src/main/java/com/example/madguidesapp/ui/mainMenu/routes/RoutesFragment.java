@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madguidesapp.DrawerActivityViewModel;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewBaseFragment;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewBaseFragment;
 import com.example.madguidesapp.recyclerViewClasses.adapter.BaseAdapter;
 import com.example.madguidesapp.recyclerViewClasses.adapter.RoutesAdapter;
 

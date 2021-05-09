@@ -1,33 +1,18 @@
 package com.example.madguidesapp.ui.mainMenu.resources;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.madguidesapp.DrawerActivityViewModel;
-import com.example.madguidesapp.FavoriteableFragment;
 import com.example.madguidesapp.SingleRecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 
 public class SingleResourceFragment extends SingleRecyclerViewElement {
 

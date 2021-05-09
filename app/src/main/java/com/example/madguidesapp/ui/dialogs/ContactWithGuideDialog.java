@@ -2,9 +2,7 @@ package com.example.madguidesapp.ui.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.Guide;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.example.madguidesapp.recyclerViewClasses.adapter.SocialNetworksAdapter;
 
 import java.util.List;

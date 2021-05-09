@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.example.madguidesapp.R;
 
-public class RoutesAdapter extends BaseAdapter{
+public class RoutesAdapter extends BaseAdapter {
 
     @Override
     View.OnClickListener getOnItemClickedListener(int position) {

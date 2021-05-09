@@ -10,9 +10,12 @@ import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.User;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,10 @@ public class DrawerActivityViewModel extends ViewModel {
         return userRepository.areUserRegistered();
     }
 
+    public Task<QuerySnapshot> usernameExists(String username){
+        return userRepository.usernameExists(username);
+    }
+
     public void setUser(){
         userRepository.getUser().
                 addOnCompleteListener(task -> {
@@ -63,8 +70,8 @@ public class DrawerActivityViewModel extends ViewModel {
                 });
     }
 
-    public void signIn(String email, String password){
-        userRepository.signIn(email, password).
+    public Task<AuthResult> signIn(String email, String password){
+        return userRepository.signIn(email, password).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         setUser();
@@ -79,7 +86,7 @@ public class DrawerActivityViewModel extends ViewModel {
         restoreGuidesList();
     }
 
-    public void register(User user, String password){
+    public Task register(User user, String password){
         OnCompleteListener creationCompleted = task -> {
             if(task.isSuccessful()){
                 setUser();
@@ -92,7 +99,7 @@ public class DrawerActivityViewModel extends ViewModel {
             }
         };
 
-        userRepository.register(user, password).addOnCompleteListener(registerCompleted);
+        return userRepository.register(user, password).addOnCompleteListener(registerCompleted);
     }
 
     public void initializeFavorites(){

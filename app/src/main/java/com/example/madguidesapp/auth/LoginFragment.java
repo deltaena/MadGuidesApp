@@ -19,6 +19,9 @@ import com.example.madguidesapp.DrawerActivityViewModel;
 import com.example.madguidesapp.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginFragment extends Fragment {
 
     private DrawerActivityViewModel drawerActivityViewModel;
@@ -28,10 +31,23 @@ public class LoginFragment extends Fragment {
     private NavController navController;
 
     View.OnClickListener onLoginBtnClicked = click -> {
-        String emailStr = emailEditText.getText().toString().trim().toLowerCase(),
-                passwordStr = passwordEditText.getText().toString().trim();
+        Map<String, String> userDataChecked = checkUserData();
 
-        drawerActivityViewModel.signIn(emailStr, passwordStr);
+        if(userDataChecked == null){
+            return;
+        }
+
+        drawerActivityViewModel.signIn(
+                userDataChecked.get("email"), userDataChecked.get("password")).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Snackbar.make(getView(), "Sesión iniciada correctamente", Snackbar.LENGTH_LONG).show();
+                        navController.popBackStack();
+                    }
+                    else{
+                        Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+                });
     };
 
     View.OnClickListener goToRegisterClicked = click -> {
@@ -47,21 +63,11 @@ public class LoginFragment extends Fragment {
     };
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        drawerActivityViewModel = new ViewModelProvider(requireActivity()).get(DrawerActivityViewModel.class);
-
-        drawerActivityViewModel.getUserLiveData()
-                .observe(this, user -> {
-                    if(user != null){
-                        Snackbar.make(requireView(), "User signed in correctly", Snackbar.LENGTH_SHORT);
-                        navController.popBackStack();
-                    }
-                    else{
-                        Snackbar.make(getView(), "Failed to sign in", Snackbar.LENGTH_SHORT);
-                    }
-                });
+        drawerActivityViewModel = new ViewModelProvider(requireActivity()).
+                get(DrawerActivityViewModel.class);
     }
 
     @Override
@@ -91,6 +97,28 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(getView());
+    }
+
+    private Map<String, String> checkUserData(){
+        //email no es vacío
+
+        Map<String, String> dataMap = new HashMap<>();
+
+        String email = emailEditText.getText().toString().trim().toLowerCase();
+        String password = passwordEditText.getText().toString();
+
+        if(email.isEmpty()){
+            emailEditText.setError("Campo obligatorio");
+            return null;
+        }
+
+        if(password.isEmpty()){
+            passwordEditText.setError("Campo obligatorio");
+        }
+
+        dataMap.put("email", email);
+        dataMap.put("password", password);
+        return dataMap;
     }
 }
 

@@ -22,7 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.madguidesapp.DrawerActivityViewModel;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.Route;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 
 public class SingleRouteFragment extends Fragment {

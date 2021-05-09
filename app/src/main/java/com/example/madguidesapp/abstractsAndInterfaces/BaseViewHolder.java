@@ -1,4 +1,4 @@
-package com.example.madguidesapp.recyclerViewClasses.adapter.viewHolder;
+package com.example.madguidesapp.abstractsAndInterfaces;
 
 import android.view.View;
 import android.widget.Button;

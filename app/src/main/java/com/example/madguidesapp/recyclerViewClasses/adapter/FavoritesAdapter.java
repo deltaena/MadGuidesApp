@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.pojos.Resource;
-import com.example.madguidesapp.pojos.Route;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 
-public class FavoritesAdapter extends BaseAdapter{
+public class FavoritesAdapter extends BaseAdapter {
     @Override
-    View.OnClickListener getOnItemClickedListener(int position) {
+    public View.OnClickListener getOnItemClickedListener(int position) {
         return click -> {
             Bundle bundle = new Bundle();
             bundle.putInt("selectedElementIndex", position);

@@ -1,6 +1,6 @@
 package com.example.madguidesapp.pojos;
 
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 
 public class SocialNetwork implements RecyclerViewElement {
 

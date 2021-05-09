@@ -1,7 +1,6 @@
 package com.example.madguidesapp.pojos;
 
-import com.example.madguidesapp.R;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
 
 import java.util.Objects;
 

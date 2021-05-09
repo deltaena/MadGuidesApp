@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class UserRepository {
     private static final String TAG = "UserRepository";
@@ -24,6 +25,12 @@ public class UserRepository {
 
     public boolean areUserRegistered(){
         return firebaseAuth.getCurrentUser() != null;
+    }
+
+    public Task<QuerySnapshot> usernameExists(String username){
+        return firestore.collection("Users").
+                whereEqualTo("username", username).
+                get();
     }
 
     public Task<DocumentSnapshot> getUser(){

@@ -5,15 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,11 +19,10 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
-import com.example.madguidesapp.recyclerViewClasses.adapter.viewHolder.BaseViewHolder;
+import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
+import com.example.madguidesapp.abstractsAndInterfaces.BaseViewHolder;
 import com.example.madguidesapp.recyclerViewClasses.adapter.viewHolder.BasicViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseAdapter extends RecyclerView.Adapter<BaseViewHolder>{
@@ -84,7 +78,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseViewHolder>{
         return recyclerViewElements.size();
     }
 
-    abstract View.OnClickListener getOnItemClickedListener(int position);
+    protected abstract View.OnClickListener getOnItemClickedListener(int position);
 
     BaseViewHolder getViewHolder(View view){
         return new BasicViewHolder(view);

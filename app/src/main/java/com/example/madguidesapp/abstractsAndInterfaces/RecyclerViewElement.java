@@ -1,4 +1,4 @@
-package com.example.madguidesapp.recyclerViewClasses;
+package com.example.madguidesapp.abstractsAndInterfaces;
 
 import com.example.madguidesapp.R;
 

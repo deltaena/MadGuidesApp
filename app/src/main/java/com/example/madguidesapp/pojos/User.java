@@ -1,5 +1,4 @@
 package com.example.madguidesapp.pojos;
-import com.example.madguidesapp.recyclerViewClasses.RecyclerViewElement;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
