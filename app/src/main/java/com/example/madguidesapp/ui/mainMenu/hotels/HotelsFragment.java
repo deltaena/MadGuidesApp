@@ -5,13 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewBaseFragment;
-import com.example.madguidesapp.recyclerViewClasses.adapter.BaseAdapter;
-import com.example.madguidesapp.recyclerViewClasses.adapter.HotelsAdapter;
+import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
+import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
+import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
+import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 
 public class HotelsFragment extends RecyclerViewBaseFragment {
-
-    private HotelsViewModel hotelsViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,16 +18,14 @@ public class HotelsFragment extends RecyclerViewBaseFragment {
 
         int categoryFilter = getArguments().getInt("selectedElementCategory");
 
-        hotelsViewModel = new ViewModelProvider(this).get(HotelsViewModel.class);
-
-        hotelsViewModel.filteredHotels(categoryFilter);
-        hotelsViewModel.getHotelsLiveData().
+        drawerActivityViewModel.filterHotels(categoryFilter);
+        drawerActivityViewModel.getHotelsLiveData().
                 observe(this, hotels -> setRecyclerViewElements(hotels));
     }
 
     @Override
     public BaseAdapter getBaseAdapter() {
-        return new HotelsAdapter();
+        return new BasicNavToPagerAdapter();
     }
 }
 

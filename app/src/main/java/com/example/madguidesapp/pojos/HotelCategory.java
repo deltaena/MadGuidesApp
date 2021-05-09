@@ -1,7 +1,5 @@
 package com.example.madguidesapp.pojos;
 
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
-
 public class HotelCategory implements RecyclerViewElement {
     private String name;
     private String imageUrl;

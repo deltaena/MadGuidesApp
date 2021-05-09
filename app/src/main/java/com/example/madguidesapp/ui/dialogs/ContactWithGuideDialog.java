@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.Guide;
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
-import com.example.madguidesapp.recyclerViewClasses.adapter.SocialNetworksAdapter;
+import com.example.madguidesapp.pojos.RecyclerViewElement;
+import com.example.madguidesapp.android.recyclerView.adapter.SocialNetworksAdapter;
 
 import java.util.List;
 

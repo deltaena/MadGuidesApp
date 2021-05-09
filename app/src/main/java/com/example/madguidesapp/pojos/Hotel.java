@@ -1,7 +1,5 @@
 package com.example.madguidesapp.pojos;
 
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
-
 public class Hotel implements RecyclerViewElement {
 
     private String name;
@@ -34,4 +32,8 @@ public class Hotel implements RecyclerViewElement {
         return imageUrl;
     }
 
+    @Override
+    public String toString() {
+        return String.format("/%s/%s", "Hotels", name);
+    }
 }

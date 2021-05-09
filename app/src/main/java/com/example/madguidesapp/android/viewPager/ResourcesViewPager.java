@@ -1,0 +1,25 @@
+package com.example.madguidesapp.android.viewPager;
+
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.madguidesapp.pojos.RecyclerViewElement;
+import com.example.madguidesapp.ui.mainMenu.resources.SingleResourceFragment;
+
+public class ResourcesViewPager extends BaseViewPagerAdapter{
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        drawerActivityViewModel.getResourcesLiveData().
+                observe(this, resources -> fillSliderAdapter(resources));
+    }
+
+    @Override
+    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement) {
+        return new SingleResourceFragment(recyclerViewElement);
+    }
+}

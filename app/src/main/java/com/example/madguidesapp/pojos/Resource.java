@@ -1,7 +1,5 @@
 package com.example.madguidesapp.pojos;
 
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
-
 import java.util.Objects;
 
 public class Resource implements RecyclerViewElement {

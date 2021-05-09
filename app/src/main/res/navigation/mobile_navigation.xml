@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/nav_resources_pager"
-        android:name="com.example.madguidesapp.viewPagerClasses.ResourcesViewPager"
+        android:name="com.example.madguidesapp.android.viewPager.ResourcesViewPager"
         android:label="Recursos" />
 
     <fragment
         android:id="@+id/nav_routes_pager"
-        android:name="com.example.madguidesapp.viewPagerClasses.RoutesViewPager"
+        android:name="com.example.madguidesapp.android.viewPager.RoutesViewPager"
         android:label="Rutas"
         tools:layout="@layout/fragment_pager_layout" />
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.example.madguidesapp.auth.LoginFragment"
+        android:name="com.example.madguidesapp.ui.auth.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_register"
-        android:name="com.example.madguidesapp.auth.RegisterFragment"
+        android:name="com.example.madguidesapp.ui.auth.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register" />
     <fragment
@@ -53,20 +53,28 @@
     <fragment
         android:id="@+id/nav_hotels"
         android:name="com.example.madguidesapp.ui.mainMenu.hotels.HotelsFragment"
-        android:label="{title}"
-        tools:layout="@layout/recycler_view_fragment" >
-        <argument
-            android:name="title"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/recycler_view_fragment"/>
     <fragment
         android:id="@+id/nav_favorites"
         android:name="com.example.madguidesapp.ui.sideMenu.FavoritesFragment"
         android:label="Favoritos" />
     <fragment
         android:id="@+id/nav_favorites_pager"
-        android:name="com.example.madguidesapp.viewPagerClasses.FavoritesViewPagerAdapter"
+        android:name="com.example.madguidesapp.android.viewPager.FavoritesViewPagerAdapter"
         android:label="Favoritos" />
+    <fragment
+        android:id="@+id/nav_hotels_pager"
+        android:name="com.example.madguidesapp.android.viewPager.HotelsViewPagerAdapter" />
+    <fragment
+        android:id="@+id/nav_information"
+        android:name="com.example.madguidesapp.ui.mainMenu.information.InformationFragment"
+        android:label="Información"
+        tools:layout="@layout/fragment_information" />
+    <fragment
+        android:id="@+id/nav_suggestions"
+        android:name="com.example.madguidesapp.ui.mainMenu.suggestions.SuggestionsFragment"
+        android:label="Sugerencias"
+        tools:layout="@layout/fragment_suggestions" />
 
 </navigation>
 

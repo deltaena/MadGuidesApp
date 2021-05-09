@@ -1,6 +1,5 @@
 package com.example.madguidesapp;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,9 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         drawerActivityViewModel.getUserLiveData()
                 .observe(this, user -> {
+                    Log.d(TAG, "onCreate: "+user);
                     this.user = user;
                     setUpHeader(user);
                 });
@@ -87,8 +86,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                 openDrawerImageButton.setOnClickListener(arrowListener);
             }
 
-            toolbarTitleTextView.setText(destination.getLabel());
+            if(arguments == null || !arguments.containsKey("title")){
+                toolbarTitleTextView.setText(destination.getLabel());
+            }
+            else{
+                toolbarTitleTextView.setText(arguments.getString("title"));
+            }
+
             markAsFavoriteImageButton.setVisibility(View.INVISIBLE);
+            drawer.close();
         });
 
         setSupportActionBar(toolbar);
@@ -96,15 +102,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void initNavigationView(){
         navigationView = findViewById(R.id.nav_view);
 
-        Log.d(TAG, "initNavigationView: "+navigationView.getCheckedItem());
-
         navigationView.setNavigationItemSelectedListener(item -> {
 
             if(user == null){
                 AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
                 accountRequiredDialog.show(getSupportFragmentManager(), "AccountRequired");
 
-                return true;
+                return false;
             }
 
             switch(item.getItemId()){
@@ -115,6 +119,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 case R.id.favorites:
                     navController.navigate(R.id.nav_favorites);
+                    break;
+                case R.id.visitedRoutes:
+                    drawerActivityViewModel.setRoutesFilter(true);
+                    navController.navigate(R.id.nav_routes);
                     break;
             }
 

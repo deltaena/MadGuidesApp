@@ -9,9 +9,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.madguidesapp.SingleRecyclerViewElement;
+import com.example.madguidesapp.ui.abstracts.SingleRecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
-import com.example.madguidesapp.abstractsAndInterfaces.RecyclerViewElement;
+import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.R;
 
 public class SingleResourceFragment extends SingleRecyclerViewElement {
