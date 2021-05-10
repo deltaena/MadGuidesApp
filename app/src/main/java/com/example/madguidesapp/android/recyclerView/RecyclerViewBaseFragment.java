@@ -64,14 +64,13 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
         recyclerView.setAdapter(baseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        baseAdapter.setRecyclerViewElements(this.recyclerViewElements);
+        baseAdapter.setRecyclerViewElements(recyclerViewElements);
         baseAdapter.notifyDataSetChanged();
     }
 

@@ -116,7 +116,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawerActivityViewModel.setResourcesFilter(true);
                     navController.navigate(R.id.nav_resources);
                     break;
-
                 case R.id.favorites:
                     navController.navigate(R.id.nav_favorites);
                     break;

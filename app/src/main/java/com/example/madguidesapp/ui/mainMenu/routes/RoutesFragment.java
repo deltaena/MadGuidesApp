@@ -24,4 +24,11 @@ public class RoutesFragment extends RecyclerViewBaseFragment {
     public BaseAdapter getBaseAdapter() {
         return new BasicNavToPagerAdapter();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        drawerActivityViewModel.setRoutesFilter(false);
+    }
 }
