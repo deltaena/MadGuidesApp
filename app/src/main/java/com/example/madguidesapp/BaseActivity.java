@@ -28,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     
     private NavigationView navigationView;
+
     private NavController navController;
 
     protected Toolbar toolbar;
@@ -45,7 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         drawerActivityViewModel.getUserLiveData()
                 .observe(this, user -> {
-                    Log.d(TAG, "onCreate: "+user);
                     this.user = user;
                     setUpHeader(user);
                 });
@@ -80,6 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             if(destination.getId() == R.id.nav_main_menu){
                 openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.three_lines_menu_icon));
                 openDrawerImageButton.setOnClickListener(menuListener);
+                drawerActivityViewModel.setResourcesFilter(false);
+                drawerActivityViewModel.setRoutesFilter(false);
             }
             else{
                 openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.back_arrow));
@@ -111,8 +113,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return false;
             }
 
+            if(navController.getCurrentDestination().getId() != R.id.nav_main_menu){
+                navController.popBackStack(R.id.nav_main_menu, false);
+            }
+
             switch(item.getItemId()){
                 case R.id.visitedResources:
+                    drawerActivityViewModel.filterResources();
                     drawerActivityViewModel.setResourcesFilter(true);
                     navController.navigate(R.id.nav_resources);
                     break;
@@ -120,6 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     navController.navigate(R.id.nav_favorites);
                     break;
                 case R.id.visitedRoutes:
+                    drawerActivityViewModel.filterRoutes();
                     drawerActivityViewModel.setRoutesFilter(true);
                     navController.navigate(R.id.nav_routes);
                     break;
@@ -168,11 +176,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         Button signInBtn = headerView.findViewById(R.id.openSignInFragmentBtn);
 
         registerBtn.setOnClickListener(click -> {
+            navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_register);
             drawer.close();
         });
 
         signInBtn.setOnClickListener(click -> {
+
+            navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_login);
             drawer.close();
         });

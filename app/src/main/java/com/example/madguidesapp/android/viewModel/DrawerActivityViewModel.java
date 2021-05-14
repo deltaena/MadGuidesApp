@@ -1,11 +1,11 @@
 package com.example.madguidesapp.android.viewModel;
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.madguidesapp.pojos.Guide;
@@ -219,6 +219,7 @@ public class DrawerActivityViewModel extends ViewModel {
                             user.setVisitedResources(resources);
 
                             userMutableLiveData.setValue(user);
+                            filterResources();
                         }
                     });
         }
@@ -230,6 +231,7 @@ public class DrawerActivityViewModel extends ViewModel {
                             user.setVisitedResources(resources);
 
                             userMutableLiveData.setValue(user);
+                            filterResources();
                         }
                     });
         }
@@ -248,6 +250,7 @@ public class DrawerActivityViewModel extends ViewModel {
                             user.setVisitedRoutes(routes);
 
                             userMutableLiveData.setValue(user);
+                            filterRoutes();
                         }
                     });
         }
@@ -259,6 +262,7 @@ public class DrawerActivityViewModel extends ViewModel {
                             user.setVisitedRoutes(routes);
 
                             userMutableLiveData.setValue(user);
+                            filterRoutes();
                         }
                     });
         }
@@ -275,23 +279,12 @@ public class DrawerActivityViewModel extends ViewModel {
 
     //region Resources view model
     private MutableLiveData<List<Resource>> resourcesMutableLiveData;
-    private MediatorLiveData<List<Resource>> filteredResourcesMediatorLiveData;
+    private MutableLiveData<List<Resource>> filteredResourcesMutableLiveData;
     private boolean areResourcesFiltered = false;
 
     private void initializeResourcesViewModel(){
         resourcesMutableLiveData = new MutableLiveData<>();
-        filteredResourcesMediatorLiveData = new MediatorLiveData<>();
-
-        filteredResourcesMediatorLiveData.
-                addSource(userMutableLiveData, user -> {
-                    if(user != null){
-                        List<Resource> filteredResources = resourcesMutableLiveData.getValue().stream().
-                                filter(resource -> user.getVisitedResources().contains(resource.getName())).
-                                collect(Collectors.toList());
-
-                        filteredResourcesMediatorLiveData.setValue(filteredResources);
-                    }
-                });
+        filteredResourcesMutableLiveData = new MutableLiveData<>();
 
         firestoreRepository.getResources().
                 addOnCompleteListener(task -> {
@@ -301,32 +294,32 @@ public class DrawerActivityViewModel extends ViewModel {
                 });
     }
 
-    public void setResourcesFilter(boolean filter){ areResourcesFiltered = filter; }
+    public void setResourcesFilter(boolean filter){
+        areResourcesFiltered = filter;
+    }
+
+    public void filterResources(){
+        List<Resource> filteredResources = resourcesMutableLiveData.getValue().stream().
+                filter(resource -> userMutableLiveData.getValue().getVisitedResources().contains(resource.getName())).
+                collect(Collectors.toList());
+
+        filteredResourcesMutableLiveData.setValue(filteredResources);
+    }
 
     public LiveData<List<Resource>> getResourcesLiveData(){
-        return (areResourcesFiltered) ? filteredResourcesMediatorLiveData : resourcesMutableLiveData;
+        Log.d(TAG, "getResourcesLiveData: "+areResourcesFiltered);
+        return (areResourcesFiltered) ? filteredResourcesMutableLiveData : resourcesMutableLiveData;
     }
     //endregion
 
     //region Routes view model
     private MutableLiveData<List<Route>> routesMutableLiveData;
-    private MediatorLiveData<List<Route>> filteredRoutesMediatorLiveDataLiveData;
+    private MutableLiveData<List<Route>> filteredRoutesMutableLiveData;
     private boolean areRoutesFiltered = false;
 
     private void initializeRoutesViewModel(){
         routesMutableLiveData = new MutableLiveData<>();
-        filteredRoutesMediatorLiveDataLiveData = new MediatorLiveData<>();
-
-        filteredRoutesMediatorLiveDataLiveData.
-                addSource(userMutableLiveData, user -> {
-                    if(user != null) {
-                        List<Route> filteredRoutes = routesMutableLiveData.getValue().stream().
-                                filter(route -> user.getVisitedRoutes().contains(route.getName())).
-                                collect(Collectors.toList());
-
-                        filteredRoutesMediatorLiveDataLiveData.setValue(filteredRoutes);
-                    }
-                });
+        filteredRoutesMutableLiveData = new MutableLiveData<>();
 
         firestoreRepository.getRoutes().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -337,8 +330,16 @@ public class DrawerActivityViewModel extends ViewModel {
 
     public void setRoutesFilter(boolean filter){ areRoutesFiltered = filter; }
 
+    public void filterRoutes(){
+        List<Route> filteredRoutes = routesMutableLiveData.getValue().stream().
+                filter(route -> userMutableLiveData.getValue().getVisitedRoutes().contains(route.getName())).
+                collect(Collectors.toList());
+
+        filteredRoutesMutableLiveData.setValue(filteredRoutes);
+    }
+
     public LiveData<List<Route>> getRoutesLiveData(){
-        return (areRoutesFiltered) ? filteredRoutesMediatorLiveDataLiveData : routesMutableLiveData;
+        return (areRoutesFiltered) ? filteredRoutesMutableLiveData : routesMutableLiveData;
     }
     //endregion
 

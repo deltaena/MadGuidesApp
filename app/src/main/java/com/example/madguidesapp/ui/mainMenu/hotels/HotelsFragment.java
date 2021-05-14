@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
 import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
 import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
@@ -25,7 +26,7 @@ public class HotelsFragment extends RecyclerViewBaseFragment {
 
     @Override
     public BaseAdapter getBaseAdapter() {
-        return new BasicNavToPagerAdapter();
+        return new BasicNavToPagerAdapter(R.id.nav_hotels_pager);
     }
 }
 

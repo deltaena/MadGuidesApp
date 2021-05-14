@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
     private RecyclerView recyclerView;
     public NavController navController;
     public BaseAdapter baseAdapter;
+    private TextView emptyRecyclerViewAdvertisementTextView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
         View view = inflater.inflate(R.layout.recycler_view_fragment, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        emptyRecyclerViewAdvertisementTextView = view.findViewById(R.id.emptyRecyclerViewAdvertisementTextView);
+        emptyRecyclerViewAdvertisementTextView.setVisibility(View.GONE);
 
         return view;
     }
@@ -79,11 +83,16 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
             navController.popBackStack();
             return;
         }
+
+        if(recyclerViewElements.isEmpty()){
+            emptyRecyclerViewAdvertisementTextView.setVisibility(View.VISIBLE);
+        }
+
         this.recyclerViewElements = recyclerViewElements;
 
         baseAdapter.setRecyclerViewElements(recyclerViewElements);
         baseAdapter.notifyDataSetChanged();
     }
 
-    public abstract BaseAdapter getBaseAdapter();
+    public abstract  BaseAdapter getBaseAdapter();
 }

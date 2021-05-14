@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
@@ -22,13 +23,6 @@ public class RoutesFragment extends RecyclerViewBaseFragment {
 
     @Override
     public BaseAdapter getBaseAdapter() {
-        return new BasicNavToPagerAdapter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        drawerActivityViewModel.setRoutesFilter(false);
+        return new BasicNavToPagerAdapter(R.id.nav_routes_pager);
     }
 }

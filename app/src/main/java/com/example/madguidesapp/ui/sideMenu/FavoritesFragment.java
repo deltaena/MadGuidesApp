@@ -3,12 +3,11 @@ package com.example.madguidesapp.ui.sideMenu;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
 import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
-import com.example.madguidesapp.android.recyclerView.adapter.FavoritesAdapter;
+import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
 
 public class FavoritesFragment extends RecyclerViewBaseFragment {
 
@@ -29,6 +28,6 @@ public class FavoritesFragment extends RecyclerViewBaseFragment {
 
     @Override
     public BaseAdapter getBaseAdapter() {
-        return new FavoritesAdapter();
+        return new BasicNavToPagerAdapter(R.id.nav_favorites_pager);
     }
 }

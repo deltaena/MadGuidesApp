@@ -1,10 +1,12 @@
 package com.example.madguidesapp.ui.mainMenu.resources;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
@@ -23,13 +25,6 @@ public class ResourcesFragment extends RecyclerViewBaseFragment {
 
     @Override
     public BaseAdapter getBaseAdapter() {
-        return new BasicNavToPagerAdapter();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        drawerActivityViewModel.setResourcesFilter(false);
+        return new BasicNavToPagerAdapter(R.id.nav_resources_pager);
     }
 }

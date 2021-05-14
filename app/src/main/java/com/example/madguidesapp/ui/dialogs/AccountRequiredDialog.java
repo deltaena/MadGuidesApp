@@ -26,6 +26,7 @@ public class AccountRequiredDialog extends DialogFragment {
 
         builder.setPositiveButton("Yes!", (dialog, which) -> {
             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_login);
             dismiss();
         });

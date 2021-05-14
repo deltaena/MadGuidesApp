@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -26,6 +30,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
     DrawerActivityViewModel drawerActivityViewModel;
 
+    public NavController navController;
     private ViewPager2 viewPager2;
     private SliderAdapter sliderAdapter;
 
@@ -46,15 +51,21 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(getView());
+    }
+
     public void fillSliderAdapter(List<? extends RecyclerViewElement> recyclerViewElements){
-        if(recyclerViewElements == null){
-            Log.d(TAG, "fillSliderAdapter: null");
-            return;
+        if(recyclerViewElements.isEmpty()){
+            navController.popBackStack();
         }
-        
+
         int selectedResourceIndex = getArguments().getInt("selectedElementIndex", 0);
 
         sliderAdapter = new BaseViewPagerAdapter.SliderAdapter(this, recyclerViewElements);
+
         viewPager2.setAdapter(sliderAdapter);
 
         viewPager2.post(() -> viewPager2.setCurrentItem(selectedResourceIndex));
@@ -64,7 +75,9 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         List<? extends RecyclerViewElement> recyclerViewElements;
 
-        public SliderAdapter(@NonNull Fragment fragment, List<? extends RecyclerViewElement> recyclerViewElements) {
+        public SliderAdapter(
+                @NonNull Fragment fragment,
+                List<? extends RecyclerViewElement> recyclerViewElements) {
 
             super(fragment);
             this.recyclerViewElements = recyclerViewElements;
@@ -73,9 +86,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            RecyclerViewElement recyclerViewElement = recyclerViewElements.get(position);
-
-            return getDetailFragment(recyclerViewElement);
+            return getDetailFragment(recyclerViewElements.get(position));
         }
 
         @Override
