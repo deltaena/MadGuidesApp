@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 import com.example.madguidesapp.android.connectivity.ConnectivityFragment;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.R;
+import com.example.madguidesapp.databinding.FragmentRegisterBinding;
 import com.example.madguidesapp.pojos.User;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,18 +30,17 @@ public class RegisterFragment extends ConnectivityFragment {
 
     private DrawerActivityViewModel drawerActivityViewModel;
 
-    private Button registerBtn;
-
-    private TextView alreadyHaveAnAccountTextView;
-
-    private EditText emailEditText, usernameEditText, passwordEditText;
+    private FragmentRegisterBinding binding;
 
     private NavController navController;
 
     View.OnClickListener onRegisterBtnClicked = click -> {
         Map<String, String> userDataChecked = checkUserData();
 
-        if(userDataChecked == null) return;
+        if(userDataChecked == null) {
+            binding.registerBtn.endLoading();
+            return;
+        }
 
         drawerActivityViewModel.usernameExists(userDataChecked.get("username")).
                 addOnCompleteListener(task -> {
@@ -49,7 +49,7 @@ public class RegisterFragment extends ConnectivityFragment {
                             Snackbar.make(getView(), "Usuario registrado con exito!", Snackbar.LENGTH_LONG).show();
                         }
                         else{
-                            usernameEditText.setError("El nombre de usuario ya está en uso");
+                            binding.usernameEditText.setError("El nombre de usuario ya está en uso");
                         }
                     }
                 });
@@ -73,8 +73,8 @@ public class RegisterFragment extends ConnectivityFragment {
     };
 
     View.OnClickListener goToLoginClicked = click -> {
-        String emailStr = emailEditText.getText().toString(),
-                passwordStr = passwordEditText.getText().toString();
+        String emailStr = binding.emailEditText.getText().toString(),
+                passwordStr = binding.passwordEditText.getText().toString();
 
         Bundle bundle = new Bundle();
         bundle.putString("email", emailStr);
@@ -94,24 +94,9 @@ public class RegisterFragment extends ConnectivityFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater);
 
-        emailEditText = view.findViewById(R.id.emailEditText);
-        usernameEditText = view.findViewById(R.id.usernameEditText);
-        passwordEditText = view.findViewById(R.id.passwordEditText);
-
-        if(getArguments() != null){
-            emailEditText.setText(getArguments().getString("email", ""));
-            passwordEditText.setText(getArguments().getString("password", ""));
-        }
-
-        registerBtn = view.findViewById(R.id.registerBtn);
-        registerBtn.setOnClickListener(onRegisterBtnClicked);
-
-        alreadyHaveAnAccountTextView = view.findViewById(R.id.goToLoginTextView);
-        alreadyHaveAnAccountTextView.setOnClickListener(goToLoginClicked);
-
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -119,6 +104,22 @@ public class RegisterFragment extends ConnectivityFragment {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(getView());
+
+        if(getArguments() != null){
+            binding.emailEditText.setText(getArguments().getString("email", ""));
+            binding.passwordEditText.setText(getArguments().getString("password", ""));
+        }
+
+        binding.registerBtn.addOnClickListener(onRegisterBtnClicked);
+
+        binding.goToLoginTextView.setOnClickListener(goToLoginClicked);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
     }
 
     private Map<String, String> checkUserData(){
@@ -138,44 +139,44 @@ public class RegisterFragment extends ConnectivityFragment {
                 matchOneSpecialCharacter = Pattern.compile("[^A-Za-z0-9]");
 
 
-        String email = emailEditText.getText().toString().trim().toLowerCase();
-        String password = passwordEditText.getText().toString();
-        String username = usernameEditText.getText().toString();
+        String email = binding.emailEditText.getText().toString().trim().toLowerCase();
+        String password = binding.passwordEditText.getText().toString();
+        String username = binding.usernameEditText.getText().toString();
 
         if(email.isEmpty()){
-            emailEditText.setError("Campo obligatorio");
+            binding.emailEditText.setError("Campo obligatorio");
             return null;
         }
 
         String basePasswordErrorText = "La contraseña debe contener al menos ";
 
         if(!matchOneLowerCase.matcher(password).find()){
-            passwordEditText.setError(basePasswordErrorText+"una minúscula");
+            binding.passwordEditText.setError(basePasswordErrorText+"una minúscula");
             return null;
         }
 
         if(!matchOneUpperCase.matcher(password).find()){
-            passwordEditText.setError(basePasswordErrorText+"una mayuscula");
+            binding.passwordEditText.setError(basePasswordErrorText+"una mayuscula");
             return null;
         }
 
         if(!matchOneNumber.matcher(password).find()){
-            passwordEditText.setError(basePasswordErrorText+"un número");
+            binding.passwordEditText.setError(basePasswordErrorText+"un número");
             return null;
         }
 
         if(!matchOneSpecialCharacter.matcher(password).find()){
-            passwordEditText.setError(basePasswordErrorText+"un carácter especial");
+            binding.passwordEditText.setError(basePasswordErrorText+"un carácter especial");
             return null;
         }
 
         if(password.length() < 8){
-            passwordEditText.setError(basePasswordErrorText+"8 cáracteres");
+            binding.passwordEditText.setError(basePasswordErrorText+"8 cáracteres");
             return null;
         }
 
         if(username.isEmpty()){
-            usernameEditText.setError("Campo oblligatorio");
+            binding.usernameEditText.setError("Campo oblligatorio");
             return null;
         }
 

@@ -1,9 +1,11 @@
 package com.example.madguidesapp.android.recyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,16 +25,20 @@ import com.example.madguidesapp.pojos.RecyclerViewElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
 
     private static final String TAG = "RVFragment";
 
     protected DrawerActivityViewModel drawerActivityViewModel;
 
-    private List<? extends RecyclerViewElement> recyclerViewElements = new ArrayList<>();
+    private List<? extends RecyclerViewElement> recyclerViewElements;
     private RecyclerView recyclerView;
     public NavController navController;
     public BaseAdapter baseAdapter;
+    private ProgressBar progressBar;
     private TextView emptyRecyclerViewAdvertisementTextView;
 
     @Override
@@ -49,8 +55,8 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         emptyRecyclerViewAdvertisementTextView = view.findViewById(R.id.emptyRecyclerViewAdvertisementTextView);
-        emptyRecyclerViewAdvertisementTextView.setVisibility(View.GONE);
-
+        emptyRecyclerViewAdvertisementTextView.setVisibility(GONE);
+        progressBar = view.findViewById(R.id.recyclerViewProgressBar);
         return view;
     }
 
@@ -59,6 +65,24 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(getView());
+
+        setRecyclerViewElements(recyclerViewElements);
+    }
+
+    public void setRecyclerViewElements(List<? extends RecyclerViewElement> recyclerViewElements){
+
+        if(recyclerViewElements == null){
+            progressBar.setVisibility(VISIBLE);
+            return;
+        }
+
+        progressBar.setVisibility(View.INVISIBLE);
+
+        if(recyclerViewElements.isEmpty()){
+            emptyRecyclerViewAdvertisementTextView.setVisibility(VISIBLE);
+        }
+
+        this.recyclerViewElements = recyclerViewElements;
 
         baseAdapter = getBaseAdapter();
 
@@ -70,29 +94,5 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
         recyclerView.setHasFixedSize(true);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        baseAdapter.setRecyclerViewElements(recyclerViewElements);
-        baseAdapter.notifyDataSetChanged();
-    }
-
-    public void setRecyclerViewElements(List<? extends RecyclerViewElement> recyclerViewElements){
-        if(recyclerViewElements == null){
-            navController.popBackStack();
-            return;
-        }
-
-        if(recyclerViewElements.isEmpty()){
-            emptyRecyclerViewAdvertisementTextView.setVisibility(View.VISIBLE);
-        }
-
-        this.recyclerViewElements = recyclerViewElements;
-
-        baseAdapter.setRecyclerViewElements(recyclerViewElements);
-        baseAdapter.notifyDataSetChanged();
-    }
-
-    public abstract  BaseAdapter getBaseAdapter();
+    public abstract BaseAdapter getBaseAdapter();
 }

@@ -2,9 +2,11 @@ package com.example.madguidesapp.android.viewPager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +32,9 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
     DrawerActivityViewModel drawerActivityViewModel;
 
+    private ImageButton nextElementImgBtn;
+    private ImageButton previousElementImgBtn;
+
     public NavController navController;
     private ViewPager2 viewPager2;
     private SliderAdapter sliderAdapter;
@@ -47,7 +52,33 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
         View view = inflater.inflate(R.layout.fragment_pager_layout, container, false);
 
         viewPager2 = view.findViewById(R.id.viewPager2);
+        nextElementImgBtn = view.findViewById(R.id.nextElementImgBtn);
+        previousElementImgBtn = view.findViewById(R.id.previousElementImgBtn);
 
+        previousElementImgBtn.setOnClickListener(click -> changeCurrentItem(-1));
+        nextElementImgBtn.setOnClickListener(click -> changeCurrentItem(1));
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                if(position < sliderAdapter.getItemCount()-1){
+                    nextElementImgBtn.setVisibility(View.VISIBLE);
+                }
+                else{
+                    nextElementImgBtn.setVisibility(View.INVISIBLE);
+                }
+
+                if(position > 0){
+                    previousElementImgBtn.setVisibility(View.VISIBLE);
+                }
+                else{
+                    previousElementImgBtn.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        
         return view;
     }
 
@@ -70,6 +101,8 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         viewPager2.post(() -> viewPager2.setCurrentItem(selectedResourceIndex));
     }
+
+    public void changeCurrentItem(int direction){ viewPager2.setCurrentItem(viewPager2.getCurrentItem()+direction); }
 
     class SliderAdapter extends FragmentStateAdapter {
 

@@ -21,7 +21,11 @@ public class HotelsFragment extends RecyclerViewBaseFragment {
 
         drawerActivityViewModel.filterHotels(categoryFilter);
         drawerActivityViewModel.getHotelsLiveData().
-                observe(this, hotels -> setRecyclerViewElements(hotels));
+                observe(this, hotels -> {
+                    if(!hotels.isEmpty()){
+                        setRecyclerViewElements(hotels);
+                    }
+                });
     }
 
     @Override

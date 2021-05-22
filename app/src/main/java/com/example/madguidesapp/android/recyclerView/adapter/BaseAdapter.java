@@ -1,13 +1,17 @@
 package com.example.madguidesapp.android.recyclerView.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,28 +52,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseViewHolder>{
         RecyclerViewElement recyclerViewElement = recyclerViewElements.get(position);
 
         holder.elementNameTextView.setText(recyclerViewElement.getName());
-
-        glideRequestManager.
-                load(recyclerViewElement.getImageUrl()).
-                placeholder(R.mipmap.guide_icon_unavailable_man_round).
-                diskCacheStrategy(DiskCacheStrategy.ALL).
-                addListener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.elementImageView.setVisibility(View.VISIBLE);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                        holder.elementImageView.setVisibility(View.VISIBLE);
-                        return false;
-                    }
-                }).
-                into(holder.elementImageView);
-
+        holder.elementCircleImageView.loadImage(recyclerViewElement.getImageUrl());
         holder.elementBtn.setOnClickListener(getOnItemClickedListener(position));
     }
 

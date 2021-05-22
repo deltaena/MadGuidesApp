@@ -24,5 +24,10 @@
             android:checkable="true"
             android:icon="@android:drawable/checkbox_on_background"
             android:title="Recursos visitados" />
+        <item
+            android:id="@+id/configuration"
+            android:checkable="true"
+            android:icon="@android:drawable/checkbox_on_background"
+            android:title="Configuración" />
     </group>
 </menu>

@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.madguidesapp.android.customViews.DecorativeImage;
 import com.example.madguidesapp.ui.abstracts.SingleRecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
@@ -29,11 +28,8 @@ public class SingleResourceFragment extends SingleRecyclerViewElement {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_single_resource, container, false);
 
-        ImageView previewImageView = view.findViewById(R.id.previewImageView);
-        Glide.with(getContext())
-                .load(resource.getImageUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(previewImageView);
+        DecorativeImage previewImageView = view.findViewById(R.id.previewImageView);
+        previewImageView.loadImage(resource.getImageUrl());
 
         //TextView historicalDescriptionTextView = view.findViewById(R.id.historicalDescriptionTextView);
         //historicalDescriptionTextView.setText(resource.getHistoricalDescription());

@@ -1,7 +1,6 @@
 package com.example.madguidesapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.madguidesapp.android.customViews.DecorativeImage;
+import com.example.madguidesapp.android.customViews.IconButton;
+import com.example.madguidesapp.android.customViews.ProgressibleButton;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
@@ -68,8 +70,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
-        ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton),
-                markAsFavoriteImageButton = findViewById(R.id.markAsFavoriteImageButton);
+        ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton);
+        IconButton markAsFavoriteImageButton = findViewById(R.id.markAsFavoriteImageButton);
 
         openDrawerImageButton.setOnClickListener(click -> drawer.open());
 
@@ -84,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 drawerActivityViewModel.setRoutesFilter(false);
             }
             else{
-                openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.back_arrow));
+                openDrawerImageButton.setImageDrawable(getDrawable(R.drawable.prev_arrow_icon));
                 openDrawerImageButton.setOnClickListener(arrowListener);
             }
 
@@ -131,6 +133,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawerActivityViewModel.setRoutesFilter(true);
                     navController.navigate(R.id.nav_routes);
                     break;
+                default:
+                    drawerActivityViewModel.signOut();
+                    break;
             }
 
             drawer.close();
@@ -159,30 +164,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setUserLoggedNavHeader(View headerView, @NotNull User user){
-        TextView usernameTextView = headerView.findViewById(R.id.usernameTextView),
-                emailTextView = headerView.findViewById(R.id.emailTextView);
+        TextView usernameTextView = headerView.findViewById(R.id.usernameTextView);
+        DecorativeImage decorativeImage = headerView.findViewById(R.id.profileDecorativeImage);
 
         usernameTextView.setText(user.getUsername());
-        emailTextView.setText(user.getEmail());
-
-        Button signOutBtn = headerView.findViewById(R.id.signOutBtn);
-        signOutBtn.setOnClickListener(click -> {
-            drawerActivityViewModel.signOut();
-        });
+        decorativeImage.loadImage(user.getImageUrl());
     }
 
     public void setUserNotLoggedNavHeader(View headerView){
-        Button registerBtn = headerView.findViewById(R.id.openRegisterFragmentBtn);
-        Button signInBtn = headerView.findViewById(R.id.openSignInFragmentBtn);
+        ProgressibleButton registerBtn = headerView.findViewById(R.id.openRegisterFragmentBtn);
+        ProgressibleButton signInBtn = headerView.findViewById(R.id.openSignInFragmentBtn);
 
-        registerBtn.setOnClickListener(click -> {
+        registerBtn.addOnClickListener(click -> {
             navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_register);
             drawer.close();
         });
 
-        signInBtn.setOnClickListener(click -> {
-
+        signInBtn.addOnClickListener(click -> {
             navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_login);
             drawer.close();

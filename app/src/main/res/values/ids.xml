@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="customPBBButton" type="id"></item>
+    <item name="customPBBProgressBar" type="id"></item>
+    <item name="customDIImage" type="id"></item>
+    <item name="customDIDecoration" type="id"></item>
+    <item name="customDIProgressBar" type="id"></item>
+    <item name="customIIEditText" type="id"></item>
+    <item name="customIIImageView" type="id"></item>
+</resources>

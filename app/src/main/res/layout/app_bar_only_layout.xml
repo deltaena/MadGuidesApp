@@ -12,68 +12,82 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/cardview_shadow_end_color"
+            android:layout_height="75dp"
+            android:background="#FFFFFF"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/toolbarConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible">
+                android:layout_marginBottom="10dp"
+                android:background="#e3e3e3">
 
-
-                <ImageButton
-                    android:id="@+id/openDrawerImageButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="15dp"
-                    android:adjustViewBounds="true"
-                    android:backgroundTint="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/three_lines_menu_icon" />
-
-                <TextView
-                    android:id="@+id/toolbarTitleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="screen name"
-                    android:textSize="30sp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toolbarConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:background="#F8F4F4"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/mapsMarkerImageView"
-                    android:layout_width="30dp"
-                    android:layout_height="26dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/toolbarTitleTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/maps_marker" />
 
-                <ImageButton
-                    android:id="@+id/markAsFavoriteImageButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:adjustViewBounds="true"
-                    android:background="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/toolbarTitleTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/empty_heart" />
+                    <ImageButton
+                        android:id="@+id/openDrawerImageButton"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="15dp"
+                        android:adjustViewBounds="true"
+                        android:backgroundTint="#00FFFFFF"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/three_lines_menu_icon" />
 
+                    <TextView
+                        android:id="@+id/toolbarTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:hint="screen name"
+                        android:textColor="#000000"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/mapsMarkerImageView"
+                        android:layout_width="30dp"
+                        android:layout_height="26dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/toolbarTitleTextView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/maps_marker" />
+
+                    <com.example.madguidesapp.android.customViews.IconButton
+                        android:id="@+id/markAsFavoriteImageButton"
+                        android:layout_width="@dimen/single_element_icons"
+                        android:layout_height="@dimen/single_element_icons"
+                        android:layout_marginEnd="@dimen/single_element_icons_right_margin"
+                        android:adjustViewBounds="true"
+                        android:background="#00FFFFFF"
+                        android:scaleType="fitCenter"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:performsAsync="true"
+                        app:srcCompat="@drawable/empty_heart" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.appcompat.widget.Toolbar>
 
 

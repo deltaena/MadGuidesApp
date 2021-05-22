@@ -15,9 +15,16 @@ public class MainMenuFragment extends RecyclerViewBaseFragment {
         super.onCreate(savedInstanceState);
 
         drawerActivityViewModel.getMainMenuElements().
-                observe(this, mainMenuElements -> {
-                    setRecyclerViewElements(mainMenuElements);
-                });
+                observe(this, mainMenuElements ->
+                    setRecyclerViewElements(mainMenuElements));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        drawerActivityViewModel.setRoutesFilter(false);
+        drawerActivityViewModel.setResourcesFilter(false);
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.List;
 public class User {
     private String email;
     private String username;
+    private String imageUrl;
     private List<String> visitedResources = new ArrayList<>();
     private List<String> visitedRoutes = new ArrayList<>();
     private List<DocumentReference> favorites = new ArrayList<>();
@@ -23,6 +24,14 @@ public class User {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<String> getVisitedResources() {

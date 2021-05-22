@@ -4,34 +4,45 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.madguidesapp.R;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.madguidesapp.android.customViews.IconButton;
 
 public abstract class SingleRecyclerViewElement extends FavoriteableFragment{
 
-    private Button toggleVisitedBtn;
+    private IconButton toggleVisitedImgBtn;
     private boolean isVisited = false;
+
+    private View.OnClickListener onToggleVisitedClick = click -> {
+        if(!drawerActivityViewModel.areUserRegistered()){
+            requireAccount();
+            toggleVisitedImgBtn.enable();
+            return;
+        }
+
+        drawerActivityViewModel.toggleVisited(getRecyclerViewElement());
+    };
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button showResourceOnMapsBtn = view.findViewById(R.id.showResourceOnMapsBtn);
-        showResourceOnMapsBtn.setOnClickListener(click -> {
+        IconButton showResourceOnMapsImgBtn = view.findViewById(R.id.showResourceOnMapsImgBtn);
+        showResourceOnMapsImgBtn.addListener(click -> {
             Intent showOnMapsIntent = new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(getMapsUrl()));
 
             startActivity(showOnMapsIntent);
+            showResourceOnMapsImgBtn.enable();
         });
 
-        toggleVisitedBtn = view.findViewById(R.id.toggleResourceVisitedBtn);
-        toggleVisitedBtn.setOnClickListener(requireAccount);
+        toggleVisitedImgBtn = view.findViewById(R.id.toggleResourceVisitedImgBtn);
+        toggleVisitedImgBtn.addListener(onToggleVisitedClick);
+
     }
 
     @Override
@@ -44,7 +55,8 @@ public abstract class SingleRecyclerViewElement extends FavoriteableFragment{
                         isVisited = drawerActivityViewModel.isVisited(getRecyclerViewElement());
                     }
 
-                    setVisitedButton();
+                    toggleVisitedImgBtn.enable();
+                    setToggleVisitedImgBtn();
                 });
     }
 
@@ -55,26 +67,12 @@ public abstract class SingleRecyclerViewElement extends FavoriteableFragment{
         drawerActivityViewModel.getUserLiveData().removeObservers(this);
     }
 
-    public void setVisitedButton(){
-        if(!drawerActivityViewModel.areUserRegistered()) {
-            toggleVisitedBtn.setOnClickListener(requireAccount);
-            toggleVisitedBtn.setText("Mark as visited");
-            return;
-        }
-
-        toggleVisitedBtn.setOnClickListener(click -> {
-            toggleVisitedBtn.setOnClickListener(null);
-            drawerActivityViewModel.toggleVisited(getRecyclerViewElement());
-
-            if(connectivityManager.getActiveNetwork() == null)
-                Snackbar.make(getView(), "La operación se relizará cuando haya conexión", Snackbar.LENGTH_LONG).show();
-        });
-
+    private void setToggleVisitedImgBtn(){
         if(isVisited){
-            toggleVisitedBtn.setText("Remove from visited");
+            toggleVisitedImgBtn.setImageDrawable(getContext().getDrawable(R.drawable.unvisit_resource_icon));
         }
         else{
-            toggleVisitedBtn.setText("Mark as visited");
+            toggleVisitedImgBtn.setImageDrawable(getContext().getDrawable(R.drawable.eye_icon));
         }
     }
 

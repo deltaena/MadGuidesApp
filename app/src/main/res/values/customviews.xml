@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressibleButton">
+        <attr name="buttonText" format="string" />
+        <attr name="performsAsync" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="IconButton">
+        <attr name="performsAsync"/>
+    </declare-styleable>
+    <declare-styleable name="DecorativeImage">
+        <attr name="makeCircular" format="boolean"/>
+        <attr name="decorationType" format="enum">
+            <enum name="Profile" value="0" />
+            <enum name="RecyclerViewElement" value="1" />
+            <enum name="ElementDetail" value="2" />
+        </attr>
+        <attr name="imageDims" format="float" />
+    </declare-styleable>
+    <declare-styleable name="IconInput">
+        <attr name="android:inputType"></attr>
+        <attr name="hint" format="string"/>
+    </declare-styleable>
+</resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

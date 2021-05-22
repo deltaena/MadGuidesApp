@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -50,6 +49,7 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeRoutesViewModel();
         initializeGuidesViewModel();
         initializeHotelsViewModel();
+        initializeSuggestionsViewModel();
     }
 
     //region User view model
@@ -438,12 +438,28 @@ public class DrawerActivityViewModel extends ViewModel {
     //endregion
 
     //region Suggestions view model
+    private MutableLiveData<Boolean> areAllOperationsDoneMutableLiveData;
+
+    public void initializeSuggestionsViewModel(){
+        areAllOperationsDoneMutableLiveData = new MutableLiveData<>();
+    }
+
     public UploadTask uploadSuggestionImage(Uri suggestionFileUri){
+        areAllOperationsDoneMutableLiveData.setValue(false);
         return firestorageRepository.uploadSuggestionImage(suggestionFileUri);
     }
 
-    public Task<Void> uploadSuggestion(Suggestion suggestion){
-        return firestoreRepository.uploadSuggestion(suggestion);
+    public void uploadSuggestion(Suggestion suggestion){
+        areAllOperationsDoneMutableLiveData.setValue(false);
+        firestoreRepository.
+                uploadSuggestion(suggestion).
+                addOnCompleteListener(task -> {
+                    areAllOperationsDoneMutableLiveData.setValue(true);
+                });
+    }
+
+    public LiveData<Boolean> getAreAllOperationsDoneLiveData(){
+        return areAllOperationsDoneMutableLiveData;
     }
     //endregion
 }

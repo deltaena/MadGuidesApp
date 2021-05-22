@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.example.madguidesapp.databinding.AppBarMainBinding;
+
 public class DraweActivity extends BaseActivity {
 
     private static final String TAG = "DraweActivity";
@@ -12,7 +14,7 @@ public class DraweActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawe);
-
-
     }
+
+
 }
