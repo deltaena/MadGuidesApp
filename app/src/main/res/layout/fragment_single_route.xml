@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/include4"
-        layout="@layout/base_single_element_layout"
+        layout="@layout/base_principal_big_photo_layout"
         android:layout_width="0dp"
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"

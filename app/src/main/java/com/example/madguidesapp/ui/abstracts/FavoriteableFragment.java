@@ -45,6 +45,11 @@ public abstract class FavoriteableFragment extends Fragment {
 
         markAsFavorite = toolbar.findViewById(R.id.markAsFavoriteImageButton);
         markAsFavorite.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         markAsFavorite.addListener(click ->{
             if(!drawerActivityViewModel.areUserRegistered()){
@@ -55,11 +60,6 @@ public abstract class FavoriteableFragment extends Fragment {
 
             drawerActivityViewModel.toggleFavorite(getRecyclerViewElement());
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         toolbarTitleTextView.setText(getRecyclerViewElement().getName());
 
@@ -80,8 +80,6 @@ public abstract class FavoriteableFragment extends Fragment {
         super.onPause();
 
         drawerActivityViewModel.getFavoritesLiveData().removeObservers(this);
-
-        Log.d(TAG, "onPause: ");
     }
 
     public void setFavoriteButton(){

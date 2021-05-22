@@ -62,9 +62,11 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
     }
 
     public void addListener(@Nullable OnClickListener l) {
-        if(listeners.size() < 2){
-            listeners.add(l);
+        if(listeners.size() == 2){
+            listeners.remove(listeners.size()-1);
         }
+
+        listeners.add(l);
     }
 
     public void enable(){

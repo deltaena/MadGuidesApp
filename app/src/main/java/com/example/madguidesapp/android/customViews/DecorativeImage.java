@@ -167,6 +167,19 @@ public class DecorativeImage extends ConstraintLayout {
                 }).
                 into(image);
     }
+
+    public void makeCircular(){
+        CircleImageView circleImageView = new CircleImageView(getContext());
+        circleImageView.setImageDrawable(image.getDrawable());
+        circleImageView.setId(R.id.customDIImage);
+
+        image = circleImageView;
+
+        removeView(image);
+        addView(circleImageView);
+
+        initConstraints();
+    }
 }
 
 

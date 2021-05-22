@@ -1,10 +1,15 @@
 package com.example.madguidesapp.repository;
 
 import com.example.madguidesapp.pojos.Suggestion;
+import com.example.madguidesapp.pojos.User;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FirestoreRepository {
 
@@ -56,6 +61,16 @@ public class FirestoreRepository {
                 orderBy("name", Query.Direction.ASCENDING).
                 get();
     }
+
+    public Task<Void> sendBecomeAGuideSolicitude(User user){
+        DocumentReference reference = firestore.collection("Users").document(user.getEmail());
+
+        Map<String, DocumentReference> data = new HashMap<>();
+        data.put("profile", reference);
+
+        return firestore.collection("GuideSolicitudes").document(user.getEmail()).set(data);
+    }
+
 }
 
 

@@ -35,7 +35,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\register', 'src\\main\\res\\layouts\\recycler_view', 'src\\main\\res\\layouts\\view_pager', 'src\\main\\res\\drawables\\icons', 'src\\main\\res\\drawables\\backgrounds'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\account', 'src\\main\\res\\layouts\\recycler_view', 'src\\main\\res\\layouts\\view_pager', 'src\\main\\res\\drawables\\icons', 'src\\main\\res\\drawables\\backgrounds', 'src\\main\\res\\layouts\\dialogs'
             }
         }
     }

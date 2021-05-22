@@ -76,6 +76,7 @@
         android:name="com.example.madguidesapp.ui.mainMenu.suggestions.SuggestionsFragment"
         android:label="Sugerencias"
         tools:layout="@layout/fragment_suggestions" />
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.madguidesapp.ui.sideMenu.ProfileFragment"

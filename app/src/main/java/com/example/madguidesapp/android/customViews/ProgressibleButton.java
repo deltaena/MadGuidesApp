@@ -27,6 +27,8 @@ public class ProgressibleButton extends ConstraintLayout {
 
     private TypedArray ta;
 
+    private boolean isLoading = false;
+
     public ProgressibleButton(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -37,9 +39,7 @@ public class ProgressibleButton extends ConstraintLayout {
 
         if(ta.getBoolean(R.styleable.ProgressibleButton_performsAsync, false)){
             onClickListeners.add(v -> {
-                button.setClickable(false);
-                button.setVisibility(INVISIBLE);
-                progressBar.setVisibility(VISIBLE);
+                startLoading();
             });
         }
     }
@@ -48,10 +48,24 @@ public class ProgressibleButton extends ConstraintLayout {
         onClickListeners.add(onClickListener);
     }
 
+    public void startLoading(){
+        button.setClickable(false);
+        button.setVisibility(INVISIBLE);
+        progressBar.setVisibility(VISIBLE);
+
+        isLoading = true;
+    }
+
     public void endLoading(){
         progressBar.setVisibility(INVISIBLE);
         button.setVisibility(VISIBLE);
         button.setClickable(true);
+
+        isLoading = false;
+    }
+
+    public boolean isLoading(){
+        return isLoading;
     }
 
     private void initButton(){
@@ -64,6 +78,7 @@ public class ProgressibleButton extends ConstraintLayout {
         button.setTextColor(Color.WHITE);
 
         button.setClickable(true);
+        button.setFocusable(true);
 
         button.setOnClickListener(click -> {
             onClickListeners.forEach(onClickListener -> {
@@ -105,6 +120,10 @@ public class ProgressibleButton extends ConstraintLayout {
         constraintSet.connect(R.id.customPBBProgressBar, ConstraintSet.TOP, R.id.customPBBButton, ConstraintSet.TOP);
 
         constraintSet.applyTo(this);
+    }
+
+    public void setText(String text){
+        button.setText(text);
     }
 }
 

@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
     private String email;
     private String username;
     private String imageUrl;
+    private int guideStatus;
+    private String address;
     private List<String> visitedResources = new ArrayList<>();
     private List<String> visitedRoutes = new ArrayList<>();
     private List<DocumentReference> favorites = new ArrayList<>();
@@ -34,6 +37,22 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
+    public int getGuideStatus() {
+        return guideStatus;
+    }
+
+    public void setGuideStatus(int guideStatus) {
+        this.guideStatus = guideStatus;
+    }
+
+    public String getAddress() {
+        return (address == null) ? "" : address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public List<String> getVisitedResources() {
         return visitedResources;
     }
@@ -54,4 +73,25 @@ public class User {
     public void setFavorites(List<DocumentReference> favorites) {
         this.favorites = favorites;
     }
+
+    public class SolicitudeStatus{
+        public static final int NOT_SOLICITED = -1,
+                         PENDING = 0,
+                         APPROVED = 1,
+                         DENIED = -2;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

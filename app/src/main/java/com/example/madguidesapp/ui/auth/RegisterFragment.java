@@ -58,6 +58,7 @@ public class RegisterFragment extends ConnectivityFragment {
 
         user.setEmail(userDataChecked.get("email"));
         user.setUsername(userDataChecked.get("username"));
+        user.setGuideStatus(User.SolicitudeStatus.NOT_SOLICITED);
 
         drawerActivityViewModel.
                 register(user, userDataChecked.get("password")).

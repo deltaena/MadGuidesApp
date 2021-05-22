@@ -3,6 +3,7 @@ package com.example.madguidesapp.android.viewModel;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -52,6 +53,26 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeSuggestionsViewModel();
     }
 
+    public void sendBecomeAGuideSolicitude(){
+        User user = userMutableLiveData.getValue();
+
+        user.setGuideStatus(0);
+
+        OnCompleteListener updateCompleted = task -> {
+            if(task.isSuccessful()){
+                userMutableLiveData.setValue(user);
+            }
+        };
+
+        OnCompleteListener sendCompleted = task -> {
+            if(task.isSuccessful()) {
+                userRepository.updateUser(user).addOnCompleteListener(updateCompleted);
+            }
+        };
+
+        firestoreRepository.sendBecomeAGuideSolicitude(user).addOnCompleteListener(sendCompleted);
+    }
+
     //region User view model
     private MutableLiveData<User> userMutableLiveData;
     private MutableLiveData<List<RecyclerViewElement>> favoritesMutableLiveData;
@@ -84,6 +105,14 @@ public class DrawerActivityViewModel extends ViewModel {
                         userMutableLiveData.setValue(user);
                         initializeFavorites();
                         removeUserFromGuides(user.getEmail());
+                    }
+                });
+    }
+    public void updateUser(User user){
+        userRepository.updateUser(user).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        userMutableLiveData.setValue(user);
                     }
                 });
     }

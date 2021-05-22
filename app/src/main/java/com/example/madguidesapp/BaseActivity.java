@@ -169,6 +169,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         usernameTextView.setText(user.getUsername());
         decorativeImage.loadImage(user.getImageUrl());
+
+        decorativeImage.setOnClickListener(click -> {
+            navController.navigate(R.id.nav_profile);
+        });
     }
 
     public void setUserNotLoggedNavHeader(View headerView){
