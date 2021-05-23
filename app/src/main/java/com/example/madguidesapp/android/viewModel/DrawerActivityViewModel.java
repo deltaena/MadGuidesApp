@@ -53,6 +53,7 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeSuggestionsViewModel();
     }
 
+    //region profile view model
     public void sendBecomeAGuideSolicitude(){
         User user = userMutableLiveData.getValue();
 
@@ -72,6 +73,30 @@ public class DrawerActivityViewModel extends ViewModel {
 
         firestoreRepository.sendBecomeAGuideSolicitude(user).addOnCompleteListener(sendCompleted);
     }
+
+    public void updateProfilePhoto(Uri profilePhotoUri){
+        OnCompleteListener<Uri> urlLoaded = task -> {
+              if(task.isSuccessful()){
+                  User user = userMutableLiveData.getValue();
+
+                  assert user != null;
+                  user.setImageUrl(task.getResult().toString());
+
+                  userRepository.updateUser(user).
+                          addOnCompleteListener(task1 -> userMutableLiveData.setValue(user));
+              }
+        };
+
+        OnCompleteListener<UploadTask.TaskSnapshot> uploadComplete = task -> {
+            if(task.isSuccessful()){
+                task.getResult().getMetadata().getReference().getDownloadUrl().
+                        addOnCompleteListener(urlLoaded);
+            }
+        };
+
+        firestorageRepository.uploadProfileImage(profilePhotoUri).addOnCompleteListener(uploadComplete);
+    }
+    //endregion
 
     //region User view model
     private MutableLiveData<User> userMutableLiveData;

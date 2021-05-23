@@ -16,9 +16,14 @@ public class FirestorageRepository {
     }
 
     public UploadTask uploadSuggestionImage(Uri suggestionFileUri){
-        UUID uuidGenerator = UUID.randomUUID();
+        return uploadImage("Suggestions", suggestionFileUri);
+    }
+    public UploadTask uploadProfileImage(Uri profileImageUri){
+        return uploadImage("ProfilePhotos", profileImageUri);
+    }
 
-        return storage.getReference().child("Suggestions/"+uuidGenerator).putFile(suggestionFileUri);
+    private UploadTask uploadImage(String folder, Uri fileUri){
+        return storage.getReference().child(folder+"/"+UUID.randomUUID()).putFile(fileUri);
     }
 
 }

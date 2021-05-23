@@ -1,6 +1,8 @@
 package com.example.madguidesapp.ui.sideMenu;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import com.example.madguidesapp.databinding.FragmentProfileBinding;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.ui.dialogs.ContactWithGuideDialog;
 import com.example.madguidesapp.ui.dialogs.SendBecomeAGuideSolicitude;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
@@ -56,6 +60,9 @@ public class ProfileFragment extends Fragment {
                     if(binding.profileButton.isLoading()){
                         binding.profileButton.endLoading();
                     }
+
+                    binding.changeProfilePhotoTextView.setClickable(true);
+                    binding.profilePhotoProgressBar.setVisibility(View.GONE);
                 });
 
         initMap();
@@ -87,6 +94,11 @@ public class ProfileFragment extends Fragment {
 
         binding.profileButton.setText((String) buttonMap.get(textKey));
         binding.profileButton.addOnClickListener((View.OnClickListener) buttonMap.get(onClickKey));
+
+        binding.changeProfilePhotoTextView.
+                setOnClickListener(v -> {
+                    ImagePicker.Companion.with(this).start();
+                });
     }
 
     public void initMap(){
@@ -136,7 +148,17 @@ public class ProfileFragment extends Fragment {
                 });
 
         buttonContentsMap.put(User.SolicitudeStatus.DENIED, deniedMap);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK) {
+            drawerActivityViewModel.updateProfilePhoto(data.getData());
+            binding.changeProfilePhotoTextView.setClickable(false);
+            binding.profilePhotoProgressBar.setVisibility(View.VISIBLE);
+        }
     }
 }
 
