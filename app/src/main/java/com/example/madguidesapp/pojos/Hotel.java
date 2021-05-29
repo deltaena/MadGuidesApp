@@ -33,6 +33,11 @@ public class Hotel implements RecyclerViewElement {
     }
 
     @Override
+    public String getMapsUrl() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return String.format("/%s/%s", "Hotels", name);
     }

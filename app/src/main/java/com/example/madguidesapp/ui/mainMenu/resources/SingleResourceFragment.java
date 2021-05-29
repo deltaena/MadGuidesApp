@@ -5,19 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.example.madguidesapp.android.customViews.DecorativeImage;
 import com.example.madguidesapp.databinding.FragmentSingleResourceBinding;
-import com.example.madguidesapp.ui.abstracts.SingleRecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
-import com.example.madguidesapp.R;
 
-public class SingleResourceFragment extends SingleRecyclerViewElement {
+public class SingleResourceFragment extends Fragment {
 
     private static final String TAG = "SingleResourceFragment";
 
@@ -54,16 +51,6 @@ public class SingleResourceFragment extends SingleRecyclerViewElement {
         super.onViewCreated(view, savedInstanceState);
 
         binding.include4.previewImageView.loadImage(resource.getImageUrl());
-    }
-
-    @Override
-    protected RecyclerViewElement getRecyclerViewElement() {
-        return resource;
-    }
-
-    @Override
-    protected String getMapsUrl() {
-        return resource.getMapsUrl();
     }
 }
 

@@ -50,17 +50,6 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
         });
     }
 
-    /*
-     * Single responsibility
-     * Open-closed
-     * Liskov substitution
-     * Interface segregation
-     * Dependency inversion
-     */
-    public void initButton(){
-
-    }
-
     public void addListener(@Nullable OnClickListener l) {
         if(listeners.size() == 2){
             listeners.remove(listeners.size()-1);

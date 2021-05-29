@@ -46,6 +46,8 @@ public class LoginFragment extends ConnectivityFragment {
                     else{
                         Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                     }
+
+                    binding.loginBtn.endLoading();
                 });
     };
 

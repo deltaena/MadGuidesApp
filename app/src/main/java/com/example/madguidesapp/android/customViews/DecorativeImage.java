@@ -168,6 +168,14 @@ public class DecorativeImage extends ConstraintLayout {
                 into(image);
     }
 
+    public void loadImage(Drawable drawable){
+        progressBar.setVisibility(VISIBLE);
+
+        image.setImageDrawable(drawable);
+
+        progressBar.setVisibility(INVISIBLE);
+    }
+
     public void makeCircular(){
         CircleImageView circleImageView = new CircleImageView(getContext());
         circleImageView.setImageDrawable(image.getDrawable());

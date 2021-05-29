@@ -1,27 +1,28 @@
 package com.example.madguidesapp.ui.sideMenu;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.madguidesapp.R;
+import com.example.madguidesapp.android.customViews.IconButton;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.databinding.FragmentProfileBinding;
 import com.example.madguidesapp.pojos.User;
-import com.example.madguidesapp.ui.dialogs.ContactWithGuideDialog;
 import com.example.madguidesapp.ui.dialogs.SendBecomeAGuideSolicitude;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,12 +30,12 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.view.View.GONE;
+
 
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
-
-    private User user;
 
     private Map<Integer, Map<String, Object>> buttonContentsMap;
 
@@ -43,27 +44,24 @@ public class ProfileFragment extends Fragment {
     private DrawerActivityViewModel drawerActivityViewModel;
     private NavController navController;
 
+    private IconButton iconButton;
+
     private final String textKey = "text", onClickKey = "onClick";
 
+    private View.OnClickListener updateUser = click -> {
+
+        User userChanged = setChanges();
+
+        if(userChanged != null) drawerActivityViewModel.updateUser(userChanged);
+        else {
+            Snackbar.make(requireView(), "No changes to commit.", Snackbar.LENGTH_SHORT).show();
+            iconButton.enable();
+        }
+    };
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        drawerActivityViewModel = new ViewModelProvider(requireActivity()).
-                get(DrawerActivityViewModel.class);
-
-        drawerActivityViewModel.getUserLiveData().
-                observe(this, user -> {
-                    this.user = user;
-                    fillView(user);
-
-                    if(binding.profileButton.isLoading()){
-                        binding.profileButton.endLoading();
-                    }
-
-                    binding.changeProfilePhotoTextView.setClickable(true);
-                    binding.profilePhotoProgressBar.setVisibility(View.GONE);
-                });
 
         initMap();
     }
@@ -80,7 +78,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(getView());
+        navController = Navigation.findNavController(requireView());
     }
 
     public void fillView(User user){
@@ -88,17 +86,18 @@ public class ProfileFragment extends Fragment {
         binding.profilePhoto.previewImageView.loadImage(user.getImageUrl());
 
         binding.usernameEditText.setText(user.getUsername());
-        binding.emailEditText.setText(user.getEmail());
+        binding.addresEditText.setText(user.getAddress());
 
         Map<String, Object> buttonMap = buttonContentsMap.get(user.getGuideStatus());
 
+        assert buttonMap != null;
         binding.profileButton.setText((String) buttonMap.get(textKey));
         binding.profileButton.addOnClickListener((View.OnClickListener) buttonMap.get(onClickKey));
 
         binding.changeProfilePhotoTextView.
-                setOnClickListener(v -> {
-                    ImagePicker.Companion.with(this).start();
-                });
+                setOnClickListener(v -> ImagePicker.Companion.with(this).start());
+
+        setToolBar();
     }
 
     public void initMap(){
@@ -112,7 +111,7 @@ public class ProfileFragment extends Fragment {
         approvedMap.put(textKey, "Manage guide profile");
         approvedMap.put(onClickKey,
                 (View.OnClickListener) v -> {
-                    //navController.navigate(R.id.nav_guide_profile);
+                    navController.navigate(R.id.nav_guide_profile);
                 });
 
         buttonContentsMap.put(User.SolicitudeStatus.APPROVED, approvedMap);
@@ -125,7 +124,7 @@ public class ProfileFragment extends Fragment {
 
                     sendBecomeAGuideSolicitude.show();
 
-                    sendBecomeAGuideSolicitude.setOnDismissListener(
+                    sendBecomeAGuideSolicitude.setOnCancelListener(
                             dialog -> binding.profileButton.startLoading());
                 });
 
@@ -135,7 +134,7 @@ public class ProfileFragment extends Fragment {
         pendingMap.put(onClickKey,
                 (View.OnClickListener) v -> {
                     String msg = "Este proceso puede tardar entre 1 y 2 días, vuelva más tarde";
-                    Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show();
                 });
 
         buttonContentsMap.put(User.SolicitudeStatus.PENDING, pendingMap);
@@ -144,10 +143,59 @@ public class ProfileFragment extends Fragment {
         deniedMap.put(onClickKey,
                 (View.OnClickListener) v -> {
                     String msg = "Your profile doesn't meet the rules to become a guide";
-                    Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show();
                 });
 
         buttonContentsMap.put(User.SolicitudeStatus.DENIED, deniedMap);
+    }
+    private void setToolBar(){
+        Toolbar toolbar = ((AppCompatActivity)requireActivity()).findViewById(R.id.toolbar);
+
+        iconButton = toolbar.findViewById(R.id.toolbarRightButton);
+        iconButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.checked_icon));
+        iconButton.setVisibility(View.VISIBLE);
+        iconButton.addListener(updateUser);
+    }
+
+    private User setChanges(){
+        boolean hasChanges = false;
+        User user = drawerActivityViewModel.getUserLiveData().getValue();
+
+        String username = binding.usernameEditText.getText().toString().trim();
+        if(!user.getUsername().equals(username)) hasChanges = true;
+
+        user.setUsername(username);
+
+        String address = binding.addresEditText.getText().toString();
+        if(!user.getAddress().equals(address)) hasChanges = true;
+
+        user.setAddress(address);
+
+        return hasChanges ? user : null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        drawerActivityViewModel = new ViewModelProvider(requireActivity()).
+                get(DrawerActivityViewModel.class);
+
+        drawerActivityViewModel.getUserLiveData().
+                observe(this, user -> {
+                    fillView(user);
+
+                    if(binding.profileButton.isLoading()){
+                        binding.profileButton.endLoading();
+                    }
+
+                    binding.changeProfilePhotoTextView.setClickable(true);
+                    binding.profilePhotoProgressBar.setVisibility(GONE);
+
+                    iconButton.enable();
+                });
+
+        setToolBar();
     }
 
     @Override
@@ -155,6 +203,7 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == Activity.RESULT_OK) {
+            assert data != null;
             drawerActivityViewModel.updateProfilePhoto(data.getData());
             binding.changeProfilePhotoTextView.setClickable(false);
             binding.profilePhotoProgressBar.setVisibility(View.VISIBLE);

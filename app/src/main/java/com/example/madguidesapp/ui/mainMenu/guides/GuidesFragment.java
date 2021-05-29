@@ -17,7 +17,7 @@ public class GuidesFragment extends RecyclerViewBaseFragment {
         super.onCreate(savedInstanceState);
 
         drawerActivityViewModel.getGuidesLiveData().
-                observe(this, guides -> setRecyclerViewElements(guides));
+                observe(this, this::setRecyclerViewElements);
     }
 
     @Override

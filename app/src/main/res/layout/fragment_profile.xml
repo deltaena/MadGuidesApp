@@ -56,6 +56,7 @@
                 android:text="Username"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/changeProfilePhotoTextView"
                 app:layout_constraintVertical_bias="0.05" />
@@ -71,36 +72,9 @@
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/usernameLbl"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/emailLbl"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Email"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
-                app:layout_constraintVertical_bias="0.05" />
-
-            <EditText
-                android:id="@+id/emailEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:hint="email"
-                android:inputType="textEmailAddress"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailLbl"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -113,8 +87,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-                app:layout_constraintVertical_bias="0.05" />
+                app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
+                app:layout_constraintVertical_bias="0.050000012" />
 
             <EditText
                 android:id="@+id/addresEditText"
@@ -127,9 +101,10 @@
                 android:inputType="textPostalAddress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addressLbl"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0" />
 
             <com.example.madguidesapp.android.customViews.ProgressibleButton
                 android:id="@+id/profileButton"

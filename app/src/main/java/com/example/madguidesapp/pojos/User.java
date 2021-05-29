@@ -3,6 +3,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
 
@@ -79,6 +80,22 @@ public class User {
                          PENDING = 0,
                          APPROVED = 1,
                          DENIED = -2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(imageUrl, user.imageUrl) &&
+                Objects.equals(address, user.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, username, address);
     }
 }
 

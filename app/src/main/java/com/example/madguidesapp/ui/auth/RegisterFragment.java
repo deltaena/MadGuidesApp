@@ -46,7 +46,7 @@ public class RegisterFragment extends ConnectivityFragment {
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         if(task.getResult().size() == 0) {
-                            Snackbar.make(getView(), "Usuario registrado con exito!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(requireView(), "Usuario registrado con exito!", Snackbar.LENGTH_LONG).show();
                         }
                         else{
                             binding.usernameEditText.setError("El nombre de usuario ya está en uso");
@@ -74,8 +74,8 @@ public class RegisterFragment extends ConnectivityFragment {
     };
 
     View.OnClickListener goToLoginClicked = click -> {
-        String emailStr = binding.emailEditText.getText().toString(),
-                passwordStr = binding.passwordEditText.getText().toString();
+        String emailStr = binding.emailEditText.getText(),
+                passwordStr = binding.passwordEditText.getText();
 
         Bundle bundle = new Bundle();
         bundle.putString("email", emailStr);

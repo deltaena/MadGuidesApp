@@ -5,18 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import androidx.fragment.app.Fragment;
+
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.customViews.DecorativeImage;
 import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
-import com.example.madguidesapp.ui.abstracts.SingleRecyclerViewElement;
 
-public class SingleRouteFragment extends SingleRecyclerViewElement {
+public class SingleRouteFragment extends Fragment {
 
     private Route route;
 
@@ -39,16 +37,6 @@ public class SingleRouteFragment extends SingleRecyclerViewElement {
         descriptionTextView.setText(route.getDescription());
 
         return view;
-    }
-
-    @Override
-    protected String getMapsUrl() {
-        return route.getMapsUrl();
-    }
-
-    @Override
-    protected RecyclerViewElement getRecyclerViewElement() {
-        return route;
     }
 }
 

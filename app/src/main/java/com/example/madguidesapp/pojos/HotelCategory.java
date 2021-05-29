@@ -15,6 +15,12 @@ public class HotelCategory implements RecyclerViewElement {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    @Override
+    public String getMapsUrl() {
+        return null;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }

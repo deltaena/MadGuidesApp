@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slidingUpPanel"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:umanoDragView="@id/commentsSection"
+    app:umanoInitialState="collapsed"
+    tools:umanoInitialState="collapsed">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/previousElementImgBtn"
-        android:layout_width="@dimen/single_element_icons"
-        android:layout_height="@dimen/single_element_icons"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="#00FFFFFF"
-        android:scaleType="fitCenter"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/prev_arrow_icon" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/nextElementImgBtn"
-        android:layout_width="@dimen/single_element_icons"
-        android:layout_height="@dimen/single_element_icons"
-        android:layout_marginEnd="@dimen/single_element_icons_right_margin"
-        android:layout_marginBottom="20dp"
-        android:background="#00FFFFFF"
-        android:rotation="180"
-        android:rotationY="0"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/prev_arrow_icon" />
+        </androidx.viewpager2.widget.ViewPager2>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            layout="@layout/single_visitable_element_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/previousElementImgBtn"
+            android:layout_width="@dimen/single_element_icons"
+            android:layout_height="@dimen/single_element_icons"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/prev_arrow_icon" />
+
+        <ImageButton
+            android:id="@+id/nextElementImgBtn"
+            android:layout_width="@dimen/single_element_icons"
+            android:layout_height="@dimen/single_element_icons"
+            android:layout_marginEnd="@dimen/single_element_icons_right_margin"
+            android:layout_marginBottom="20dp"
+            android:background="#00FFFFFF"
+            android:rotation="180"
+            android:rotationY="0"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/prev_arrow_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/commentsSection"
+        layout="@layout/comments_layout"></include>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

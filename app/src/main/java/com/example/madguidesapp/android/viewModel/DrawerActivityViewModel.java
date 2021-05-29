@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.madguidesapp.pojos.Comment;
 import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.pojos.Hotel;
 import com.example.madguidesapp.pojos.HotelCategory;
@@ -28,7 +30,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DrawerActivityViewModel extends ViewModel {
@@ -51,6 +56,7 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeGuidesViewModel();
         initializeHotelsViewModel();
         initializeSuggestionsViewModel();
+        initializeComments();
     }
 
     //region profile view model
@@ -123,16 +129,19 @@ public class DrawerActivityViewModel extends ViewModel {
     }
 
     public void setUser(){
+        Log.d(TAG, "setUser: ");
         userRepository.getUser().
                 addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         User user = task.getResult().toObject(User.class);
                         userMutableLiveData.setValue(user);
                         initializeFavorites();
-                        removeUserFromGuides(user.getEmail());
+                        removeUserFromGuides(userRepository.getUserId());
+                        fillGuide();
                     }
                 });
     }
+
     public void updateUser(User user){
         userRepository.updateUser(user).
                 addOnCompleteListener(task -> {
@@ -156,6 +165,7 @@ public class DrawerActivityViewModel extends ViewModel {
         userMutableLiveData.setValue(null);
         favoritesMutableLiveData.setValue(null);
         restoreGuidesList();
+        registeredGuideMutableLiveData.setValue(null);
     }
 
     public Task register(User user, String password){
@@ -165,19 +175,21 @@ public class DrawerActivityViewModel extends ViewModel {
             }
         };
 
-        OnCompleteListener registerCompleted = task -> {
-            if(task.isSuccessful()){
-                userRepository.createUser(user).addOnCompleteListener(creationCompleted);
-            }
-        };
-
-        return userRepository.register(user, password).addOnCompleteListener(registerCompleted);
+        return userRepository.register(user, password).
+                addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        userRepository.createUser(user, task.getResult().getUser().getUid()).
+                                addOnCompleteListener(creationCompleted);
+                    }
+                });
     }
 
     public void initializeFavorites(){
         favoritesMutableLiveData.setValue(new ArrayList<>());
 
-        if(!areUserRegistered()){
+        Log.d(TAG, "initializeFavorites: "+userMutableLiveData.getValue());
+
+        if(!areUserRegistered() && userMutableLiveData.getValue().getFavorites() != null){
             return;
         }
 
@@ -215,6 +227,10 @@ public class DrawerActivityViewModel extends ViewModel {
         }
 
         return false;
+    }
+
+    public boolean isFavorite(RecyclerViewElement recyclerViewElement){
+        return favoritesMutableLiveData.getValue().contains(recyclerViewElement);
     }
 
     public void toggleVisited(RecyclerViewElement recyclerViewElement){
@@ -357,6 +373,8 @@ public class DrawerActivityViewModel extends ViewModel {
                 filter(resource -> userMutableLiveData.getValue().getVisitedResources().contains(resource.getName())).
                 collect(Collectors.toList());
 
+        Log.d(TAG, "filterResources: ");
+
         filteredResourcesMutableLiveData.setValue(filteredResources);
     }
 
@@ -399,11 +417,14 @@ public class DrawerActivityViewModel extends ViewModel {
 
     //region Guides view model
     private List<Guide> guidesFullList = new ArrayList<>();
+    private MutableLiveData<Guide> registeredGuideMutableLiveData;
     private MutableLiveData<List<Guide>> filteredGuidesMutableLiveData;
 
     private void initializeGuidesViewModel(){
         firestoreRepository = new FirestoreRepository();
+
         filteredGuidesMutableLiveData = new MutableLiveData<>();
+        registeredGuideMutableLiveData = new MutableLiveData<>();
 
         firestoreRepository.getGuides().
                 addOnCompleteListener(task -> {
@@ -415,20 +436,56 @@ public class DrawerActivityViewModel extends ViewModel {
                 });
     }
 
-    public void removeUserFromGuides(String userEmail){
+    public void removeUserFromGuides(String id){
+        assert userMutableLiveData.getValue() != null;
+
         List<Guide> guidesFiltered = guidesFullList.stream().
-                filter(guide -> !guide.getEmail().equals(userEmail)).
+                filter(guide -> !guide.getId().equals(id)).
                 collect(Collectors.toList());
 
         filteredGuidesMutableLiveData.setValue(guidesFiltered);
+    }
+
+    public Task<Void> createGuideProfile(Map<String, Object> map){
+        assert userMutableLiveData.getValue() != null;
+        map.put("imageUrl", userMutableLiveData.getValue().getImageUrl());
+        map.put("id", userRepository.getUserId());
+        map.put("name", userMutableLiveData.getValue().getUsername());
+
+        return firestoreRepository.insertGuide(map, userRepository.getUserId()).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        fillGuide();
+                    }
+                });
     }
 
     public void restoreGuidesList(){
         filteredGuidesMutableLiveData.setValue(guidesFullList);
     }
 
+    public void fillGuide(){
+        firestoreRepository.findGuide(userRepository.getUserId()).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        registeredGuideMutableLiveData.setValue(task.getResult().toObject(Guide.class));
+                    }
+                });
+    }
+
     public LiveData<List<Guide>> getGuidesLiveData(){
+        if(areUserRegistered()){
+            removeUserFromGuides(userRepository.getUserId());
+        }
+        else{
+            restoreGuidesList();
+        }
+
         return filteredGuidesMutableLiveData;
+    }
+
+    public LiveData<Guide> getGuideLiveData(){
+        return registeredGuideMutableLiveData;
     }
     //endregion
 
@@ -514,6 +571,46 @@ public class DrawerActivityViewModel extends ViewModel {
 
     public LiveData<Boolean> getAreAllOperationsDoneLiveData(){
         return areAllOperationsDoneMutableLiveData;
+    }
+    //endregion
+
+    //region Comments view model
+    public MutableLiveData<List<Comment>> commentsMutableLiveData;
+
+    public void initializeComments(){
+        commentsMutableLiveData = new MutableLiveData<>();
+    }
+
+    public Task<Void> postComment(String text, RecyclerViewElement element){
+        Comment comment = new Comment();
+        comment.setText(text);
+        comment.setDate(new Date());
+        comment.setUser(userRepository.getUserReference());
+
+        return firestoreRepository.postComment(comment, element).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        userRepository.addComment(comment);
+
+                        List<Comment> comments = commentsMutableLiveData.getValue();
+                        comments.add(0, comment);
+
+                        commentsMutableLiveData.setValue(comments);
+                    }
+                });
+    }
+
+    public LiveData<List<Comment>> getComments(RecyclerViewElement element){
+        commentsMutableLiveData.setValue(null);
+
+        firestoreRepository.getComments(element.toString()).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        commentsMutableLiveData.setValue(task.getResult().toObjects(Comment.class));
+                    }
+                });
+
+        return commentsMutableLiveData;
     }
     //endregion
 }

@@ -2,7 +2,6 @@ package com.example.madguidesapp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -71,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
         ImageButton openDrawerImageButton = findViewById(R.id.openDrawerImageButton);
-        IconButton markAsFavoriteImageButton = findViewById(R.id.markAsFavoriteImageButton);
+        IconButton markAsFavoriteImageButton = findViewById(R.id.toolbarRightButton);
 
         openDrawerImageButton.setOnClickListener(click -> drawer.open());
 
@@ -171,7 +170,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         decorativeImage.loadImage(user.getImageUrl());
 
         decorativeImage.setOnClickListener(click -> {
-            navController.navigate(R.id.nav_profile);
+            Bundle bundle = new Bundle();
+            bundle.putString("title", user.getUsername());
+
+            navController.navigate(R.id.nav_profile, bundle);
         });
     }
 

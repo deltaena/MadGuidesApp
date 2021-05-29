@@ -40,11 +40,8 @@ public class SendBecomeAGuideSolicitude extends AlertDialog {
                 "exert as a guide.");
 
         setButton(BUTTON_POSITIVE, "Ok!", (dialog, which) -> {
-            User user = drawerActivityViewModel.getUserLiveData().getValue();
-
             drawerActivityViewModel.sendBecomeAGuideSolicitude();
-
-            dismiss();
+            cancel();
         });
 
         setButton(BUTTON_NEGATIVE, "Not now", ((dialog, which) -> dismiss()));

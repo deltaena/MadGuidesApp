@@ -72,7 +72,7 @@
                         app:srcCompat="@drawable/maps_marker" />
 
                     <com.example.madguidesapp.android.customViews.IconButton
-                        android:id="@+id/markAsFavoriteImageButton"
+                        android:id="@+id/toolbarRightButton"
                         android:layout_width="@dimen/single_element_icons"
                         android:layout_height="@dimen/single_element_icons"
                         android:layout_marginEnd="@dimen/single_element_icons_right_margin"

@@ -45,6 +45,17 @@ public class ProgressibleButton extends ConstraintLayout {
     }
 
     public void addOnClickListener(OnClickListener onClickListener){
+        if(!ta.getBoolean(R.styleable.ProgressibleButton_performsAsync, false)){
+            if(!onClickListeners.isEmpty()){
+                onClickListeners.remove(0);
+            }
+        }
+        else {
+            if (onClickListeners.size() == 2) {
+                onClickListeners.remove(onClickListeners.size() - 1);
+            }
+        }
+
         onClickListeners.add(onClickListener);
     }
 

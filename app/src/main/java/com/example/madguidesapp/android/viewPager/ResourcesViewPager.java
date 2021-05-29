@@ -18,9 +18,7 @@ public class ResourcesViewPager extends BaseViewPagerAdapter{
         super.onCreate(savedInstanceState);
 
         drawerActivityViewModel.getResourcesLiveData().
-                observe(this, resources -> {
-                    fillSliderAdapter(resources);
-                });
+                observe(this, resources -> fillSliderAdapter(resources));
     }
 
     @Override
