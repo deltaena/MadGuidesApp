@@ -21,7 +21,6 @@ public class SocialNetworksAdapter extends BaseAdapter {
 
         holder.elementNameTextView.setText(recyclerViewElement.getName());
 
-        Log.d(TAG, "onBindViewHolder: "+recyclerViewElement.getName());
         switch (recyclerViewElement.getName()) {
             case "instagram":
                 holder.elementCircleImageView.loadImage(ContextCompat.getDrawable(context, R.drawable.instagram_icon));

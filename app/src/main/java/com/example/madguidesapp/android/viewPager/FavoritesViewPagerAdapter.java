@@ -26,11 +26,11 @@ public class FavoritesViewPagerAdapter extends BaseViewPagerAdapter{
     }
 
     @Override
-    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement) {
+    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index) {
         if (recyclerViewElement instanceof Resource) {
             return new SingleResourceFragment(recyclerViewElement);
         } else if(recyclerViewElement instanceof Route){
-            return new SingleRouteFragment(recyclerViewElement);
+            return new SingleRouteFragment(recyclerViewElement, navController, index);
         } else if(recyclerViewElement instanceof Hotel){
             return new SingleHotelFragment(recyclerViewElement);
         }

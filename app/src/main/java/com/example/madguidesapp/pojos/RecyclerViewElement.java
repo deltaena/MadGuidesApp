@@ -11,9 +11,10 @@ public interface RecyclerViewElement extends Serializable {
     String getMapsUrl();
 
     enum Type {
-        MAIN_MENU_ELEMENT, RESOURCE, ROUTE, GUIDE, HOTEL_CATEGORY, HOTEL,
+        MAIN_MENU_ELEMENT, RESOURCE, ROUTE, GUIDE, MAP, HOTEL_CATEGORY, HOTEL,
         RESTAURANT, SOCIAL_NETWORK, INFORMATION, SUGGESTIONS;
     }
+
 
 
 

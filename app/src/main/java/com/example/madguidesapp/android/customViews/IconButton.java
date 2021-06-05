@@ -44,7 +44,7 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
         this.setBackgroundColor(Color.GREEN);
         this.setOnClickListener(click -> {
             if(connectivityManager.getActiveNetwork() == null)
-                Snackbar.make(click.getRootView(), "La operación se relizará cuando haya conexión", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(click.getRootView(), context.getString(R.string.operationDispatchDelayedCon), Snackbar.LENGTH_LONG).show();
 
             listeners.forEach(listener -> listener.onClick(click));
         });
@@ -61,6 +61,10 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
     public void enable(){
         this.setBackgroundColor(Color.GREEN);
         this.setClickable(true);
+    }
+
+    public boolean isEnabled(){
+        return this.isClickable();
     }
 }
 

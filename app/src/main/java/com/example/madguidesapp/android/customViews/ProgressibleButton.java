@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 
 import com.example.madguidesapp.R;
 
@@ -85,17 +86,15 @@ public class ProgressibleButton extends ConstraintLayout {
         button.setId(R.id.customPBBButton);
         button.setText(ta.getString(0));
 
-        button.setBackground(getContext().getDrawable(R.drawable.progress_button_bg));
+        button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.progress_button_bg));
         button.setTextColor(Color.WHITE);
 
         button.setClickable(true);
         button.setFocusable(true);
 
-        button.setOnClickListener(click -> {
-            onClickListeners.forEach(onClickListener -> {
-                onClickListener.onClick(click);
-            });
-        });
+        button.setOnClickListener(click ->
+                onClickListeners.forEach(onClickListener ->
+                        onClickListener.onClick(click)));
 
         addView(button);
 

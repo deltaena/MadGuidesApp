@@ -1,5 +1,6 @@
 package com.example.madguidesapp.android.viewModel;
 
+import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
@@ -15,6 +16,8 @@ import com.example.madguidesapp.pojos.Hotel;
 import com.example.madguidesapp.pojos.HotelCategory;
 import com.example.madguidesapp.pojos.MainMenuElement;
 import com.example.madguidesapp.pojos.Resource;
+import com.example.madguidesapp.pojos.Restaurant;
+import com.example.madguidesapp.pojos.RestaurantCategory;
 import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.Suggestion;
 import com.example.madguidesapp.pojos.User;
@@ -36,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class DrawerActivityViewModel extends ViewModel {
     private static final String TAG = "DrawerActivityViewModel";
     private FirestoreRepository firestoreRepository;
@@ -55,6 +60,7 @@ public class DrawerActivityViewModel extends ViewModel {
         initializeRoutesViewModel();
         initializeGuidesViewModel();
         initializeHotelsViewModel();
+        initializeRestaurants();
         initializeSuggestionsViewModel();
         initializeComments();
     }
@@ -77,7 +83,7 @@ public class DrawerActivityViewModel extends ViewModel {
             }
         };
 
-        firestoreRepository.sendBecomeAGuideSolicitude(user).addOnCompleteListener(sendCompleted);
+        firestoreRepository.sendBecomeAGuideSolicitude(user.getEmail(), userRepository.getUserId()).addOnCompleteListener(sendCompleted);
     }
 
     public void updateProfilePhoto(Uri profilePhotoUri){
@@ -361,6 +367,10 @@ public class DrawerActivityViewModel extends ViewModel {
                     if(task.isSuccessful()){
                         resourcesMutableLiveData.setValue(task.getResult().toObjects(Resource.class));
                     }
+                    else{
+                        Log.d(TAG, "initializeResourcesViewModel: "+task.getException());
+                        resourcesMutableLiveData.setValue(new ArrayList<>());
+                    }
                 });
     }
 
@@ -421,8 +431,6 @@ public class DrawerActivityViewModel extends ViewModel {
     private MutableLiveData<List<Guide>> filteredGuidesMutableLiveData;
 
     private void initializeGuidesViewModel(){
-        firestoreRepository = new FirestoreRepository();
-
         filteredGuidesMutableLiveData = new MutableLiveData<>();
         registeredGuideMutableLiveData = new MutableLiveData<>();
 
@@ -494,8 +502,6 @@ public class DrawerActivityViewModel extends ViewModel {
     private MutableLiveData<List<Hotel>> hotelsMutableLiveData;
 
     public void initializeHotelsViewModel(){
-        firestoreRepository = new FirestoreRepository();
-
         hotelCategoriesMutableLiveData = new MutableLiveData<>();
         hotelsMutableLiveData = new MutableLiveData<>();
 
@@ -528,11 +534,49 @@ public class DrawerActivityViewModel extends ViewModel {
     }
     //endregion
 
+    //region restaurants view model
+    private MutableLiveData<List<RestaurantCategory>> restaurantCategoriesMutableLiveData;
+    private MutableLiveData<List<Restaurant>> restaurantsMutableLiveData;
+
+    public void initializeRestaurants(){
+        restaurantCategoriesMutableLiveData = new MutableLiveData<>();
+        restaurantsMutableLiveData = new MutableLiveData<>();
+
+        firestoreRepository.getRestaurantCategories().
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        restaurantCategoriesMutableLiveData.setValue(task.getResult().toObjects(RestaurantCategory.class));
+                    }
+                });
+    }
+
+    public void filterRestaurants(String categories){
+        restaurantsMutableLiveData.setValue(new ArrayList<>());
+
+        Log.d(TAG, "filterRestaurants: "+categories);
+
+        firestoreRepository.getRestaurants(categories).
+                addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        restaurantsMutableLiveData.setValue(task.getResult().toObjects(Restaurant.class));
+                    }
+                });
+    }
+
+    public LiveData<List<RestaurantCategory>> getRestaurantsCategoryLiveData(){
+        return restaurantCategoriesMutableLiveData;
+    }
+
+    public LiveData<List<Restaurant>> getRestaurantsLiveData(){
+        return restaurantsMutableLiveData;
+    }
+
+    //endregion
+
     //region Main menu view model
     private MutableLiveData<List<MainMenuElement>> mainMenuElements;
 
     public void initializeMainMenuViewModel(){
-        firestoreRepository = new FirestoreRepository();
         mainMenuElements = new MutableLiveData<>();
 
         firestoreRepository.getMainMenuElements().
@@ -613,6 +657,10 @@ public class DrawerActivityViewModel extends ViewModel {
         return commentsMutableLiveData;
     }
     //endregion
+
+    public void getNearbyResources(){
+
+    }
 }
 
 

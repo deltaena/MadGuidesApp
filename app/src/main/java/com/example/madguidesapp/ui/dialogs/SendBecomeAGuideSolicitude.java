@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.repository.FirestoreRepository;
@@ -18,8 +19,6 @@ import com.google.android.gms.tasks.Task;
 
 public class SendBecomeAGuideSolicitude extends AlertDialog {
 
-    private FirestoreRepository firestoreRepository;
-    private UserRepository userRepository;
     private DrawerActivityViewModel drawerActivityViewModel;
 
     public SendBecomeAGuideSolicitude(
@@ -27,24 +26,20 @@ public class SendBecomeAGuideSolicitude extends AlertDialog {
         super(context);
 
         this.drawerActivityViewModel = drawerActivityViewModel;
-        firestoreRepository = new FirestoreRepository();
-        userRepository = new UserRepository();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setTitle("Send become a guide solicitude");
-        setMessage("By clicking ok you accept to send your profile to revision and "+
-                "collaborate to create a better community if you are approved to "+
-                "exert as a guide.");
+        setTitle(getContext().getString(R.string.becomeGuideTitle));
+        setMessage(getContext().getString(R.string.becomeGuideMessage));
 
-        setButton(BUTTON_POSITIVE, "Ok!", (dialog, which) -> {
+        setButton(BUTTON_POSITIVE, getContext().getString(R.string.ok), (dialog, which) -> {
             drawerActivityViewModel.sendBecomeAGuideSolicitude();
             cancel();
         });
 
-        setButton(BUTTON_NEGATIVE, "Not now", ((dialog, which) -> dismiss()));
+        setButton(BUTTON_NEGATIVE, getContext().getString(R.string.notNow), ((dialog, which) -> dismiss()));
 
         super.onCreate(savedInstanceState);
     }

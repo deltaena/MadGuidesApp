@@ -24,6 +24,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.example.madguidesapp.pojos.MyUtil.toDp;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
@@ -144,6 +146,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setUpHeader(User user){
         View headerView = navigationView.getHeaderView(0);
+
+        navigationView.setItemIconTintList(null);
 
         ConstraintLayout userLoggedNavHeader = headerView.findViewById(R.id.userLoggedNavHeader);
         ConstraintLayout userNotLoggedNavHeader = headerView.findViewById(R.id.userNotLoggedNavHeader);

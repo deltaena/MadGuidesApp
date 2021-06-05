@@ -1,10 +1,27 @@
 package com.example.madguidesapp.pojos;
 
+import android.util.Log;
+
+import java.util.Map;
+
 public class Hotel implements RecyclerViewElement {
 
+    private static final String TAG = "Hotel";
+    
     private String name;
+    private String url;
+    private int phone;
     private String imageUrl;
+    private String mapsUrl;
     private int category;
+    private Map<String, Boolean> amenities;
+    private Map<String, String> optionalAmenities;
+
+    public int getOptionalAmenity(int option){
+        assert optionalAmenities != null;
+        Log.d(TAG, "getOptionalAmenity: "+optionalAmenities.get("option"+option));
+        return OptionalAmenities.amenities.get(optionalAmenities.get("option"+option));
+    }
 
     @Override
     public String getName() {
@@ -27,6 +44,38 @@ public class Hotel implements RecyclerViewElement {
         this.category = category;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public Map<String, Boolean> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(Map<String, Boolean> amenities) {
+        this.amenities = amenities;
+    }
+
+    public Map<String, String> getOptionalAmenities() {
+        return optionalAmenities;
+    }
+
+    public void setOptionalAmenities(Map<String, String> optionalAmenities) {
+        this.optionalAmenities = optionalAmenities;
+    }
+
     @Override
     public String getImageUrl() {
         return imageUrl;
@@ -34,7 +83,11 @@ public class Hotel implements RecyclerViewElement {
 
     @Override
     public String getMapsUrl() {
-        return null;
+        return mapsUrl;
+    }
+
+    public void setMapsUrl(String mapsUrl) {
+        this.mapsUrl = mapsUrl;
     }
 
     @Override

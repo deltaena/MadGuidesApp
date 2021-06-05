@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -31,8 +33,10 @@ import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.connectivity.ConnectivityFragment;
 import com.example.madguidesapp.android.customViews.IconButton;
 import com.example.madguidesapp.android.recyclerView.adapter.CommentsAdapter;
+import com.example.madguidesapp.pojos.Hotel;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
+import com.example.madguidesapp.pojos.ReferenceElement;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 import com.google.android.material.snackbar.Snackbar;
@@ -48,7 +52,6 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
     DrawerActivityViewModel drawerActivityViewModel;
 
-    private SlidingUpPanelLayout slidingUpPanelLayout;
     private ImageButton nextElementImgBtn;
     private ImageButton previousElementImgBtn;
 
@@ -59,7 +62,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
     private ProgressBar progressBar;
 
-    private IconButton toggleVisitedIcon, showOnMapsIcon;
+    private IconButton toggleVisitedIcon, showOnMapsIcon, referencesBtn;
 
     private IconButton markAsFavorite;
 
@@ -81,8 +84,6 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pager_layout, container, false);
 
-        slidingUpPanelLayout = view.findViewById(R.id.slidingUpPanel);
-
         viewPager2 = view.findViewById(R.id.viewPager2);
         nextElementImgBtn = view.findViewById(R.id.nextElementImgBtn);
         previousElementImgBtn = view.findViewById(R.id.previousElementImgBtn);
@@ -97,6 +98,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         toggleVisitedIcon = view.findViewById(R.id.toggleResourceVisitedImgBtn);
         showOnMapsIcon = view.findViewById(R.id.showOnMapsImgBtn);
+        referencesBtn = view.findViewById(R.id.referencesBtn);
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -107,6 +109,20 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
                 progressBar.setVisibility(View.VISIBLE);
                 commentsRecyclerView.setVisibility(View.INVISIBLE);
+
+                if(position < sliderAdapter.getItemCount()-1){
+                    nextElementImgBtn.setVisibility(View.VISIBLE);
+                }
+                else{
+                    nextElementImgBtn.setVisibility(View.INVISIBLE);
+                }
+
+                if(position > 0){
+                    previousElementImgBtn.setVisibility(View.VISIBLE);
+                }
+                else{
+                    previousElementImgBtn.setVisibility(View.INVISIBLE);
+                }
 
                 drawerActivityViewModel.getComments(recyclerViewElements.get(viewPager2.getCurrentItem())).
                         observe(getViewLifecycleOwner(), comments -> {
@@ -122,6 +138,23 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
                                 commentsRecyclerView.setVisibility(View.VISIBLE);
                             }
                         });
+
+                referencesBtn.setVisibility(View.GONE);
+                toggleVisitedIcon.setVisibility(View.GONE);
+
+                showOnMapsIcon.setOnClickListener(click -> {
+                    Intent showOnMapsIntent = new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(recyclerViewElements.get(viewPager2.getCurrentItem()).getMapsUrl()));
+
+                    startActivity(showOnMapsIntent);
+                    showOnMapsIcon.enable();
+                });
+
+                if(recyclerViewElements.get(0) instanceof Hotel) return;
+
+                toggleVisitedIcon.setVisibility(View.VISIBLE);
+                referencesBtn.setVisibility(View.VISIBLE);
 
                 drawerActivityViewModel.getUserLiveData().
                         observe(getViewLifecycleOwner(), user -> {
@@ -155,28 +188,21 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
                     drawerActivityViewModel.toggleVisited(recyclerViewElements.get(viewPager2.getCurrentItem()));
                 });
 
-                showOnMapsIcon.setOnClickListener(click -> {
-                    Intent showOnMapsIntent = new Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(recyclerViewElements.get(viewPager2.getCurrentItem()).getMapsUrl()));
+                referencesBtn.addListener(click -> {
+                    RecyclerViewElement reference = recyclerViewElements.get(viewPager2.getCurrentItem());
 
-                    startActivity(showOnMapsIntent);
-                    showOnMapsIcon.enable();
+                    if(((ReferenceElement)reference).getReferences() == null){
+                        Snackbar.make(requireView(), "Este recurso no tiene paradas.", Snackbar.LENGTH_LONG).show();
+                        referencesBtn.enable();
+                        return;
+                    }
+
+                    Bundle bundle = new Bundle();
+
+                    bundle.putSerializable("references", reference);
+
+                    navController.navigate(R.id.nav_references, bundle);
                 });
-
-                if(position < sliderAdapter.getItemCount()-1){
-                    nextElementImgBtn.setVisibility(View.VISIBLE);
-                }
-                else{
-                    nextElementImgBtn.setVisibility(View.INVISIBLE);
-                }
-
-                if(position > 0){
-                    previousElementImgBtn.setVisibility(View.VISIBLE);
-                }
-                else{
-                    previousElementImgBtn.setVisibility(View.INVISIBLE);
-                }
             }
         });
 
@@ -195,7 +221,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
                     recyclerViewElements.get(viewPager2.getCurrentItem())).
                     addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
-                            Snackbar.make(requireView(), "Comentario añadido!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(requireView(), requireContext().getString(R.string.commentAdded), Snackbar.LENGTH_LONG).show();
                         }
                     });
         });
@@ -218,7 +244,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         int selectedResourceIndex = getArguments().getInt("selectedElementIndex", 0);
 
-        sliderAdapter = new BaseViewPagerAdapter.SliderAdapter(this, recyclerViewElements);
+        sliderAdapter = new BaseViewPagerAdapter.SliderAdapter(getChildFragmentManager(), getLifecycle(), recyclerViewElements);
 
         viewPager2.setAdapter(sliderAdapter);
 
@@ -258,18 +284,17 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         List<? extends RecyclerViewElement> recyclerViewElements;
 
-        public SliderAdapter(
-                @NonNull Fragment fragment,
+        public SliderAdapter(@NonNull FragmentManager fragmentManager, Lifecycle lifecycle,
                 List<? extends RecyclerViewElement> recyclerViewElements) {
 
-            super(fragment);
+            super(fragmentManager, lifecycle);
             this.recyclerViewElements = recyclerViewElements;
         }
 
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return getDetailFragment(recyclerViewElements.get(position));
+            return getDetailFragment(recyclerViewElements.get(position), position);
         }
 
         @Override
@@ -278,5 +303,5 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
         }
     }
 
-    abstract Fragment getDetailFragment(RecyclerViewElement recyclerViewElement);
+    abstract Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index);
 }

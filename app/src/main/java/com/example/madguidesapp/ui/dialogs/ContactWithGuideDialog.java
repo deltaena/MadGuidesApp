@@ -44,7 +44,7 @@ public class ContactWithGuideDialog extends AlertDialog {
         recyclerView.setHasFixedSize(true);
 
         setView(view);
-        setTitle("Redes Sociales");
+        setTitle(getContext().getString(R.string.socialMedia));
 
         super.onCreate(savedInstanceState);
     }

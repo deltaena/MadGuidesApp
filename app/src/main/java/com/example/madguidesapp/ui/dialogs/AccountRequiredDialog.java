@@ -20,18 +20,17 @@ public class AccountRequiredDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Account required");
-        builder.setMessage("You must be signed in in order to use " +
-                "this feature, would you like to sign in now?");
+        builder.setTitle(getString(R.string.accountRequired));
+        builder.setMessage(getString(R.string.askForSignUp));
 
-        builder.setPositiveButton("Yes!", (dialog, which) -> {
+        builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
             navController.popBackStack(R.id.nav_main_menu, false);
             navController.navigate(R.id.nav_login);
             dismiss();
         });
 
-        builder.setNegativeButton("Not now", ((dialog, which) -> dismiss() ));
+        builder.setNegativeButton(getString(R.string.notNow), ((dialog, which) -> dismiss() ));
 
         return builder.create();
     }

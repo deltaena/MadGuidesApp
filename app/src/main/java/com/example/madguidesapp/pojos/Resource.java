@@ -1,15 +1,22 @@
 package com.example.madguidesapp.pojos;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.GeoPoint;
+
+import java.util.List;
 import java.util.Objects;
 
-public class Resource implements RecyclerViewElement {
+public class Resource implements RecyclerViewElement , ReferenceElement{
 
     private String name;
     private String historicalDescription;
     private String formalDescription;
     private String curiosities;
+    private Double lat, lng;
     private String imageUrl;
     private String mapsUrl;
+    private boolean available;
 
     public String getName() {
         return name;
@@ -51,6 +58,39 @@ public class Resource implements RecyclerViewElement {
     }
     public void setMapsUrl(String mapsUrl) {
         this.mapsUrl = mapsUrl;
+    }
+
+    public LatLng getLatLng(){
+        return new LatLng(lat, lng);
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    @Override
+    public List<DocumentReference> getReferences() {
+        return null;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     @Override

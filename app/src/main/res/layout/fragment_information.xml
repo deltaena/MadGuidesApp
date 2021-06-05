@@ -59,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Daniel Suárez - Programador\nMarta Pozo - puesto\nLeon apellido - puesto\nIrene apellido - puesto"
+                android:text="Daniel Suárez - Programador\nMarta del Pozo - Informadora turistica/Guía\n
+                            Irene Rodriguez -Diseñadora/Guía\nLeon Vazquez - Creador de Rutas/Guía"
                 android:visibility="visible" />
 
             <TextView

@@ -43,7 +43,7 @@ public class GuideProfileFragment extends Fragment {
         HashMap<String, Object> map = checkLinks();
 
         if(map.size() == 0){
-            Snackbar.make(requireView(), "Insert at least one link to be displayed as a guide", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(requireView(), getString(R.string.fillOneFieldToBecomeGuide), Snackbar.LENGTH_LONG).show();
             iconButton.enable();
             return;
         }
@@ -51,7 +51,7 @@ public class GuideProfileFragment extends Fragment {
         String description = binding.descriptionEditText.getText().toString().trim();
 
         if(description.isEmpty()){
-            Snackbar.make(requireView(), "Description can't be empty to be displayed as a guide", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(requireView(), getString(R.string.fillDescriptionToBecomeGuide), Snackbar.LENGTH_LONG).show();
             iconButton.enable();
             return;
         }
@@ -61,7 +61,7 @@ public class GuideProfileFragment extends Fragment {
         drawerActivityViewModel.createGuideProfile(map).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        Snackbar.make(requireView(), "Congrats!! you just updated you'r guide profile", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(requireView(), getString(R.string.guideProfileUpdated), Snackbar.LENGTH_LONG).show();
                         iconButton.enable();
                     }
                 });
@@ -87,8 +87,6 @@ public class GuideProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated: ");
-
         setToolBar();
     }
 
@@ -100,7 +98,6 @@ public class GuideProfileFragment extends Fragment {
                 observe(requireActivity(), guide -> {
                     if(guide == null) return;
 
-                    Log.d(TAG, "onCreate`+: ");
                     binding.instagramLinkEditText.setText(guide.getInstagram());
                     binding.twitterlinkEditText.setText(guide.getTwitter());
                     binding.linkedinLinkEditText.setText(guide.getLinkedin());

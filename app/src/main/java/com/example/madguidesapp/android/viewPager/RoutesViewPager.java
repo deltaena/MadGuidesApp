@@ -19,7 +19,7 @@ public class RoutesViewPager extends BaseViewPagerAdapter {
     }
 
     @Override
-    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement) {
-        return new SingleRouteFragment(recyclerViewElement);
+    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index) {
+        return new SingleRouteFragment(recyclerViewElement, navController, index);
     }
 }

@@ -40,7 +40,7 @@ public class LoginFragment extends ConnectivityFragment {
                 userDataChecked.get("email"), userDataChecked.get("password")).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        Snackbar.make(getView(), "Sesión iniciada correctamente", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), getContext().getString(R.string.signedIn), Snackbar.LENGTH_LONG).show();
                         navController.popBackStack();
                     }
                     else{
@@ -53,7 +53,7 @@ public class LoginFragment extends ConnectivityFragment {
 
     View.OnClickListener goToRegisterClicked = click -> {
         String emailStr = binding.emailEditText.getText(),
-                passwordStr = binding.passwordEditText.getText().toString();
+                passwordStr = binding.passwordEditText.getText();
 
         Bundle bundle = new Bundle();
         bundle.putString("email", emailStr);
@@ -106,15 +106,15 @@ public class LoginFragment extends ConnectivityFragment {
         Map<String, String> dataMap = new HashMap<>();
 
         String email = binding.emailEditText.getText();
-        String password = binding.passwordEditText.getText().toString();
+        String password = binding.passwordEditText.getText();
 
         if(email.isEmpty()){
-            binding.emailEditText.setError("Campo obligatorio");
+            binding.emailEditText.setError(getString(R.string.requiredField));
             return null;
         }
 
         if(password.isEmpty()){
-            binding.passwordEditText.setError("Campo obligatorio");
+            binding.passwordEditText.setError(getString(R.string.requiredField));
         }
 
         dataMap.put("email", email);

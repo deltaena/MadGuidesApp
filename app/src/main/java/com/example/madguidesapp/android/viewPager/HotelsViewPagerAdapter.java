@@ -20,7 +20,7 @@ public class HotelsViewPagerAdapter extends BaseViewPagerAdapter{
     }
 
     @Override
-    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement) {
+    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index) {
         return new SingleHotelFragment(recyclerViewElement);
     }
 }

@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
 
         if(userChanged != null) drawerActivityViewModel.updateUser(userChanged);
         else {
-            Snackbar.make(requireView(), "No changes to commit.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(requireView(), getString(R.string.noChanges), Snackbar.LENGTH_SHORT).show();
             iconButton.enable();
         }
     };
@@ -108,7 +108,7 @@ public class ProfileFragment extends Fragment {
                             pendingMap = new HashMap<>(),
                             deniedMap = new HashMap<>();
 
-        approvedMap.put(textKey, "Manage guide profile");
+        approvedMap.put(textKey, getString(R.string.manageGuideProfile));
         approvedMap.put(onClickKey,
                 (View.OnClickListener) v -> {
                     navController.navigate(R.id.nav_guide_profile);
@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment {
 
         buttonContentsMap.put(User.SolicitudeStatus.APPROVED, approvedMap);
 
-        notSolicitedMap.put(textKey, "Become a guide!");
+        notSolicitedMap.put(textKey, getString(R.string.becomeGuide));
         notSolicitedMap.put(onClickKey,
                 (View.OnClickListener) v -> {
                     SendBecomeAGuideSolicitude sendBecomeAGuideSolicitude =
@@ -130,19 +130,18 @@ public class ProfileFragment extends Fragment {
 
         buttonContentsMap.put(User.SolicitudeStatus.NOT_SOLICITED, notSolicitedMap);
 
-        pendingMap.put(textKey, "Guide solicitude is pending...");
+        pendingMap.put(textKey, getString(R.string.guideSolicitudePending));
         pendingMap.put(onClickKey,
                 (View.OnClickListener) v -> {
-                    String msg = "Este proceso puede tardar entre 1 y 2 días, vuelva más tarde";
-                    Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireView(), getString(R.string.guideSolicitudePendingWarning), Snackbar.LENGTH_LONG).show();
                 });
 
         buttonContentsMap.put(User.SolicitudeStatus.PENDING, pendingMap);
 
-        deniedMap.put(textKey, "Permanently denied");
+        deniedMap.put(textKey, getString(R.string.permanentlyDenied));
         deniedMap.put(onClickKey,
                 (View.OnClickListener) v -> {
-                    String msg = "Your profile doesn't meet the rules to become a guide";
+                    String msg = getString(R.string.permanentlyDeniedWarning);
                     Snackbar.make(requireView(), msg, Snackbar.LENGTH_LONG).show();
                 });
 

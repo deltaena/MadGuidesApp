@@ -46,10 +46,10 @@ public class RegisterFragment extends ConnectivityFragment {
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         if(task.getResult().size() == 0) {
-                            Snackbar.make(requireView(), "Usuario registrado con exito!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(requireView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
                         }
                         else{
-                            binding.usernameEditText.setError("El nombre de usuario ya está en uso");
+                            binding.usernameEditText.setError(getString(R.string.usernameExistsAlready));
                         }
                     }
                 });
@@ -64,7 +64,7 @@ public class RegisterFragment extends ConnectivityFragment {
                 register(user, userDataChecked.get("password")).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        Snackbar.make(getView(), "Usuario registrado con éxito", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
                         navController.popBackStack();
                     }
                     else{
@@ -124,15 +124,6 @@ public class RegisterFragment extends ConnectivityFragment {
     }
 
     private Map<String, String> checkUserData(){
-        //email no es vacío
-        /*
-            At least 8 characters—the more characters, the better
-            A mixture of both uppercase and lowercase letters
-            A mixture of letters and numbers
-            Inclusion of at least one special character, e.g., ! @ # ? ]
-            Note: do not use < or > in your password, as both can cause problems in Web browsers
-         */
-
         Map<String, String> dataMap = new HashMap<>();
         Pattern matchOneLowerCase = Pattern.compile("[a-z]+"),
                 matchOneUpperCase = Pattern.compile("[A-Z]+"),
@@ -140,44 +131,42 @@ public class RegisterFragment extends ConnectivityFragment {
                 matchOneSpecialCharacter = Pattern.compile("[^A-Za-z0-9]");
 
 
-        String email = binding.emailEditText.getText().toString().trim().toLowerCase();
-        String password = binding.passwordEditText.getText().toString();
-        String username = binding.usernameEditText.getText().toString();
+        String email = binding.emailEditText.getText().trim().toLowerCase();
+        String password = binding.passwordEditText.getText();
+        String username = binding.usernameEditText.getText();
 
         if(email.isEmpty()){
-            binding.emailEditText.setError("Campo obligatorio");
+            binding.emailEditText.setError(getString(R.string.requiredField));
             return null;
         }
 
-        String basePasswordErrorText = "La contraseña debe contener al menos ";
-
         if(!matchOneLowerCase.matcher(password).find()){
-            binding.passwordEditText.setError(basePasswordErrorText+"una minúscula");
+            binding.passwordEditText.setError(getString(R.string.invalidPasswordBase)+getString(R.string.lowerCase));
             return null;
         }
 
         if(!matchOneUpperCase.matcher(password).find()){
-            binding.passwordEditText.setError(basePasswordErrorText+"una mayuscula");
+            binding.passwordEditText.setError(getString(R.string.invalidPasswordBase)+getString(R.string.upperCase));
             return null;
         }
 
         if(!matchOneNumber.matcher(password).find()){
-            binding.passwordEditText.setError(basePasswordErrorText+"un número");
+            binding.passwordEditText.setError(getString(R.string.invalidPasswordBase)+getString(R.string.number));
             return null;
         }
 
         if(!matchOneSpecialCharacter.matcher(password).find()){
-            binding.passwordEditText.setError(basePasswordErrorText+"un carácter especial");
+            binding.passwordEditText.setError(getString(R.string.invalidPasswordBase)+getString(R.string.specialChar));
             return null;
         }
 
         if(password.length() < 8){
-            binding.passwordEditText.setError(basePasswordErrorText+"8 cáracteres");
+            binding.passwordEditText.setError(getString(R.string.invalidPasswordBase)+getString(R.string.eightChars));
             return null;
         }
 
         if(username.isEmpty()){
-            binding.usernameEditText.setError("Campo oblligatorio");
+            binding.usernameEditText.setError(getString(R.string.requiredField));
             return null;
         }
 

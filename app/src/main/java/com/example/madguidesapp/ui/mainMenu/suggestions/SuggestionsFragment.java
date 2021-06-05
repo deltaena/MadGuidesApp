@@ -76,7 +76,7 @@ public class SuggestionsFragment extends Fragment {
         String suggestionText = suggestionEditText.getText().toString().trim();
 
         if(suggestionText.isEmpty()){
-            suggestionEditText.setError("Campo obligatorio");
+            suggestionEditText.setError(getString(R.string.requiredField));
             return;
         }
 
@@ -106,7 +106,7 @@ public class SuggestionsFragment extends Fragment {
                     if(aBoolean) {
                         suggestionPendingProgressBar.setVisibility(View.GONE);
                         sendSuggestionButton.setVisibility(View.VISIBLE);
-                        Snackbar.make(getView(), "Sugerencia enviada correctamente!", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), getString(R.string.suggestionSended), Snackbar.LENGTH_LONG).show();
                         suggestionEditText.setText("");
                         checkBox.setChecked(false);
                     }

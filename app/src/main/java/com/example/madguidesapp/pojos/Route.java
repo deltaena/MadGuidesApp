@@ -1,13 +1,17 @@
 package com.example.madguidesapp.pojos;
 
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.List;
 import java.util.Objects;
 
-public class Route implements RecyclerViewElement {
+public class Route implements RecyclerViewElement, ReferenceElement{
     private String name;
     private String description;
     private String duration;
     private String imageUrl;
     private String mapsUrl;
+    private List<DocumentReference> waypoints;
 
     public String getName() {
         return name;
@@ -58,6 +62,24 @@ public class Route implements RecyclerViewElement {
     @Override
     public String toString() {
         return String.format("/%s/%s", "Routes", name);
+    }
+
+    @Override
+    public List<DocumentReference> getReferences() {
+        return waypoints;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return false;
+    }
+
+    public List<DocumentReference> getWaypoints() {
+        return waypoints;
+    }
+
+    public void setWaypoints(List<DocumentReference> waypoints) {
+        this.waypoints = waypoints;
     }
 }
 

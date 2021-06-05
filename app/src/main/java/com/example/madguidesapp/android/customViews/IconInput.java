@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 
 import com.example.madguidesapp.R;
 
@@ -67,7 +68,7 @@ public class IconInput extends ConstraintLayout {
         editText.setInputType(inputType);
 
         editText.setHint(ta.getString(R.styleable.IconInput_hint));
-        editText.setBackground(getContext().getDrawable(R.drawable.input_bg));
+        //editText.setBackground((ContextCompat.getDrawable(getContext(), iconsMap.get(R.drawable.input_bg))));
 
         addView(editText);
 
@@ -80,9 +81,7 @@ public class IconInput extends ConstraintLayout {
 
         imageView.setId(R.id.customIIImageView);
 
-        Log.d(TAG, "initIcon: "+inputType);
-
-        imageView.setImageDrawable(getContext().getDrawable(iconsMap.get(inputType)));
+        imageView.setImageDrawable(ContextCompat.getDrawable(getContext(), iconsMap.get(inputType)));
 
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setAdjustViewBounds(true);

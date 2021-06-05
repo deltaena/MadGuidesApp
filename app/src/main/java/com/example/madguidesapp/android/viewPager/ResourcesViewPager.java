@@ -22,7 +22,7 @@ public class ResourcesViewPager extends BaseViewPagerAdapter{
     }
 
     @Override
-    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement) {
+    Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index) {
         return new SingleResourceFragment(recyclerViewElement);
     }
 }

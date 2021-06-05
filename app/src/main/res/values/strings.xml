@@ -19,4 +19,56 @@
         <item>Linkedin</item>
         <item>Other</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="connectionLost">Conexión perdida</string>
+    <string name="accept">Aceptar</string>
+    <string name="operationDispatchDelayedCon">La operación se relizará cuando haya conexión</string>
+    <string name="commentAdded">Comentario añadido!</string>
+    <string name="signedIn">Sesión iniciada correctamente</string>
+    <string name="requiredField">Campo obligatorio</string>
+    <string name="signedUp">Usuario registrado con exito!</string>
+    <string name="usernameExistsAlready">El nombre de usuario ya está en uso</string>
+    <string name="invalidPasswordBase">La contraseña debe contener al menos</string>
+    <string name="lowerCase"> una minuscula</string>
+    <string name="upperCase">" una mayuscula"</string>
+    <string name="number">" un número"</string>
+    <string name="specialChar">" un carácter especial"</string>
+    <string name="eightChars">" 8 cáracteres"</string>
+    <string name="accountRequired">Cuenta requerida</string>
+    <string name="askForSignUp">"Necesitas una cuenta para usar esta funcionalidad, ¿Desea crear una ahora? "</string>
+    <string name="yes">Si!</string>
+    <string name="notNow">Ahora no</string>
+    <string name="socialMedia">Redes Sociales</string>
+    <string name="becomeGuideTitle">Enviar solicitud para ser guía</string>
+    <string name="becomeGuideMessage">Haciendo click en ok aceptas enviar tu perfil a revision y colaborar a una mejor comunidad si eres aceptado para ejercer como guía</string>
+    <string name="ok">Ok!</string>
+    <string name="locationPermaDenied">Permisos de localización denegados permantentemente, acceda a configuración para cambiarlo.</string>
+    <string name="locationDenied">Permisos de localización denegados</string>
+    <string name="suggestionSended">Sugerencia enviada correctamente!</string>
+    <string name="fillOneFieldToBecomeGuide">Introduzca al menos un enlace para ser mostrado como guía</string>
+    <string name="fillDescriptionToBecomeGuide">Introduzca una descripción para ser mostrado como guía</string>
+    <string name="guideProfileUpdated">Se ha actualizado tú perfil de guía!</string>
+    <string name="noChanges">No se han encontrado cambios</string>
+    <string name="manageGuideProfile">Admistra tú perfil de guía</string>
+    <string name="becomeGuide">Conviertete en guía</string>
+    <string name="guideSolicitudePending">Solicitud de guía pendiente...</string>
+    <string name="guideSolicitudePendingWarning">Este proceso puede tardar entre 1 y 2 días, vuelva más tarde</string>
+    <string name="permanentlyDenied">Denegado permanentemente</string>
+    <string name="permanentlyDeniedWarning">Denegado permanentemente, tú perfil no cumple las reglas para convertirte en guía</string>
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

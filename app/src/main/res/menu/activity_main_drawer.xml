@@ -7,27 +7,22 @@
         <item
             android:id="@+id/visitedResources"
             android:checkable="true"
-            android:icon="@android:drawable/alert_dark_frame"
+            android:icon="@drawable/resources_icon"
             android:title="Recursos visitados" />
-        <item
-            android:id="@+id/createGuideProfile"
-            android:checkable="true"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="Create guide profile" />
         <item
             android:id="@+id/favorites"
             android:checkable="true"
-            android:icon="@android:drawable/ic_menu_add"
+            android:icon="@drawable/filled_heart"
             android:title="Favoritos" />
         <item
             android:id="@+id/visitedRoutes"
             android:checkable="true"
-            android:icon="@android:drawable/checkbox_on_background"
-            android:title="Recursos visitados" />
+            android:icon="@drawable/routes_icon"
+            android:title="Rutas visitados" />
         <item
-            android:id="@+id/configuration"
+            android:id="@+id/signout"
             android:checkable="true"
-            android:icon="@android:drawable/checkbox_on_background"
-            android:title="Configuración" />
+            android:icon="@drawable/sign_out_icon"
+            android:title="Cerrar sesión" />
     </group>
 </menu>
