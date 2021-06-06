@@ -21,7 +21,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -29,7 +28,6 @@
                 android:src="@drawable/logo" />
 
             <TextView
-                android:id="@+id/aboutUsLblTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -37,7 +35,6 @@
                 android:text="Acerca de MadGuidesApp" />
 
             <TextView
-                android:id="@+id/aboutUsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -47,7 +44,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/contributorsLblTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -56,7 +52,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/contributorsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -66,7 +61,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/buyMeACoffeeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -84,7 +78,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/privatyPoliticsLblTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
@@ -93,7 +86,6 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/privacyPoliticsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

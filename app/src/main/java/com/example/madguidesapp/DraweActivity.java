@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.example.madguidesapp.databinding.AppBarMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DraweActivity extends BaseActivity {

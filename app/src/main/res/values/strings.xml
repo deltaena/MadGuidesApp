@@ -1,24 +1,6 @@
 <resources>
     <string name="app_name">MadGuidesApp</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string-array name="guidesSocialLinks">
-        <item>Instagram</item>
-        <item>Twitter</item>
-        <item>Linkedin</item>
-        <item>Other</item>
-    </string-array>
     <string name="title_activity_maps">Map</string>
 
     <string name="connectionLost">Conexión perdida</string>
@@ -56,8 +38,6 @@
     <string name="guideSolicitudePendingWarning">Este proceso puede tardar entre 1 y 2 días, vuelva más tarde</string>
     <string name="permanentlyDenied">Denegado permanentemente</string>
     <string name="permanentlyDeniedWarning">Denegado permanentemente, tú perfil no cumple las reglas para convertirte en guía</string>
-    <string name="phoneLabel"><b>Teléfono:</b> %d</string>
-    <string name="webLabel"><b>Página web:</b> %s</string>
 </resources>
 
 

@@ -1,6 +1,9 @@
 package com.example.madguidesapp.ui.sideMenu;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,26 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.customViews.IconButton;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.databinding.FragmentGuideProfileBinding;
-import com.example.madguidesapp.pojos.Guide;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class GuideProfileFragment extends Fragment {
 

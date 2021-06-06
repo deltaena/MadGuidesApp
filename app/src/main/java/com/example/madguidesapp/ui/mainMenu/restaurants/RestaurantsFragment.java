@@ -9,8 +9,6 @@ import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
 import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
 import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
 
-import java.util.Arrays;
-
 public class RestaurantsFragment extends RecyclerViewBaseFragment {
 
     @Override

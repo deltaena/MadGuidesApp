@@ -2,7 +2,6 @@ package com.example.madguidesapp.pojos;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.GeoPoint;
 
 import java.util.List;
 import java.util.Objects;

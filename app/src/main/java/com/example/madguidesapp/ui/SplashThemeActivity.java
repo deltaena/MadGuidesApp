@@ -1,15 +1,11 @@
 package com.example.madguidesapp.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.madguidesapp.DraweActivity;
-import com.example.madguidesapp.R;
 
 public class SplashThemeActivity extends AppCompatActivity {
 

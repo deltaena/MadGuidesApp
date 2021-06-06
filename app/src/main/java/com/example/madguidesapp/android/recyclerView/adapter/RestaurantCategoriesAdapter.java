@@ -1,11 +1,9 @@
 package com.example.madguidesapp.android.recyclerView.adapter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.pojos.HotelCategory;
 import com.example.madguidesapp.pojos.RestaurantCategory;
 
 public class RestaurantCategoriesAdapter extends BaseAdapter{

@@ -1,7 +1,6 @@
 package com.example.madguidesapp.android.recyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;

@@ -1,17 +1,12 @@
 package com.example.madguidesapp.ui.mainMenu.resources;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madguidesapp.R;
-import com.example.madguidesapp.android.recyclerView.adapter.BasicNavToPagerAdapter;
-import com.example.madguidesapp.android.recyclerView.adapter.RestaurantCategoriesAdapter;
-import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
 import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
+import com.example.madguidesapp.android.recyclerView.adapter.RestaurantCategoriesAdapter;
 
 public class ResourcesFragment extends RecyclerViewBaseFragment {
     private static final String TAG = "ResourcesFragment";

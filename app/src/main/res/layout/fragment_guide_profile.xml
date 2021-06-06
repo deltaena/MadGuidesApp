@@ -18,7 +18,6 @@
         app:layout_constraintTop_toTopOf="@+id/instagramLinkEditText" />
 
     <ImageView
-        android:id="@+id/linkedinIconImageView"
         android:layout_width="40dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -28,7 +27,6 @@
         app:layout_constraintTop_toTopOf="@+id/linkedinLinkEditText" />
 
     <ImageView
-        android:id="@+id/twitterIconImageView"
         android:layout_width="40dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -38,7 +36,6 @@
         app:layout_constraintTop_toTopOf="@+id/twitterlinkEditText" />
 
     <ImageView
-        android:id="@+id/otherIconImageView"
         android:layout_width="40dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -123,7 +120,6 @@
         tools:textSize="24sp" />
 
     <EditText
-        android:id="@+id/descriptionEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"

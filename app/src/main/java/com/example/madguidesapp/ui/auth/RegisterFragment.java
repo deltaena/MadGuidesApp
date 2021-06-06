@@ -4,24 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.connectivity.ConnectivityFragment;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
-import com.example.madguidesapp.R;
 import com.example.madguidesapp.databinding.FragmentRegisterBinding;
 import com.example.madguidesapp.pojos.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,8 +31,6 @@ public class RegisterFragment extends ConnectivityFragment {
     private FragmentRegisterBinding binding;
 
     private NavController navController;
-
-    //  TODO separate on complete
 
     View.OnClickListener onRegisterBtnClicked = click -> {
         Map<String, String> userDataChecked = checkUserData();
@@ -56,6 +49,7 @@ public class RegisterFragment extends ConnectivityFragment {
                 }
                 else{
                     binding.usernameEditText.setError(getString(R.string.usernameExistsAlready));
+                    binding.registerBtn.endLoading();
                 }
             }
         };
@@ -80,6 +74,7 @@ public class RegisterFragment extends ConnectivityFragment {
                     }
                     else{
                         Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                        binding.registerBtn.endLoading();
                     }
                 });
     }

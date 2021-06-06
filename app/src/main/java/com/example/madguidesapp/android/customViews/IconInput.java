@@ -2,9 +2,7 @@ package com.example.madguidesapp.android.customViews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.Html;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +19,6 @@ import java.util.HashMap;
 
 import static android.text.InputType.TYPE_NULL;
 import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
-import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.example.madguidesapp.pojos.MyUtil.toDp;
 

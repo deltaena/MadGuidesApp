@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_main_menu">
 
     <fragment
@@ -106,7 +105,7 @@
         tools:layout="@layout/activity_maps" />
     <fragment
         android:id="@+id/nav_references"
-        android:name="com.example.madguidesapp.ui.mainMenu.routes.RouteReferencesFragment"
+        android:name="com.example.madguidesapp.ui.mainMenu.routes.ResourcesReferencesFragment"
         android:label="nav_route_reference" />
     <fragment
         android:id="@+id/nav_restaurants_pager"

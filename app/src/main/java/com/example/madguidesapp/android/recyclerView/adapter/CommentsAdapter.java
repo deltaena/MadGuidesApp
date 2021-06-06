@@ -11,9 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.pojos.Comment;
 import com.example.madguidesapp.pojos.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 

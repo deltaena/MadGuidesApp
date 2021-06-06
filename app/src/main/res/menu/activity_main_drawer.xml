@@ -20,7 +20,6 @@
             android:icon="@drawable/routes_icon"
             android:title="Rutas visitados" />
         <item
-            android:id="@+id/signout"
             android:checkable="true"
             android:icon="@drawable/sign_out_icon"
             android:title="Cerrar sesión" />

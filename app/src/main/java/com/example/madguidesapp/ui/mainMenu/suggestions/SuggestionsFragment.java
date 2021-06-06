@@ -2,19 +2,9 @@ package com.example.madguidesapp.ui.mainMenu.suggestions;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,29 +14,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.Suggestion;
-import com.example.madguidesapp.pojos.User;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.github.dhaval2404.imagepicker.listener.DismissListener;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.io.File;
 import java.util.Date;
-import java.util.List;
 
 public class SuggestionsFragment extends Fragment {
 
@@ -103,12 +90,15 @@ public class SuggestionsFragment extends Fragment {
 
         drawerActivityViewModel.getAreAllOperationsDoneLiveData().
                 observe(this, aBoolean -> {
+                    if(aBoolean == null) return;
+
                     if(aBoolean) {
                         suggestionPendingProgressBar.setVisibility(View.GONE);
                         sendSuggestionButton.setVisibility(View.VISIBLE);
                         Snackbar.make(getView(), getString(R.string.suggestionSended), Snackbar.LENGTH_LONG).show();
                         suggestionEditText.setText("");
                         checkBox.setChecked(false);
+                        drawerActivityViewModel.suggestionProcessed();
                     }
                     else{
                         suggestionPendingProgressBar.setVisibility(View.VISIBLE);

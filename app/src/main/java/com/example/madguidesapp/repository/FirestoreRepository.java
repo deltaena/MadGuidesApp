@@ -1,11 +1,8 @@
 package com.example.madguidesapp.repository;
 
-import android.location.Location;
-
 import com.example.madguidesapp.pojos.Comment;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.pojos.Suggestion;
-import com.example.madguidesapp.pojos.User;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQueryBounds;

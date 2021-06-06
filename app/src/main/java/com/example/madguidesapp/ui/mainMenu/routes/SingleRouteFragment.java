@@ -1,24 +1,18 @@
 package com.example.madguidesapp.ui.mainMenu.routes;
 
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.customViews.DecorativeImage;
-import com.example.madguidesapp.android.customViews.IconButton;
-import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
+import com.example.madguidesapp.pojos.Route;
 
 public class SingleRouteFragment extends Fragment {
     private static final String TAG = "SingleRouteFragment";

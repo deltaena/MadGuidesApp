@@ -1,21 +1,11 @@
 package com.example.madguidesapp.ui.dialogs;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
-import com.example.madguidesapp.pojos.User;
-import com.example.madguidesapp.repository.FirestoreRepository;
-import com.example.madguidesapp.repository.UserRepository;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class SendBecomeAGuideSolicitude extends AlertDialog {
 

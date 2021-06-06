@@ -55,7 +55,6 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionLblTextView">
 
         <TextView
-            android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

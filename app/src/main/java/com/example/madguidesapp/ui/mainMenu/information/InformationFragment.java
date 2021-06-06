@@ -1,6 +1,5 @@
 package com.example.madguidesapp.ui.mainMenu.information;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

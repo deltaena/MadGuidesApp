@@ -3,9 +3,7 @@ package com.example.madguidesapp.ui.mainMenu.guides;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.android.recyclerView.RecyclerViewBaseFragment;
 import com.example.madguidesapp.android.recyclerView.adapter.BaseAdapter;
 import com.example.madguidesapp.android.recyclerView.adapter.GuidesAdapter;

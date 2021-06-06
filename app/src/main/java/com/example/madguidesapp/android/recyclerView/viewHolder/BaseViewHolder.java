@@ -1,10 +1,7 @@
 package com.example.madguidesapp.android.recyclerView.viewHolder;
 
-import android.media.Image;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.customViews.DecorativeImage;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
     public TextView elementNameTextView;

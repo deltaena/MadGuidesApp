@@ -5,9 +5,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.android.recyclerView.viewHolder.BaseViewHolder;
 import com.example.madguidesapp.android.recyclerView.viewHolder.GuidesViewHolder;
+import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.ui.dialogs.ContactWithGuideDialog;
 
 public class GuidesAdapter extends BaseAdapter {

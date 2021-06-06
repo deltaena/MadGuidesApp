@@ -1,7 +1,6 @@
 package com.example.madguidesapp.ui.mainMenu.resources;
 
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.madguidesapp.databinding.FragmentSingleResourceBinding;
-import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
+import com.example.madguidesapp.pojos.Resource;
 
 public class SingleResourceFragment extends Fragment {
 

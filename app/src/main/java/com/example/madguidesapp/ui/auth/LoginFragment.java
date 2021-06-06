@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.connectivity.ConnectivityFragment;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
-import com.example.madguidesapp.R;
 import com.example.madguidesapp.databinding.FragmentLoginBinding;
 import com.google.android.material.snackbar.Snackbar;
 

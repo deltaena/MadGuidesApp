@@ -1,31 +1,20 @@
 package com.example.madguidesapp.android.recyclerView.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.android.recyclerView.viewHolder.BaseViewHolder;
 import com.example.madguidesapp.android.recyclerView.viewHolder.BasicViewHolder;
+import com.example.madguidesapp.pojos.RecyclerViewElement;
 
 import java.util.List;
 

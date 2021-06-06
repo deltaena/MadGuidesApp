@@ -2,10 +2,7 @@ package com.example.madguidesapp.android.recyclerView.adapter;
 
 import android.view.View;
 
-import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.pojos.ReferenceElement;
-import com.example.madguidesapp.pojos.Resource;
-import com.example.madguidesapp.pojos.Route;
 import com.google.android.material.snackbar.Snackbar;
 
 public class ReferenceAdapter extends BaseAdapter{

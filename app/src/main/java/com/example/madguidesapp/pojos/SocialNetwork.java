@@ -1,7 +1,5 @@
 package com.example.madguidesapp.pojos;
 
-import android.graphics.drawable.Drawable;
-
 public class SocialNetwork implements RecyclerViewElement {
 
     private String name;

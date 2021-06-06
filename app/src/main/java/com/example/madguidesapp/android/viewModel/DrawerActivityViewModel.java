@@ -1,27 +1,24 @@
 package com.example.madguidesapp.android.viewModel;
 
-import android.location.LocationManager;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madguidesapp.pojos.Comment;
 import com.example.madguidesapp.pojos.Guide;
 import com.example.madguidesapp.pojos.Hotel;
 import com.example.madguidesapp.pojos.HotelCategory;
 import com.example.madguidesapp.pojos.MainMenuElement;
+import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.pojos.Resource;
 import com.example.madguidesapp.pojos.Restaurant;
 import com.example.madguidesapp.pojos.RestaurantCategory;
 import com.example.madguidesapp.pojos.Route;
 import com.example.madguidesapp.pojos.Suggestion;
 import com.example.madguidesapp.pojos.User;
-import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.repository.FirestorageRepository;
 import com.example.madguidesapp.repository.FirestoreRepository;
 import com.example.madguidesapp.repository.UserRepository;
@@ -34,12 +31,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static android.content.Context.LOCATION_SERVICE;
 
 public class DrawerActivityViewModel extends ViewModel {
     private static final String TAG = "DrawerActivityViewModel";
@@ -608,9 +602,11 @@ public class DrawerActivityViewModel extends ViewModel {
         areAllOperationsDoneMutableLiveData.setValue(false);
         firestoreRepository.
                 uploadSuggestion(suggestion).
-                addOnCompleteListener(task -> {
-                    areAllOperationsDoneMutableLiveData.setValue(true);
-                });
+                addOnCompleteListener(task -> areAllOperationsDoneMutableLiveData.setValue(true));
+    }
+
+    public void suggestionProcessed(){
+        areAllOperationsDoneMutableLiveData.setValue(null);
     }
 
     public LiveData<Boolean> getAreAllOperationsDoneLiveData(){

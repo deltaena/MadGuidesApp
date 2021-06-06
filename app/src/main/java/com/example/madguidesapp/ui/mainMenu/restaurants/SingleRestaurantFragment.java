@@ -1,17 +1,14 @@
 package com.example.madguidesapp.ui.mainMenu.restaurants;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.madguidesapp.R;
 import com.example.madguidesapp.databinding.FragmentSingleRestaurantBinding;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.pojos.Restaurant;

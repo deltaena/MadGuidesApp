@@ -1,30 +1,21 @@
 package com.example.madguidesapp.ui.mainMenu.hotels;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.example.madguidesapp.R;
-import com.example.madguidesapp.android.customViews.DecorativeImage;
 import com.example.madguidesapp.databinding.FragmentSingleHotelBinding;
-import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.pojos.Hotel;
-
-import org.w3c.dom.Text;
+import com.example.madguidesapp.pojos.RecyclerViewElement;
 
 public class SingleHotelFragment extends Fragment {
 
