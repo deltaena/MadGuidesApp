@@ -7,6 +7,9 @@ public class Restaurant implements RecyclerViewElement{
     private String imageUrl;
     private String mapsUrl;
     private String web;
+    private int phone;
+    private String description;
+    private String reference;
 
     @Override
     public String getName() {
@@ -49,6 +52,30 @@ public class Restaurant implements RecyclerViewElement{
 
     public void setWeb(String web) {
         this.web = web;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     @Override

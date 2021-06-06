@@ -174,8 +174,8 @@ public class DrawerActivityViewModel extends ViewModel {
         registeredGuideMutableLiveData.setValue(null);
     }
 
-    public Task register(User user, String password){
-        OnCompleteListener creationCompleted = task -> {
+    public Task<AuthResult> register(User user, String password){
+        OnCompleteListener<Void> creationCompleted = task -> {
             if(task.isSuccessful()){
                 setUser();
             }

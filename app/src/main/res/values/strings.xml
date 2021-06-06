@@ -10,7 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="guidesSocialLinks">
@@ -41,8 +41,8 @@
     <string name="notNow">Ahora no</string>
     <string name="socialMedia">Redes Sociales</string>
     <string name="becomeGuideTitle">Enviar solicitud para ser guía</string>
-    <string name="becomeGuideMessage">Haciendo click en ok aceptas enviar tu perfil a revision y colaborar a una mejor comunidad si eres aceptado para ejercer como guía</string>
-    <string name="ok">Ok!</string>
+    <string name="becomeGuideMessage">Haciendo click en OK aceptas enviar tu perfil a revision y colaborar a una mejor comunidad si eres aceptado para ejercer como guía</string>
+    <string name="ok">OK!</string>
     <string name="locationPermaDenied">Permisos de localización denegados permantentemente, acceda a configuración para cambiarlo.</string>
     <string name="locationDenied">Permisos de localización denegados</string>
     <string name="suggestionSended">Sugerencia enviada correctamente!</string>
@@ -52,10 +52,12 @@
     <string name="noChanges">No se han encontrado cambios</string>
     <string name="manageGuideProfile">Admistra tú perfil de guía</string>
     <string name="becomeGuide">Conviertete en guía</string>
-    <string name="guideSolicitudePending">Solicitud de guía pendiente...</string>
+    <string name="guideSolicitudePending">Solicitud de guía pendiente…</string>
     <string name="guideSolicitudePendingWarning">Este proceso puede tardar entre 1 y 2 días, vuelva más tarde</string>
     <string name="permanentlyDenied">Denegado permanentemente</string>
     <string name="permanentlyDeniedWarning">Denegado permanentemente, tú perfil no cumple las reglas para convertirte en guía</string>
+    <string name="phoneLabel"><b>Teléfono:</b> %d</string>
+    <string name="webLabel"><b>Página web:</b> %s</string>
 </resources>
 
 

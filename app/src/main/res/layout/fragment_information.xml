@@ -40,15 +40,17 @@
                 android:id="@+id/aboutUsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:text="Bueno pues somos un grupo de chavales que yo que se tampoco voy a gastar tiempo ahora en esto pero pues la aplicación está chula y que se yo si ya ves esto es que la has descargado así que gracias crack jaja"
+                android:layout_marginEnd="20dp"
+                android:text="Buenas, ante todo gracias por descargar la app, MadGuides está formado por  4 estudiantes con la intención de facilitar la interacción con el turismo, nuestro principal objetivo es poder formar una comunidad sana en la que mediante escuchar a lo usuarios, podamos aprender y mejorar como profesionales a la vez que os brindamos una app digna de usar y hecha para todos los que la usan."
                 android:visibility="visible" />
 
             <TextView
                 android:id="@+id/contributorsLblTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:text="¿Quienes somos?"
                 android:visibility="visible" />
@@ -67,7 +69,9 @@
                 android:id="@+id/buyMeACoffeeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:text="Si encuentras la aplicación útil puedes invitarnos a un café para apoyar la iniciativa! :)"
                 android:visibility="visible" />
@@ -92,10 +96,12 @@
                 android:id="@+id/privacyPoliticsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:overScrollMode="always"
-                android:text="Es recomendable que una política de privacidad incluya las siguientes informaciones:      Motivos y finalidades del procesamiento de datos en una página web.     Nombre y datos de contacto del responsable del sitio así como del responsable de protección de datos.     Legitimación legal para el procesamiento de datos.     Receptores de los datos.     Periodo de tiempo durante el que los datos van a permanecer almacenados.     Intención de facilitar los datos a terceras partes, incluso en otro país.     Derecho a la información y/o eliminación de los datos.     Derecho de apelación ante la autoridad competente en materia de protección de datos. "
+                android:text="Responsable de la app y protección de datos: bemol54192@gmail.com.\n LA APP CODIFICA TODA INFORMACIÓN SENSIBLE PARA QUE SOLO EL USUARIO LA SEPA.\n La app MadGuides no guarda ningun dato que no sea proporcionado por el usuario,  los datos proporcionados son almacenados con el único fin de permitirle usar su perfil desde cualquier dipositivo y ponerle en contacto con otros usuarios.\n El receptor de estos datos es el responsable de la app, asimismo se reserva el  acceso a los datos al equipo de MadGuides a fin de tratar datos sobre los perfiles de guías para determinar si cumplen la normativa.\n Toda información del usuario será eliminada al cumplirse el año desde su ultimo inicio de sesión, contando como inicio de sesión el ultimo día que la aplicación se conectó a internet.\n En cualquier momento puede ponerse en contacto con el responsable de la app a fin de consultar que datos de usted hay en la base de datos(Sin restricciones por país) y de la misma forma puede pedir su eliminación.\n El usuario tiene derecho a apelar ante la autoridad si considera que ha habido  un incumplimiento en materia de protección de datos."
                 android:visibility="visible" />
         </LinearLayout>
     </ScrollView>

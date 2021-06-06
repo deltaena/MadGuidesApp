@@ -13,6 +13,7 @@ public class Hotel implements RecyclerViewElement {
     private int phone;
     private String imageUrl;
     private String mapsUrl;
+    private String reference;
     private int category;
     private Map<String, Boolean> amenities;
     private Map<String, String> optionalAmenities;
@@ -74,6 +75,14 @@ public class Hotel implements RecyclerViewElement {
 
     public void setOptionalAmenities(Map<String, String> optionalAmenities) {
         this.optionalAmenities = optionalAmenities;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     @Override

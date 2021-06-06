@@ -37,6 +37,7 @@ import com.example.madguidesapp.pojos.Hotel;
 import com.example.madguidesapp.pojos.RecyclerViewElement;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.ReferenceElement;
+import com.example.madguidesapp.pojos.Restaurant;
 import com.example.madguidesapp.pojos.User;
 import com.example.madguidesapp.ui.dialogs.AccountRequiredDialog;
 import com.google.android.material.snackbar.Snackbar;
@@ -151,7 +152,8 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
                     showOnMapsIcon.enable();
                 });
 
-                if(recyclerViewElements.get(0) instanceof Hotel) return;
+                if(recyclerViewElements.get(0) instanceof Hotel ||
+                        recyclerViewElements.get(0) instanceof Restaurant) return;
 
                 toggleVisitedIcon.setVisibility(View.VISIBLE);
                 referencesBtn.setVisibility(View.VISIBLE);

@@ -20,7 +20,10 @@ import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.databinding.FragmentRegisterBinding;
 import com.example.madguidesapp.pojos.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +37,8 @@ public class RegisterFragment extends ConnectivityFragment {
 
     private NavController navController;
 
+    //  TODO separate on complete
+
     View.OnClickListener onRegisterBtnClicked = click -> {
         Map<String, String> userDataChecked = checkUserData();
 
@@ -42,18 +47,24 @@ public class RegisterFragment extends ConnectivityFragment {
             return;
         }
 
-        drawerActivityViewModel.usernameExists(userDataChecked.get("username")).
-                addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        if(task.getResult().size() == 0) {
-                            Snackbar.make(requireView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
-                        }
-                        else{
-                            binding.usernameEditText.setError(getString(R.string.usernameExistsAlready));
-                        }
-                    }
-                });
+        OnCompleteListener<QuerySnapshot> onUsernameChecked = task -> {
+            if(task.isSuccessful()){
+                if(task.getResult().size() == 0) {
+                    Snackbar.make(requireView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
 
+                    register(userDataChecked);
+                }
+                else{
+                    binding.usernameEditText.setError(getString(R.string.usernameExistsAlready));
+                }
+            }
+        };
+
+        drawerActivityViewModel.usernameExists(userDataChecked.get("username")).
+                addOnCompleteListener(onUsernameChecked);
+    };
+
+    private void register(Map<String, String> userDataChecked) {
         User user = new User();
 
         user.setEmail(userDataChecked.get("email"));
@@ -71,7 +82,7 @@ public class RegisterFragment extends ConnectivityFragment {
                         Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                     }
                 });
-    };
+    }
 
     View.OnClickListener goToLoginClicked = click -> {
         String emailStr = binding.emailEditText.getText(),

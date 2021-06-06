@@ -52,9 +52,9 @@ public class SingleHotelFragment extends Fragment {
 
         binding.include4.previewImageView.loadImage(hotel.getImageUrl());
 
-        binding.urlTextView.setText(hotel.getUrl());
+        binding.contactLayout.urlTextView.setText(hotel.getUrl());
 
-        binding.urlTextView.setOnClickListener(click -> {
+        binding.contactLayout.urlTextView.setOnClickListener(click -> {
             Intent openUrlIntent = new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(hotel.getUrl()));
@@ -62,13 +62,15 @@ public class SingleHotelFragment extends Fragment {
             startActivity(openUrlIntent);
         });
 
-        binding.phoneTextView.setText(hotel.getPhone()+"");
+        binding.contactLayout.phoneTextView.setText(hotel.getPhone()+"");
 
-        binding.phoneTextView.setOnClickListener(click -> {
+        binding.contactLayout.phoneTextView.setOnClickListener(click -> {
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
             callIntent.setData(Uri.parse("tel:"+hotel.getPhone()));
             startActivity(callIntent);
         });
+
+        binding.contactLayout.referenceTextView.setText(hotel.getReference());
 
         int wifiIcon = hotel.getAmenities().get("wifi") ? R.drawable.wifi_icon : R.drawable.no_wifi_icon;
         binding.wifiImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), wifiIcon));
