@@ -1,8 +1,10 @@
 package com.example.madguidesapp.android.viewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
-public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
+public abstract class BaseViewPagerAdapter extends ConnectivityFragment
+        implements AccountRequiredDialog.OnButtonClicked{
 
     private static final String TAG = "BaseViewPagerAdapter";
 
@@ -188,7 +191,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
                     RecyclerViewElement reference = recyclerViewElements.get(viewPager2.getCurrentItem());
 
                     if(((ReferenceElement)reference).getReferences() == null){
-                        Snackbar.make(requireView(), "Este recurso no tiene paradas.", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(requireView(), "Este recurso no tiene referencias.", Snackbar.LENGTH_LONG).show();
                         referencesBtn.enable();
                         return;
                     }
@@ -261,7 +264,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
 
         toolbarTitleTextView.setText(element.getName());
 
-        markAsFavorite.setOnClickListener(click -> {
+        markAsFavorite.addListener(click -> {
             if(!drawerActivityViewModel.areUserRegistered()){
                 requireAccount();
                 return;
@@ -272,7 +275,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
     }
 
     public void requireAccount(){
-        AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
+        AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog(this);
         accountRequiredDialog.show(getParentFragmentManager(), "Account Required");
     }
 
@@ -300,4 +303,16 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment {
     }
 
     abstract Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index);
+
+    @Override
+    public void OnPositiveButtonClicked() {
+        toggleVisitedIcon.enable();
+        markAsFavorite.enable();
+    }
+
+    @Override
+    public void OnNegativeButtonClicked() {
+        toggleVisitedIcon.enable();
+        markAsFavorite.enable();
+    }
 }

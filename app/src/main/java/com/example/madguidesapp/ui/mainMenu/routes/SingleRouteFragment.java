@@ -1,5 +1,7 @@
 package com.example.madguidesapp.ui.mainMenu.routes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,6 @@ public class SingleRouteFragment extends Fragment {
     private static final String TAG = "SingleRouteFragment";
 
     private Route route;
-    private boolean firstTime = true;
     private NavController navController;
     private int index;
 
@@ -50,15 +51,16 @@ public class SingleRouteFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(!firstTime){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MadGuides", Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getBoolean("referencesOpened", false)){
+            sharedPreferences.edit().putBoolean("referencesOpened", false).apply();
             Bundle bundle = new Bundle();
             bundle.putInt("selectedElementIndex", index);
 
             navController.popBackStack();
             navController.navigate(R.id.nav_routes_pager, bundle);
         }
-
-        firstTime = false;
     }
 }
 

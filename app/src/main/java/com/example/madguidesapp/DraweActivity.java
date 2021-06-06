@@ -14,25 +14,15 @@ public class DraweActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawe);
-
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        firebaseAuth.signInWithEmailAndPassword("bemol54192@gmail.com", "B");
     }
 
+    @Override
+    public void OnPositiveButtonClicked() {
+        //TODO
+    }
 
+    @Override
+    public void OnNegativeButtonClicked() {
+        //TODO
+    }
 }

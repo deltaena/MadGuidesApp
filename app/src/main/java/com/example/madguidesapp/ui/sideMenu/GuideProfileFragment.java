@@ -1,5 +1,8 @@
 package com.example.madguidesapp.ui.sideMenu;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,6 +111,8 @@ public class GuideProfileFragment extends Fragment {
     }
 
     public HashMap<String, Object> checkLinks(){
+        PackageManager packageManager = requireActivity().getPackageManager();
+
         HashMap<String, Object> map = new HashMap<>();
 
         String instagram = binding.instagramLinkEditText.getText().toString().trim(),
@@ -115,13 +120,49 @@ public class GuideProfileFragment extends Fragment {
                 linkedin = binding.linkedinLinkEditText.getText().toString().trim(),
                 other = binding.otherLinkEditText.getText().toString().trim();
 
-        if(!instagram.isEmpty()) map.put("instagram", instagram);
+        if(!instagram.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram));
+            if(packageManager.resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                map.put("instagram", instagram);
+            }
+            else{
+                binding.instagramLinkEditText.setError("Introduzca un enlace válido");
+            }
+        }
 
-        if(!twitter.isEmpty()) map.put("twitter", twitter);
+        if(!twitter.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter));
+            if(packageManager.resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                map.put("twitter", twitter);
+            }
+            else{
+                binding.twitterlinkEditText.setError("Introduzca un enlace válido");
+            }
 
-        if(!linkedin.isEmpty()) map.put("linkedin", linkedin);
+        }
 
-        if(!other.isEmpty()) map.put("other", other);
+        if(!linkedin.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkedin));
+            if(packageManager.resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                map.put("linkedin", linkedin);
+            }
+            else{
+                binding.linkedinLinkEditText.setError("Introduzca un enlace válido");
+            }
+
+
+        }
+
+        if(!other.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(other));
+            if(packageManager.resolveActivity(intent, PackageManager.MATCH_ALL) != null) {
+                map.put("other", other);
+            }
+            else{
+                binding.otherLinkEditText.setError("Introduzca un enlace válido");
+            }
+
+        }
 
         return map;
     }

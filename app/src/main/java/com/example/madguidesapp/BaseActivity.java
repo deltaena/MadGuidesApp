@@ -24,7 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements AccountRequiredDialog.OnButtonClicked {
 
     private static final String TAG = "BaseActivity";
     
@@ -108,7 +108,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
 
             if(user == null){
-                AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog();
+                AccountRequiredDialog accountRequiredDialog = new AccountRequiredDialog(this);
                 accountRequiredDialog.show(getSupportFragmentManager(), "AccountRequired");
 
                 return false;

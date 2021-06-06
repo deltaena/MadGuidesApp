@@ -1,5 +1,7 @@
 package com.example.madguidesapp.ui.mainMenu.restaurants;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +47,29 @@ public class SingleRestaurantFragment extends Fragment {
         binding.include5.previewImageView.loadImage(restaurant.getImageUrl());
 
         binding.contactLayout.urlTextView.setText(restaurant.getWeb());
+        binding.contactLayout.urlTextView.setOnClickListener(click -> {
+            Intent openUrlIntent = new Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(restaurant.getWeb()));
+
+            startActivity(openUrlIntent);
+        });
 
         binding.contactLayout.phoneTextView.setText(restaurant.getPhone()+"");
+        binding.contactLayout.phoneTextView.setOnClickListener(click -> {
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:"+restaurant.getPhone()));
+            startActivity(callIntent);
+        });
 
         binding.contactLayout.referenceTextView.setText(restaurant.getReference());
+        binding.contactLayout.referenceTextView.setOnClickListener(click -> {
+            Intent openUrlIntent = new Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(restaurant.getReference()));
+
+            startActivity(openUrlIntent);
+        });
 
         binding.descriptionTextView.setText(restaurant.getDescription());
     }

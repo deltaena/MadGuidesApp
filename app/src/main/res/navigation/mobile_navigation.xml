@@ -17,12 +17,12 @@
     <fragment
         android:id="@+id/nav_login"
         android:name="com.example.madguidesapp.ui.auth.LoginFragment"
-        android:label="LoginFragment"
+        android:label="Iniciar sesión"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_register"
         android:name="com.example.madguidesapp.ui.auth.RegisterFragment"
-        android:label="RegisterFragment"
+        android:label="Registrar"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/nav_main_menu"
@@ -79,12 +79,12 @@
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.madguidesapp.ui.sideMenu.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Perfil usuario"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_guide_profile"
         android:name="com.example.madguidesapp.ui.sideMenu.GuideProfileFragment"
-        android:label="guide profile"
+        android:label="Perfil guía"
         tools:layout="@layout/fragment_guide_profile" />
     <fragment
         android:id="@+id/nav_restaurant_categories"
@@ -106,11 +106,10 @@
     <fragment
         android:id="@+id/nav_references"
         android:name="com.example.madguidesapp.ui.mainMenu.routes.ResourcesReferencesFragment"
-        android:label="nav_route_reference" />
+        android:label="Referencias" />
     <fragment
         android:id="@+id/nav_restaurants_pager"
-        android:name="com.example.madguidesapp.android.viewPager.RestaurantViewPagerAdapter"
-        android:label="RestaurantViewPagerAdapter" />
+        android:name="com.example.madguidesapp.android.viewPager.RestaurantViewPagerAdapter" />
 
 </navigation>
 

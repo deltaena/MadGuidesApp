@@ -64,6 +64,7 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <TextView
+        android:id="@+id/goToLoginTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Ya posees una cuenta? Inicia sesion aquí"

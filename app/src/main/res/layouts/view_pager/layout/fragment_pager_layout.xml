@@ -9,10 +9,8 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:umanoClipPanel="false"
     app:umanoDragView="@id/commentsSection"
     app:umanoInitialState="collapsed"
-    app:umanoOverlay="false"
     tools:umanoInitialState="collapsed">
 
     <androidx.constraintlayout.widget.ConstraintLayout

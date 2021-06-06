@@ -49,6 +49,7 @@
         app:performsAsync="true" />
 
     <TextView
+        android:id="@+id/goToRegisterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¿Nuevo aquí? Registrate"

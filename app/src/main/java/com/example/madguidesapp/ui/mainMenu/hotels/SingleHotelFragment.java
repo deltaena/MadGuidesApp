@@ -63,6 +63,14 @@ public class SingleHotelFragment extends Fragment {
 
         binding.contactLayout.referenceTextView.setText(hotel.getReference());
 
+        binding.contactLayout.referenceTextView.setOnClickListener(click -> {
+            Intent openUrlIntent = new Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(hotel.getReference()));
+
+            startActivity(openUrlIntent);
+        });
+
         int wifiIcon = hotel.getAmenities().get("wifi") ? R.drawable.wifi_icon : R.drawable.no_wifi_icon;
         binding.wifiImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), wifiIcon));
 

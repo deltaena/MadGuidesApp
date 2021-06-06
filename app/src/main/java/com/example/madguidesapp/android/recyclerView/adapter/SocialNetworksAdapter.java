@@ -1,6 +1,8 @@
 package com.example.madguidesapp.android.recyclerView.adapter;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.View;
 
@@ -44,6 +46,7 @@ public class SocialNetworksAdapter extends BaseAdapter {
 
         return click -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(socialNetwork.getUrl()));
+
             context.startActivity(intent);
         };
     }

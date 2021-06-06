@@ -22,6 +22,6 @@ public class ResourcesViewPager extends BaseViewPagerAdapter{
 
     @Override
     Fragment getDetailFragment(RecyclerViewElement recyclerViewElement, int index) {
-        return new SingleResourceFragment(recyclerViewElement);
+        return new SingleResourceFragment(recyclerViewElement, navController, index);
     }
 }

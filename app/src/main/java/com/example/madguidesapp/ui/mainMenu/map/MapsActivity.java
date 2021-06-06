@@ -18,20 +18,24 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madguidesapp.R;
 import com.example.madguidesapp.android.viewModel.MapsActivityViewModel;
+import com.example.madguidesapp.pojos.Resource;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
@@ -52,7 +56,7 @@ public class MapsActivity extends FragmentActivity {
     private MapsActivityViewModel mapsActivityViewModel;
     private View root;
 
-    private final double radiusInM = 6000;
+    private final double radiusInM = 2000;
 
     private GoogleMap mMap;
 
@@ -126,12 +130,22 @@ public class MapsActivity extends FragmentActivity {
         mapsActivityViewModel.getResourcesLiveData().
                 observe(this, resources -> {
                     Snackbar.make(root, "Mostrando " + resources.size() + " recursos cercanos", Snackbar.LENGTH_LONG).show();
-                    resources.forEach(resource -> {
+
+                    if(resources.size() == 0) return;
+
+                    LatLngBounds.Builder bounds = LatLngBounds.builder();
+
+                    for(int i=0; i<resources.size(); i++){
+                        Resource resource = resources.get(i);
+
                         mMap.addMarker(new MarkerOptions().
                                 position(resource.getLatLng()).
                                 title(resource.getName()).
                                 icon(getBitmapDescriptor(R.drawable.ic_point_of_interest)));
-                    });
+                        bounds.include(resource.getLatLng());
+                    }
+
+
                 });
 
         Dexter.withContext(this).
@@ -147,10 +161,10 @@ public class MapsActivity extends FragmentActivity {
                 title("Soy yo!").
                 icon(getBitmapDescriptor(R.drawable.user_icon)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 12));
-
-        mMap.addCircle(new CircleOptions().center(locationLatLng).radius(radiusInM).
+        Circle circle = mMap.addCircle(new CircleOptions().center(locationLatLng).radius(radiusInM).
                 strokeWidth(10).strokeColor(Color.BLACK));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, getZoomLevel(circle)));
 
         GeoLocation center = new GeoLocation(location.getLatitude(), location.getLongitude());
 
@@ -175,6 +189,16 @@ public class MapsActivity extends FragmentActivity {
         } else {
             return BitmapDescriptorFactory.fromResource(id);
         }
+    }
+
+    public int getZoomLevel(Circle circle) {
+        int zoomLevel = 11;
+        if (circle != null) {
+            double radius = circle.getRadius() + circle.getRadius() / 2;
+            double scale = radius / 500;
+            zoomLevel = (int) (16 - Math.log(scale) / Math.log(2));
+        }
+        return zoomLevel;
     }
 }
 
