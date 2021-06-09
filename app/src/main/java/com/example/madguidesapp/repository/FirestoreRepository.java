@@ -51,8 +51,14 @@ public class FirestoreRepository {
                 get();
     }
 
-    public Task<QuerySnapshot> getGuides(){
-        return firestore.collection("Guides").get();
+    public Task<QuerySnapshot> getGuides(String uid){
+        return firestore.collection("Guides").
+                whereNotEqualTo("id", uid)
+                .get();
+    }
+
+    public Task<DocumentSnapshot> getGuide(String uid){
+        return firestore.collection("Guides").document(uid).get();
     }
 
     public Task<QuerySnapshot> getHotelCategories(){

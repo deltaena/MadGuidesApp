@@ -141,19 +141,18 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment
                 toggleVisitedIcon.setVisibility(View.GONE);
 
                 showOnMapsIcon.setOnClickListener(click -> {
+                    String mapsUrl = recyclerViewElements.get(viewPager2.getCurrentItem()).getMapsUrl();
+                    if (mapsUrl == null) {
+                        Snackbar.make(requireView(), "Este elemento no puede ser mostrado en maps", Snackbar.LENGTH_LONG).show();
+                        return;
+                    }
                     Intent showOnMapsIntent = new Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse(recyclerViewElements.get(viewPager2.getCurrentItem()).getMapsUrl()));
+                            Uri.parse(mapsUrl));
 
                     startActivity(showOnMapsIntent);
                     showOnMapsIcon.enable();
                 });
-
-                if(recyclerViewElements.get(0) instanceof Hotel ||
-                        recyclerViewElements.get(0) instanceof Restaurant) return;
-
-                toggleVisitedIcon.setVisibility(View.VISIBLE);
-                referencesBtn.setVisibility(View.VISIBLE);
 
                 drawerActivityViewModel.getUserLiveData().
                         observe(getViewLifecycleOwner(), user -> {
@@ -178,6 +177,12 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment
                             }
                         });
 
+                if(recyclerViewElements.get(0) instanceof Hotel ||
+                        recyclerViewElements.get(0) instanceof Restaurant) return;
+
+                toggleVisitedIcon.setVisibility(View.VISIBLE);
+                referencesBtn.setVisibility(View.VISIBLE);
+
                 toggleVisitedIcon.addListener(v -> {
                     if(!drawerActivityViewModel.areUserRegistered()){
                         requireAccount();
@@ -191,7 +196,7 @@ public abstract class BaseViewPagerAdapter extends ConnectivityFragment
                     RecyclerViewElement reference = recyclerViewElements.get(viewPager2.getCurrentItem());
 
                     if(((ReferenceElement)reference).getReferences() == null){
-                        Snackbar.make(requireView(), "Este recurso no tiene referencias.", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(requireView(), "Este elemento no tiene referencias.", Snackbar.LENGTH_LONG).show();
                         referencesBtn.enable();
                         return;
                     }

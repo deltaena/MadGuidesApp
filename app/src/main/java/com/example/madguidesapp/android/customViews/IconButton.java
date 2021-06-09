@@ -35,13 +35,11 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
 
         if(performsAsync) {
             listeners.add(click -> {
-                this.setBackgroundColor(Color.RED);
                 this.setClickable(false);
             });
         }
 
         this.setClickable(true);
-        this.setBackgroundColor(Color.GREEN);
         this.setOnClickListener(click -> {
             if(connectivityManager.getActiveNetwork() == null)
                 Snackbar.make(click.getRootView(), context.getString(R.string.operationDispatchDelayedCon), Snackbar.LENGTH_LONG).show();
@@ -59,7 +57,6 @@ public class IconButton extends androidx.appcompat.widget.AppCompatImageView {
     }
 
     public void enable(){
-        this.setBackgroundColor(Color.GREEN);
         this.setClickable(true);
     }
 

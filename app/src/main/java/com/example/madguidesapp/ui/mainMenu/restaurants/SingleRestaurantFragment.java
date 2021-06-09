@@ -71,7 +71,7 @@ public class SingleRestaurantFragment extends Fragment {
             startActivity(openUrlIntent);
         });
 
-        binding.descriptionTextView.setText(restaurant.getDescription());
+        binding.descriptionTextView.setText(restaurant.getDescription().replace("_br", " \n"));
     }
 }
 

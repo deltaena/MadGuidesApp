@@ -43,11 +43,14 @@ public class SingleResourceFragment extends Fragment {
 
         binding.include4.previewImageView.loadImage(resource.getImageUrl());
 
-        binding.historicalDescriptionTextView.setText(resource.getHistoricalDescription());
+        binding.historicalDescriptionTextView.setText(
+                resource.getHistoricalDescription().replace("_br", "\n\n"));
 
-        binding.formalDescriptionTextView.setText(resource.getFormalDescription());
+        binding.formalDescriptionTextView.setText(
+                resource.getFormalDescription().replace("_br", "\n\n"));
 
-        binding.curiositiesTextView.setText(resource.getCuriosities());
+        binding.curiositiesTextView.setText(
+                resource.getCuriosities().replace("_br", "\n\n"));
 
         return binding.getRoot();
     }

@@ -3,6 +3,7 @@ package com.example.madguidesapp.android.viewModel;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -136,8 +137,8 @@ public class DrawerActivityViewModel extends ViewModel {
                         User user = task.getResult().toObject(User.class);
                         userMutableLiveData.setValue(user);
                         initializeFavorites();
-                        removeUserFromGuides(userRepository.getUserId());
-                        fillGuide();
+                        setGuides();
+                        setGuide();
                     }
                 });
     }
@@ -164,8 +165,7 @@ public class DrawerActivityViewModel extends ViewModel {
         userRepository.signOut();
         userMutableLiveData.setValue(null);
         favoritesMutableLiveData.setValue(null);
-        restoreGuidesList();
-        registeredGuideMutableLiveData.setValue(null);
+        setGuides();
     }
 
     public Task<AuthResult> register(User user, String password){
@@ -206,6 +206,9 @@ public class DrawerActivityViewModel extends ViewModel {
                     }
                     else if(ref.getParent().getId().contains("Hotels")){
                         favorites.add(task.getResult().toObject(Hotel.class));
+                    }
+                    else if(ref.getParent().getId().contains("Restaurants")){
+                        favorites.add(task.getResult().toObject(Restaurant.class));
                     }
 
                     favorites = favorites.stream().
@@ -421,32 +424,45 @@ public class DrawerActivityViewModel extends ViewModel {
 
     //region Guides view model
     private List<Guide> guidesFullList = new ArrayList<>();
-    private MutableLiveData<Guide> registeredGuideMutableLiveData;
-    private MutableLiveData<List<Guide>> filteredGuidesMutableLiveData;
+    private MutableLiveData<List<Guide>> guidesMutableLiveData;
+    private MutableLiveData<Guide> guideMutableLiveData;
 
     private void initializeGuidesViewModel(){
-        filteredGuidesMutableLiveData = new MutableLiveData<>();
-        registeredGuideMutableLiveData = new MutableLiveData<>();
+        guidesMutableLiveData = new MutableLiveData<>();
+        guideMutableLiveData = new MutableLiveData<>();
 
-        firestoreRepository.getGuides().
+        setGuides();
+    }
+
+    private void setGuides(){
+        String uid = userRepository.areUserRegistered() ? userRepository.getUserId() : "";
+
+        firestoreRepository.getGuides(uid).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         guidesFullList = task.getResult().toObjects(Guide.class);
 
-                        filteredGuidesMutableLiveData.setValue(guidesFullList);
+                        guidesMutableLiveData.setValue(guidesFullList);
                     }
                 });
     }
-
-    public void removeUserFromGuides(String id){
+    private void setGuide(){
+        firestoreRepository.getGuide(userRepository.getUserId()).
+                addOnCompleteListener(task -> {
+                    guideMutableLiveData.setValue(task.getResult().toObject(Guide.class));
+                });
+    }
+    /*public void removeUserFromGuides(String id){
         assert userMutableLiveData.getValue() != null;
+
+        if(userMutableLiveData.getValue().getGuideStatus() != 1) return;
 
         List<Guide> guidesFiltered = guidesFullList.stream().
                 filter(guide -> !guide.getId().equals(id)).
                 collect(Collectors.toList());
 
         filteredGuidesMutableLiveData.setValue(guidesFiltered);
-    }
+    }*/
 
     public Task<Void> createGuideProfile(Map<String, Object> map){
         assert userMutableLiveData.getValue() != null;
@@ -457,37 +473,33 @@ public class DrawerActivityViewModel extends ViewModel {
         return firestoreRepository.insertGuide(map, userRepository.getUserId()).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        fillGuide();
+                        setGuides();
                     }
                 });
     }
 
-    public void restoreGuidesList(){
-        filteredGuidesMutableLiveData.setValue(guidesFullList);
-    }
 
-    public void fillGuide(){
+    /*public void restoreGuidesList(){
+        filteredGuidesMutableLiveData.setValue(guidesFullList);
+    }*/
+
+    /*public void fillGuide(){
         firestoreRepository.findGuide(userRepository.getUserId()).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         registeredGuideMutableLiveData.setValue(task.getResult().toObject(Guide.class));
+
+                        initializeGuidesViewModel();
                     }
                 });
-    }
+    }*/
 
     public LiveData<List<Guide>> getGuidesLiveData(){
-        if(areUserRegistered()){
-            removeUserFromGuides(userRepository.getUserId());
-        }
-        else{
-            restoreGuidesList();
-        }
-
-        return filteredGuidesMutableLiveData;
+        return guidesMutableLiveData;
     }
 
-    public LiveData<Guide> getGuideLiveData(){
-        return registeredGuideMutableLiveData;
+    public LiveData<Guide> getGuideLiveData() {
+        return guideMutableLiveData;
     }
     //endregion
 
@@ -657,6 +669,8 @@ public class DrawerActivityViewModel extends ViewModel {
     public void getNearbyResources(){
 
     }
+
+
 }
 
 

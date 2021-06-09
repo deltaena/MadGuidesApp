@@ -18,7 +18,7 @@
             android:id="@+id/visitedRoutes"
             android:checkable="true"
             android:icon="@drawable/routes_icon"
-            android:title="Rutas visitados" />
+            android:title="Rutas visitadas" />
         <item
             android:checkable="true"
             android:icon="@drawable/sign_out_icon"

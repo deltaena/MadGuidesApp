@@ -61,6 +61,7 @@
                 android:id="@+id/historicalDescriptionTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Some historical description"
                 app:layout_constraintBottom_toTopOf="@+id/formalDescriptionLabelTextView"
                 app:layout_constraintEnd_toEndOf="parent"

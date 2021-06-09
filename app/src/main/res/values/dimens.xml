@@ -5,5 +5,5 @@
     <dimen name="single_element_icons">30dp</dimen>
     <dimen name="single_element_icons_right_margin">10dp</dimen>
 
-    <dimen name="hotel_icons_margin">10dp</dimen>
+    <dimen name="hotel_icons_margin">35dp</dimen>
 </resources>

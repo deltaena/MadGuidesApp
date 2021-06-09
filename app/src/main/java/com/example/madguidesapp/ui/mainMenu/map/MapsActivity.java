@@ -1,16 +1,14 @@
 package com.example.madguidesapp.ui.mainMenu.map;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.VectorDrawable;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
@@ -21,11 +19,7 @@ import com.example.madguidesapp.android.viewModel.MapsActivityViewModel;
 import com.example.madguidesapp.pojos.Resource;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +31,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -56,7 +51,9 @@ public class MapsActivity extends FragmentActivity {
     private MapsActivityViewModel mapsActivityViewModel;
     private View root;
 
-    private final double radiusInM = 2000;
+    private float radiusInM = 2000;
+    private LatLng lastCenter;
+    private Location lastLocation;
 
     private GoogleMap mMap;
 
@@ -64,34 +61,51 @@ public class MapsActivity extends FragmentActivity {
     private OnMapReadyCallback onMapReady = googleMap -> {
         mMap = googleMap;
 
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        FusedLocationProviderClient fused = LocationServices.getFusedLocationProviderClient(getApplicationContext());
 
-        String bestProvider = locationManager.getBestProvider(new Criteria(), false);
+        Task<Location> task = fused.getLastLocation();
 
-        Location location = locationManager.getLastKnownLocation(bestProvider);
+        task.addOnCompleteListener(task1 -> {
+            if(task1.isSuccessful()){
+                lastLocation = task1.getResult();
 
-        if (location == null) {
-            LocationRequest locationRequest = new LocationRequest();
-            locationRequest.setFastestInterval(5000);
+                showUserLocationOnMap();
+                setCameraFirstTime(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
+            }
+        });
 
-            FusedLocationProviderClient fused = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+        mMap.setOnCameraIdleListener(() -> {
+            radiusInM = updateRadius();
 
-            fused.requestLocationUpdates(locationRequest, new LocationCallback(){
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        super.onLocationResult(locationResult);
+            float displacement = calcDisplacement();
 
-                        showUserLocationOnMap(locationResult.getLastLocation());
-                    }
-                }, null);
-            return;
+            if(displacement > 50) {
+                GeoLocation geoLocation = new GeoLocation(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude);
+                mapsActivityViewModel.loadNearByResources(geoLocation, radiusInM);
+            }
+        });
+    };
+
+    private float calcDisplacement() {
+        if(lastCenter == null) {
+            lastCenter = mMap.getCameraPosition().target;
+            return 0;
         }
 
-        showUserLocationOnMap(location);
-    };
+        Location lastCenterLoc = new Location("lastcenter");
+        lastCenterLoc.setLatitude(lastCenter.latitude);
+        lastCenterLoc.setLongitude(lastCenter.longitude);
+
+        Location centerLoc = new Location("center");
+        centerLoc.setLatitude(mMap.getCameraPosition().target.latitude);
+        centerLoc.setLongitude(mMap.getCameraPosition().target.longitude);
+
+        lastCenter = mMap.getCameraPosition().target;
+
+        return lastCenterLoc.distanceTo(centerLoc);
+    }
 
     private MultiplePermissionsListener permissionListener = new MultiplePermissionsListener() {
 
@@ -131,6 +145,9 @@ public class MapsActivity extends FragmentActivity {
                 observe(this, resources -> {
                     Snackbar.make(root, "Mostrando " + resources.size() + " recursos cercanos", Snackbar.LENGTH_LONG).show();
 
+                    mMap.clear();
+                    showUserLocationOnMap();
+
                     if(resources.size() == 0) return;
 
                     LatLngBounds.Builder bounds = LatLngBounds.builder();
@@ -144,8 +161,6 @@ public class MapsActivity extends FragmentActivity {
                                 icon(getBitmapDescriptor(R.drawable.ic_point_of_interest)));
                         bounds.include(resource.getLatLng());
                     }
-
-
                 });
 
         Dexter.withContext(this).
@@ -154,21 +169,35 @@ public class MapsActivity extends FragmentActivity {
                 check();
     }
 
-    private void showUserLocationOnMap(Location location){
-        LatLng locationLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+    private float updateRadius(){
+        LatLng center = mMap.getCameraPosition().target;
+        LatLng farRight = mMap.getProjection().getVisibleRegion().farRight;
+
+        Location centerLoc = new Location("a");
+        centerLoc.setLatitude(center.latitude);
+        centerLoc.setLongitude(center.longitude);
+
+        Location farRightLoc = new Location("b");
+        farRightLoc.setLatitude(farRight.latitude);
+        farRightLoc.setLongitude(farRight.longitude);
+
+        return centerLoc.distanceTo(farRightLoc)/2;
+    }
+
+    private void showUserLocationOnMap(){
+        LatLng locationLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
         mMap.addMarker(new MarkerOptions().
                 position(locationLatLng).
                 title("Soy yo!").
                 icon(getBitmapDescriptor(R.drawable.user_icon)));
+    }
 
-        Circle circle = mMap.addCircle(new CircleOptions().center(locationLatLng).radius(radiusInM).
-                strokeWidth(10).strokeColor(Color.BLACK));
+    private void setCameraFirstTime(LatLng locationLatLng){
+        Circle circle = mMap.addCircle(new CircleOptions().
+                center(locationLatLng).radius(2000).strokeWidth(0));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, getZoomLevel(circle)));
-
-        GeoLocation center = new GeoLocation(location.getLatitude(), location.getLongitude());
-
-        mapsActivityViewModel.loadNearByResources(center, radiusInM);
     }
 
     private BitmapDescriptor getBitmapDescriptor(int id) {
