@@ -3,12 +3,14 @@ package com.example.madguidesapp.android.customViews;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -145,10 +147,11 @@ public class DecorativeImage extends ConstraintLayout {
 
     public void loadImage(String url){
         progressBar.setVisibility(VISIBLE);
+        progressBar.bringToFront();
 
         Glide.with(getContext()).
                 load(url).
-                placeholder(getContext().getDrawable(placeHoldersMap.get(decorationType))).
+                placeholder(AppCompatResources.getDrawable(getContext(), placeHoldersMap.get(decorationType))).
                 diskCacheStrategy(DiskCacheStrategy.ALL).
                 addListener(new RequestListener<Drawable>() {
                     @Override
@@ -168,6 +171,7 @@ public class DecorativeImage extends ConstraintLayout {
 
     public void loadImage(Drawable drawable){
         progressBar.setVisibility(VISIBLE);
+        progressBar.bringToFront();
 
         image.setImageDrawable(drawable);
 

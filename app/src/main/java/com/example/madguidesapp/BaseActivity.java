@@ -2,7 +2,9 @@ package com.example.madguidesapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -144,6 +146,9 @@ public abstract class BaseActivity extends AppCompatActivity implements AccountR
 
     private void setUpHeader(User user){
         View headerView = navigationView.getHeaderView(0);
+
+        ImageButton closeDrawerBtn = headerView.findViewById(R.id.closeDrawerBtn);
+        closeDrawerBtn.setOnClickListener(click -> drawer.close());
 
         navigationView.setItemIconTintList(null);
 

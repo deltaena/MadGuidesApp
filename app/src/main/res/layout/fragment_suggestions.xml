@@ -10,11 +10,12 @@
     <EditText
         android:id="@+id/suggestionEditText"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="210dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:ems="10"
+        android:fontFamily="@font/crusoe"
         android:gravity="start|top"
         android:hint='¿Tienes alguna sugerencia? Estamos encantados de escucharte. Recuerda no incluir datos sensibles. Si lo encuentras más preciso puedes añadir un adjunto marcando "Incluir imagen"'
         android:inputType="textMultiLine"
@@ -50,25 +51,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/includeImageCheckBox" />
 
-    <Button
+    <com.example.madguidesapp.android.customViews.ProgressibleButton
         android:id="@+id/sendSuggestionbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:text="Enviar"
+        app:buttonText="Enviar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/suggestionPendingProgressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/sendSuggestionbutton"
-        app:layout_constraintEnd_toEndOf="@+id/sendSuggestionbutton"
-        app:layout_constraintStart_toStartOf="@+id/sendSuggestionbutton"
-        app:layout_constraintTop_toTopOf="@+id/sendSuggestionbutton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:performsAsync="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,8 +43,6 @@ public class RegisterFragment extends ConnectivityFragment {
         OnCompleteListener<QuerySnapshot> onUsernameChecked = task -> {
             if(task.isSuccessful()){
                 if(task.getResult().size() == 0) {
-                    Snackbar.make(requireView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
-
                     register(userDataChecked);
                 }
                 else{
@@ -69,11 +67,11 @@ public class RegisterFragment extends ConnectivityFragment {
                 register(user, userDataChecked.get("password")).
                 addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        Snackbar.make(getView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(requireView(), getString(R.string.signedUp), Snackbar.LENGTH_LONG).show();
                         navController.popBackStack();
                     }
                     else{
-                        Snackbar.make(getView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(requireView(), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                         binding.registerBtn.endLoading();
                     }
                 });

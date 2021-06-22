@@ -192,13 +192,18 @@ public class DrawerActivityViewModel extends ViewModel {
         if(!areUserRegistered() && userMutableLiveData.getValue().getFavorites() != null){
             return;
         }
-
+        Log.d(TAG, "initializeFavorites: "+userMutableLiveData.getValue().getFavorites().size());
         for(DocumentReference ref:userMutableLiveData.getValue().getFavorites()) {
             ref.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     List<RecyclerViewElement> favorites = favoritesMutableLiveData.getValue();
 
+                    Log.d(TAG, "initializeFavorites: "+ref.getParent().getId());
+                    Log.d(TAG, "initializeFavorites: "+favorites.size());
+
                     if (ref.getParent().getId().contains("Resources")) {
+                        Resource resource = task.getResult().toObject(Resource.class);
+                        Log.d(TAG, "initializeFavorites: "+resource);
                         favorites.add(task.getResult().toObject(Resource.class));
                     }
                     else if(ref.getParent().getId().contains("Routes")){
@@ -503,7 +508,7 @@ public class DrawerActivityViewModel extends ViewModel {
     }
     //endregion
 
-    //region hotels view model
+    //region Hotels view model
     private MutableLiveData<List<HotelCategory>> hotelCategoriesMutableLiveData;
     private MutableLiveData<List<Hotel>> hotelsMutableLiveData;
 
@@ -521,7 +526,7 @@ public class DrawerActivityViewModel extends ViewModel {
     }
 
     public void filterHotels(int categoryFilter){
-        hotelsMutableLiveData.setValue(new ArrayList<>());
+        hotelsMutableLiveData.setValue(null);
 
         firestoreRepository.getHotels(categoryFilter).
                 addOnCompleteListener(task -> {
@@ -540,7 +545,7 @@ public class DrawerActivityViewModel extends ViewModel {
     }
     //endregion
 
-    //region restaurants view model
+    //region Restaurants view model
     private MutableLiveData<List<RestaurantCategory>> restaurantCategoriesMutableLiveData;
     private MutableLiveData<List<Restaurant>> restaurantsMutableLiveData;
 
@@ -557,9 +562,7 @@ public class DrawerActivityViewModel extends ViewModel {
     }
 
     public void filterRestaurants(String categories){
-        restaurantsMutableLiveData.setValue(new ArrayList<>());
-
-        Log.d(TAG, "filterRestaurants: "+categories);
+        restaurantsMutableLiveData.setValue(null);
 
         firestoreRepository.getRestaurants(categories).
                 addOnCompleteListener(task -> {

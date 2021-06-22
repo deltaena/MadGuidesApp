@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madguidesapp.R;
+import com.example.madguidesapp.android.customViews.ProgressibleButton;
 import com.example.madguidesapp.android.viewModel.DrawerActivityViewModel;
 import com.example.madguidesapp.pojos.Suggestion;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -43,8 +44,7 @@ public class SuggestionsFragment extends Fragment {
     private EditText suggestionEditText;
     private ImageView attachmentImageView;
     private CheckBox checkBox;
-    private ProgressBar suggestionPendingProgressBar;
-    private Button sendSuggestionButton;
+    private ProgressibleButton sendSuggestionButton;
 
     private Uri suggestionFileUri;
 
@@ -64,10 +64,9 @@ public class SuggestionsFragment extends Fragment {
 
         if(suggestionText.isEmpty()){
             suggestionEditText.setError(getString(R.string.requiredField));
+            sendSuggestionButton.endLoading();
             return;
         }
-
-        sendSuggestionButton.setVisibility(View.INVISIBLE);
 
         suggestion = new Suggestion();
 
@@ -93,16 +92,11 @@ public class SuggestionsFragment extends Fragment {
                     if(aBoolean == null) return;
 
                     if(aBoolean) {
-                        suggestionPendingProgressBar.setVisibility(View.GONE);
-                        sendSuggestionButton.setVisibility(View.VISIBLE);
                         Snackbar.make(getView(), getString(R.string.suggestionSended), Snackbar.LENGTH_LONG).show();
                         suggestionEditText.setText("");
                         checkBox.setChecked(false);
                         drawerActivityViewModel.suggestionProcessed();
-                    }
-                    else{
-                        suggestionPendingProgressBar.setVisibility(View.VISIBLE);
-                        sendSuggestionButton.setVisibility(View.INVISIBLE);
+                        sendSuggestionButton.endLoading();
                     }
                 });
     }
@@ -134,9 +128,7 @@ public class SuggestionsFragment extends Fragment {
         });
 
         sendSuggestionButton = view.findViewById(R.id.sendSuggestionbutton);
-        sendSuggestionButton.setOnClickListener(onSendSuggestionClicked);
-
-        suggestionPendingProgressBar = view.findViewById(R.id.suggestionPendingProgressBar);
+        sendSuggestionButton.addOnClickListener(onSendSuggestionClicked);
 
         return view;
     }

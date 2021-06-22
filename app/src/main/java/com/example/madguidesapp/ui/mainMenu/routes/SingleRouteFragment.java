@@ -42,7 +42,7 @@ public class SingleRouteFragment extends Fragment {
         durationTextView.setText("Duración de la ruta: "+route.getDuration());
 
         TextView descriptionTextView = view.findViewById(R.id.routeDescriptionTextView);
-        descriptionTextView.setText(route.getDescription());
+        descriptionTextView.setText(route.getDescription().replace("_br", "\n"));
 
         return view;
     }

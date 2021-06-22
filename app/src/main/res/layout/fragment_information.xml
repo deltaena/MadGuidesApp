@@ -40,14 +40,16 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
-                android:text="Buenas, ante todo gracias por descargar la app, MadGuides está formado por  4 estudiantes con la intención de facilitar la interacción con el turismo, nuestro principal objetivo es poder formar una comunidad sana en la que mediante escuchar a lo usuarios, podamos aprender y mejorar como profesionales a la vez que os brindamos una app digna de usar y hecha para todos los que la usan."
+                android:text="¡Buenas! Ante todo gracias por descargar la app, MadGuides está formado por 4 estudiantes con la intención de facilitar la interacción con el turismo.Nuestro principal objetivo es poder formar una comunidad sana en la que mediante escuchar a lo usuarios, podamos aprender y mejorar como profesionales a la vez que os brindamos una app digna de usar y hecha para todos los que la usan."
                 android:visibility="visible" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
                 android:text="¿Quiénes somos?"
                 android:visibility="visible" />
@@ -56,8 +58,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
-                android:text="Daniel Suárez - Programador\nMarta del Pozo - Informadora turistica/Guía\nIrene Rodriguez -Diseñadora/Guía\nLeon Vazquez - Creador de Rutas/Guía"
+                android:text="Daniel Suárez - Programador\nMarta del Pozo - Informadora turistica/Guía\nIrene Rodriguez - Diseñadora/Guía\nLeon Vazquez - Creador de Rutas/Guía"
                 android:visibility="visible" />
 
             <TextView
@@ -66,6 +69,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
                 android:text="Si encuentras la aplicación útil puedes invitarnos a un café para apoyar la iniciativa! :)"
                 android:visibility="visible" />
@@ -81,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
                 android:text="Politicas de privacidad"
                 android:visibility="visible" />
@@ -91,6 +96,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
+                android:fontFamily="@font/crusoe"
                 android:gravity="center"
                 android:overScrollMode="always"
                 android:text="Responsable de la app y protección de datos: bemol54192@gmail.com.\nLA APP CODIFICA TODA INFORMACIÓN SENSIBLE PARA QUE SOLO EL USUARIO LA SEPA.\nLa app MadGuides no guarda ningún dato que no sea proporcionado por el usuario, los datos proporcionados son almacenados con el único fin de permitirle usar su perfil desde cualquier dipositivo y ponerle en contacto con otros usuarios.\nEl receptor de estos datos es el responsable de la app, asimismo se reserva el acceso a los datos al equipo de MadGuides a fin de tratar datos sobre los perfiles de guías para determinar si cumplen la normativa.\nToda información del usuario será eliminada al cumplirse el año desde su ultimo inicio de sesión, contando como inicio de sesión el ultimo día que la aplicación se conectó a internet.\nEn cualquier momento puede ponerse en contacto con el responsable de la app a fin de consultar qué datos de usted hay en la base de datos (Sin restricciones por país) y de la misma forma puede pedir su eliminación.\n El usuario tiene derecho a apelar ante la autoridad si considera que ha habido  un incumplimiento en materia de protección de datos."

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.madguidesapp.R;
 
@@ -88,6 +89,10 @@ public class ProgressibleButton extends ConstraintLayout {
 
         button.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.progress_button_bg));
         button.setTextColor(Color.WHITE);
+
+        if(ta.getBoolean(R.styleable.ProgressibleButton_crusoeFont, false)){
+            button.setTypeface(ResourcesCompat.getFont(getContext(), R.font.crusoe));
+        }
 
         button.setClickable(true);
         button.setFocusable(true);

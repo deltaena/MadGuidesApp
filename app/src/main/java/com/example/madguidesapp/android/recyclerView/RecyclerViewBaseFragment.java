@@ -24,6 +24,7 @@ import com.example.madguidesapp.pojos.RecyclerViewElement;
 import java.util.List;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
@@ -74,11 +75,14 @@ public abstract class RecyclerViewBaseFragment extends ConnectivityFragment {
             return;
         }
 
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(INVISIBLE);
 
         if(recyclerViewElements.isEmpty()){
             emptyRecyclerViewAdvertisementTextView.setVisibility(VISIBLE);
+            return;
         }
+
+        emptyRecyclerViewAdvertisementTextView.setVisibility(INVISIBLE);
 
         this.recyclerViewElements = recyclerViewElements;
 

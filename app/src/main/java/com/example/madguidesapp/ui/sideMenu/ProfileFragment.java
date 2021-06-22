@@ -3,10 +3,16 @@ package com.example.madguidesapp.ui.sideMenu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,12 +57,28 @@ public class ProfileFragment extends Fragment {
 
         User userChanged = setChanges();
 
-        if(userChanged != null) drawerActivityViewModel.updateUser(userChanged);
+        if(userChanged != null) {
+            drawerActivityViewModel.updateUser(userChanged);
+            Snackbar.make(requireView(), "¡Perfíl actualizado!", Snackbar.LENGTH_LONG).show();
+        }
         else {
             Snackbar.make(requireView(), getString(R.string.noChanges), Snackbar.LENGTH_SHORT).show();
             iconButton.enable();
         }
     };
+
+    private ActivityResultLauncher<Intent> startForProfileImageResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if(result.getResultCode() == Activity.RESULT_OK){
+                    Snackbar.make(requireView(), "Actualizando imagen... Esto puede llevar unos segundos", Snackbar.LENGTH_LONG).show();
+                    drawerActivityViewModel.updateProfilePhoto(result.getData().getData());
+                }
+                else{
+                    Snackbar.make(requireView(),
+                            "Ha habido un fallo actualizando la imagen, intentelo de nuevo",
+                            Snackbar.LENGTH_LONG).show();
+                }
+            });
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,11 +112,18 @@ public class ProfileFragment extends Fragment {
         Map<String, Object> buttonMap = buttonContentsMap.get(user.getGuideStatus());
 
         assert buttonMap != null;
+
         binding.profileButton.setText((String) buttonMap.get(textKey));
         binding.profileButton.addOnClickListener((View.OnClickListener) buttonMap.get(onClickKey));
 
-        binding.changeProfilePhotoTextView.
-                setOnClickListener(v -> ImagePicker.Companion.with(this).start());
+        binding.changeProfilePhotoTextView.setOnClickListener(v -> {
+            ImagePicker.Companion
+                    .with(this).
+                    createIntent( intent -> {
+                        startForProfileImageResult.launch(intent);
+                        return null;
+                    });
+        });
 
         setToolBar();
     }
@@ -146,28 +175,22 @@ public class ProfileFragment extends Fragment {
 
         buttonContentsMap.put(User.SolicitudeStatus.DENIED, deniedMap);
     }
-    private void setToolBar(){
-        Toolbar toolbar = ((AppCompatActivity)requireActivity()).findViewById(R.id.toolbar);
-
-        iconButton = toolbar.findViewById(R.id.toolbarRightButton);
-        iconButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.checked_icon));
-        iconButton.setVisibility(View.VISIBLE);
-        iconButton.addListener(updateUser);
-    }
 
     private User setChanges(){
         boolean hasChanges = false;
         User user = drawerActivityViewModel.getUserLiveData().getValue();
 
         String username = binding.usernameEditText.getText().toString().trim();
-        if(!user.getUsername().equals(username)) hasChanges = true;
-
-        user.setUsername(username);
+        if(!user.getUsername().equals(username)) {
+            hasChanges = true;
+            user.setUsername(username);
+        }
 
         String address = binding.addresEditText.getText().toString();
-        if(!user.getAddress().equals(address)) hasChanges = true;
-
-        user.setAddress(address);
+        if(!user.getAddress().equals(address)) {
+            hasChanges = true;
+            user.setAddress(address);
+        }
 
         return hasChanges ? user : null;
     }
@@ -175,9 +198,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        drawerActivityViewModel = new ViewModelProvider(requireActivity()).
-                get(DrawerActivityViewModel.class);
+        
+        drawerActivityViewModel = new ViewModelProvider(requireActivity()).get(DrawerActivityViewModel.class);
 
         drawerActivityViewModel.getUserLiveData().
                 observe(this, user -> {
@@ -196,16 +218,16 @@ public class ProfileFragment extends Fragment {
         setToolBar();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void setToolBar(){
+        Toolbar toolbar = ((AppCompatActivity)requireActivity()).findViewById(R.id.toolbar);
 
-        if(resultCode == Activity.RESULT_OK) {
-            assert data != null;
-            drawerActivityViewModel.updateProfilePhoto(data.getData());
-            binding.changeProfilePhotoTextView.setClickable(false);
-            binding.profilePhotoProgressBar.setVisibility(View.VISIBLE);
-        }
+        iconButton = toolbar.findViewById(R.id.toolbarRightButton);
+        iconButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.checked_icon));
+        iconButton.setVisibility(View.VISIBLE);
+        iconButton.addListener(updateUser);
+
+        TextView toolbarTitleTextView = toolbar.findViewById(R.id.toolbarTitleTextView);
+        toolbarTitleTextView.setText(drawerActivityViewModel.getUserLiveData().getValue().getUsername());
     }
 }
 

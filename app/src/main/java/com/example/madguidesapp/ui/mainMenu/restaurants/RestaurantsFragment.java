@@ -19,11 +19,7 @@ public class RestaurantsFragment extends RecyclerViewBaseFragment {
 
         drawerActivityViewModel.filterRestaurants(categoryFilter);
         drawerActivityViewModel.getRestaurantsLiveData().
-                observe(this, restaurants -> {
-                    if(!restaurants.isEmpty()){
-                        setRecyclerViewElements(restaurants);
-                    }
-                });
+                observe(this, restaurants -> setRecyclerViewElements(restaurants));
     }
 
     @Override
