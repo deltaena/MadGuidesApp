@@ -22,7 +22,7 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.example.madguidesapp.pojos.MyUtil.toDp;
 
-public class IconInput extends ConstraintLayout {
+public class    IconInput extends ConstraintLayout {
 
     private static final String TAG = "IconInput";
 

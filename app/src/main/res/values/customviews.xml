@@ -18,7 +18,7 @@
         <attr name="imageDims" format="float" />
     </declare-styleable>
     <declare-styleable name="IconInput">
-        <attr name="android:inputType"></attr>
+        <attr name="android:inputType" />
         <attr name="hint" format="string"/>
     </declare-styleable>
 </resources>
